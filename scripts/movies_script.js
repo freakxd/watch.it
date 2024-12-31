@@ -1,3 +1,4 @@
+//filmek
 document.addEventListener('DOMContentLoaded', function() {
     const apiKey = '5b10ee05a53140a03e252ca409834183';
     const apiUrl = 'https://api.themoviedb.org/3/movie/popular?api_key=' + apiKey;
@@ -16,9 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const movieElement = document.createElement('div');
                 movieElement.className = 'movie';
                 movieElement.innerHTML = `
-                    <img src="${imageBaseUrl + movie.poster_path}" alt="${movie.title} poster">
-                    <h3>${movie.title}</h3>
-                    <p>${movie.overview}</p>
+                    <img src="${imageBaseUrl + movie.poster_path}" alt="${movie.title} poster" class="movie-poster">
+                    <h3 class="movie-title">${movie.title}</h3>
+                    <p class="movie-overview">${movie.overview}</p>
                 `;
                 moviesContainer.appendChild(movieElement);
             });

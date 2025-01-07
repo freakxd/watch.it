@@ -48,8 +48,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ss", $username, $hashed_password);
 
     if ($stmt->execute()) {
+        $user_id = $stmt->insert_id;
         $response['status'] = 'success';
         $response['message'] = 'Sikeres regisztráció';
+
+        // Létrehozzuk a felhasználói oldalt
+        $template = file_get_contents('../members/username.id.html');
+        $new_content = str_replace(['User Name'], [$username], $template);
+        // $new_content = str_replace(['User Name', 'User Role'], [$username, 'Felhasználó'], $template);
+        $new_filename = "../members/{$username}.{$user_id}.html";
+        file_put_contents($new_filename, $new_content);
     } else {
         $response['status'] = 'error';
         $response['message'] = 'Hiba: ' . $stmt->error;

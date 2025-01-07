@@ -134,7 +134,8 @@
     <div class="container mt-5">
         <div class="card bg-dark bg-gradient">
             <div class="card-body d-flex custom-height-header">
-                <div class="members-profilepicture align-self-center"></div>
+                <div class="members-profilepicture align-self-center" id="profilePictureDiv" role="button" data-bs-toggle="modal" data-bs-target="#modal_profilkepfeltoltes">
+                </div>
                 <div class="ms-3 text-light d-flex flex-column justify-content-start">
                     <h4 class="card-title text-left" id="userName">User Name</h4>
                     <!-- <p class="card-text text-left" id="userRole">User Role</p> -->
@@ -182,6 +183,23 @@
                     <div id="rolam" class="tab-pane container fade">
                         <h3>Rólam</h3>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- profilkép feltöltés modal -->
+
+    <div class="modal fade" id="modal_profilkepfeltoltes" tabindex="-1" aria-labelledby="modal_profilkepfeltoltesLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark bg-gradient text-light">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal_profilkepfeltoltesLabel">Profilkép beállítása</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="file" id="profilePictureInput" name="profilePicture" accept="image/*">
                 </div>
             </div>
         </div>

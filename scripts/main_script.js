@@ -8,28 +8,38 @@ window.addEventListener('load', function () {
     }, 750);
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    const registerForm = document.getElementById('register_form');
-    const registerAlert = document.getElementById('div_registerAlert');
-    const registerModal = new bootstrap.Modal(document.getElementById('modal_regisztracio'));
-    const loginModal = new bootstrap.Modal(document.getElementById('modal_bejelentkezes'));
+$(document).ready(function() {
+    $('#profilePictureInput').on('click').trigger('click');
 
-    registerForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const formData = new FormData(registerForm);
+    $('#profilePictureInput').on('change', function() {
+        var formData = new FormData();
+        formData.append('profilePicture', $('#profilePictureInput')[0].files[0]);
 
-        fetch('../backend/register.php', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    setTimeout(() => {
-                        registerModal.hide();
-                        loginModal.show();
-                    }, 1000); // 1000 ms = 1 másodperc késleltetés
+        $.ajax({
+            url: '../backend/upload_profile_picture.php',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                try {
+                    if (typeof response === 'string') {
+                        response = JSON.parse(response); // JSON válasz dekódolása
+                    }
+                    if (response.status === 'success') {
+                        var randomParam = new Date().getTime(); // Véletlenszerű paraméter
+                        $('#profilePictureDiv').html('<img src="' + response.filePath + '?t=' + randomParam + '" alt="Profilkép" class="img-fluid">');
+                    } else {
+                        alert(response.message);
+                    }
+                } catch (e) {
+                    console.error('JSON parse error: ', e);
+                    console.error('Response: ', response);
                 }
-            })
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
+            }
+        });
     });
 });

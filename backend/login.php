@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $response['role'] = $_SESSION['role'];
     } else {
         $response['status'] = 'error';
-        $response['message'] = 'Hibás felhasználónév vagy jelszó';
+        $response['message'] = 'Hibás felhasználónév vagy jelszó. Regisztálj <a style="text-decoration: underline;" href="#" role="button" data-bs-toggle="modal" data-bs-target="#modal_regisztracio"> itt. </a>';
     }
 
     $stmt->close();

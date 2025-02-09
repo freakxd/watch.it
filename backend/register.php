@@ -6,6 +6,7 @@ $response = array();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST['register_username']);
     $password = trim($_POST['register_password']);
+    $email = trim($_POST['register_email']);
 
     // Ellenőrizzük, hogy a felhasználónév és a jelszó nem üres
     if (empty($username) || empty($password)) {
@@ -43,9 +44,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Ha a felhasználónév nem létezik, akkor létrehozzuk az új felhasználót
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO account (username, password) VALUES (?, ?)";
+    $sql = "INSERT INTO account (username, password, email) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $username, $hashed_password);
+    $stmt->bind_param("sss", $username, $hashed_password, $email);
 
     if ($stmt->execute()) {
         $user_id = $stmt->insert_id;

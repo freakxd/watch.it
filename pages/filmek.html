@@ -78,12 +78,21 @@
                             <input type="password" class="form-control" id="login_password" placeholder="🔑" name="login_password" required>
                             <div class="valid-feedback"></div>
                         </div>
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" id="login_rememberme" name="remember">
-                            <label class="form-check-label" for="login_rememberme">Jegyezz meg!</label>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="stay_logged_in" name="stay_logged_in">
+                            <label class="form-check-label" for="stay_logged_in">Maradj bejelentkezve</label>
                         </div>
                         <div id="div_loginAlert"></div>
                         <button type="submit" class="btn btn-success">Bejelentkezés</button>
+                    </form>
+                    <form id="verify_form" method="POST" class="was-validated" style="display: none;">
+                        <div class="mb-3">
+                            <label for="verification_code" class="form-label">Bejelentkezési kód</label>
+                            <input type="text" class="form-control" id="verification_code" placeholder="🔢" name="verification_code" required>
+                            <div class="valid-feedback"></div>
+                        </div>
+                        <div id="div_verifyAlert"></div>
+                        <button type="submit" class="btn btn-success">Kód ellenőrzése</button>
                     </form>
                 </div>
             </div>
@@ -110,6 +119,11 @@
                             <input type="password" class="form-control" id="register_password" placeholder="🔑" name="register_password" required>
                             <div class="valid-feedback"></div>
                         </div>
+                        <div class="mb-3">
+                            <label for="register_email" class="form-label">E-mail cím</label>
+                            <input type="email" class="form-control" id="register_email" placeholder="📧" name="register_email" required>
+                            <div class="valid-feedback"></div>
+                        </div>
                         <div id="div_registerAlert"></div>
                         <button type="submit" class="btn btn-success">Regisztráció</button>
                     </form>
@@ -118,8 +132,20 @@
         </div>
     </div>
 
-    <div id="movies-container" class="container mt-5">
-
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-3">
+                <h5 style="color: white;">Kategóriák</h5>
+                <ul id="category-list" class="list-group">
+                    <!-- Kategóriák dinamikusan betöltve -->
+                </ul>
+            </div>
+            <div class="col-md-9">
+                <div id="movies-container" class="row">
+                    <!-- Filmek dinamikusan betöltve -->
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

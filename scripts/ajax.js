@@ -1,20 +1,60 @@
 $(document).ready(function() {
     $('#login_form').on('submit', function(event) {
         event.preventDefault();
+
+        var formData = {
+            login_username: $('#login_username').val(),
+            login_password: $('#login_password').val(),
+            stay_logged_in: $('#stay_logged_in').is(':checked')
+        };
+
         $.ajax({
             url: '../backend/login.php',
-            method: 'POST',
-            data: $(this).serialize(),
+            type: 'POST',
+            data: formData,
             dataType: 'json',
             success: function(response) {
-                if (response.status === 'error') {
-                    $('#div_loginAlert').html('<div class="alert alert-danger" role="alert">' + response.message + '</div>');
+                if (response.status === 'success') {
+                    $('#div_loginAlert').html('<div class="alert alert-success">' + response.message + '</div>');
+                    $('#login_form').hide();
+                    $('#verify_form').show();
+                    $('#verify_form').data('user_id', response.user_id);
+                    $('#verify_form').data('stay_logged_in', response.stay_logged_in);
                 } else {
-                    $('#div_loginAlert').html('<div class="alert alert-success" role="alert">' + response.message + '</div>');
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1000);
+                    $('#div_loginAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
+            }
+        });
+    });
+
+    $('#verify_form').on('submit', function(event) {
+        event.preventDefault();
+
+        var formData = {
+            user_id: $('#verify_form').data('user_id'),
+            verification_code: $('#verification_code').val(),
+            stay_logged_in: $('#verify_form').data('stay_logged_in')
+        };
+
+        $.ajax({
+            url: '../backend/verify_code.php',
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    $('#div_verifyAlert').html('<div class="alert alert-success">' + response.message + '</div>');
+                    // Átirányítás a profil oldalra vagy más oldalra
+                    window.location.href = '../pages/index.html';
+                } else {
+                    $('#div_verifyAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
             }
         });
     });

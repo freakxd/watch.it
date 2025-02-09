@@ -26,3 +26,12 @@
     background-color: #343a40;
     color: white;
 }
+
+.movie-poster:hover {
+    cursor: pointer;
+}
+
+p {
+    color: white;
+    font-size: 0.9em;
+}

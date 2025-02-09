@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     const apiKey = '5b10ee05a53140a03e252ca409834183';
-    const apiUrl = `https://api.themoviedb.org/3/tv/popular?api_key=${apiKey}&language=hu-HU`;
+    const apiUrl = `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&language=hu-HU&sort_by=popularity.desc`;
     const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
     const categoryUrl = `https://api.themoviedb.org/3/genre/tv/list?api_key=${apiKey}&language=hu-HU`;
 
     const tvContainer = document.getElementById('tv-container');
     const categoryList = document.getElementById('category-list');
+    const categoryColumn = document.querySelector('.col-md-3');
+    const searchBar = document.getElementById('search-bar');
 
     // Kategóriák magyar nevei
     const categoryNames = {
@@ -55,8 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 tvContainer.innerHTML = ''; // Töröljük a korábbi sorozatokat
                 if (data.results) {
                     data.results.forEach(tv => {
-                        // Kiszűrjük a kínai karaktereket tartalmazó címeket és azokat, amelyeknek nincs leírásuk
-                        if (!/[\u4e00-\u9fa5]/.test(tv.name) && tv.overview) {
+                        if (!/[^\u0000-\u007F]+/.test(tv.name)) { // Kizárjuk azokat a sorozatokat, amelyek címében kínai vagy japán karakterek találhatók, illetve amelyeknek nincs leírásuk
                             const tvElement = document.createElement('div');
                             tvElement.className = 'col-md-4 tv';
                             tvElement.innerHTML = `
@@ -64,6 +65,9 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <h3 class="tv-title">${tv.name}</h3>
                                 <p class="tv-overview">${tv.overview}</p>
                             `;
+                            tvElement.addEventListener('click', () => {
+                                window.location.href = `sorozatok.html?id=${tv.id}`;
+                            });
                             tvContainer.appendChild(tvElement);
                         }
                     });
@@ -74,27 +78,139 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => console.error('Error fetching tv:', error));
     }
 
-    // Alapértelmezett sorozatok betöltése
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            if (data.results) {
-                data.results.forEach(tv => {
-                    // Kiszűrjük a kínai karaktereket tartalmazó címeket és azokat, amelyeknek nincs leírásuk
-                    if (!/[\u4e00-\u9fa5]/.test(tv.name) && tv.overview) {
-                        const tvElement = document.createElement('div');
-                        tvElement.className = 'col-md-4 tv';
-                        tvElement.innerHTML = `
-                            <img src="${imageBaseUrl + tv.poster_path}" alt="${tv.name} poster" class="tv-poster">
-                            <h3 class="tv-title">${tv.name}</h3>
-                            <p class="tv-overview">${tv.overview}</p>
-                        `;
-                        tvContainer.appendChild(tvElement);
+    // Egy adott sorozat betöltése
+    function loadTvById(tvId) {
+        const tvApiUrl = `https://api.themoviedb.org/3/tv/${tvId}?api_key=${apiKey}&language=hu-HU`;
+        fetch(tvApiUrl)
+            .then(response => response.json())
+            .then(tv => {
+                if (!/[^\u0000-\u007F]+/.test(tv.name)) { // Kizárjuk azokat a sorozatokat, amelyek címében kínai vagy japán karakterek találhatók, illetve amelyeknek nincs leírásuk
+                    tvContainer.innerHTML = ''; // Töröljük a korábbi sorozatokat
+                    const tvElement = document.createElement('div');
+                    tvElement.className = 'col-md-4 tv';
+                    tvElement.innerHTML = `
+                        <img src="${imageBaseUrl + tv.poster_path}" alt="${tv.name} poster" class="tv-poster">
+                        <h3 class="tv-title">${tv.name}</h3>
+                        <p class="tv-overview">${tv.overview}</p>
+                        <p><strong>Eredeti cím:</strong> ${tv.original_name}</p>
+                        <p><strong>Első adás dátuma:</strong> ${tv.first_air_date}</p>
+                        <p><strong>Értékelés:</strong> ${tv.vote_average} (${tv.vote_count} szavazat)</p>
+                        <p><strong>Nyelv:</strong> ${tv.original_language}</p>
+                        <p><strong>Státusz:</strong> ${tv.status}</p>
+                        <p><strong>Tagline:</strong> ${tv.tagline}</p>
+                        <p><strong>Gyártó cégek:</strong> ${tv.production_companies.map(company => company.name).join(', ')}</p>
+                        <p><strong>Gyártó országok:</strong> ${tv.production_countries.map(country => country.name).join(', ')}</p>
+                        <p><strong>Epizódok száma:</strong> ${tv.number_of_episodes}</p>
+                        <p><strong>Évadok száma:</strong> ${tv.number_of_seasons}</p>
+                        <p><strong>Weboldal:</strong> <a href="${tv.homepage}" target="_blank">${tv.homepage}</a></p>
+                    `;
+                    tvContainer.appendChild(tvElement);
+                } else {
+                    console.error('No detailed information found for tv:', tvId);
+                }
+            })
+            .catch(error => console.error('Error fetching tv:', error));
+    }
+
+    // Sorozatok keresése cím alapján
+    function searchTvByTitle(title) {
+        const searchApiUrl = `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${title}&language=hu-HU`;
+        fetch(searchApiUrl)
+            .then(response => response.json())
+            .then(data => {
+                tvContainer.innerHTML = ''; // Töröljük a korábbi sorozatokat
+                if (data.results) {
+                    data.results.forEach(tv => {
+                        if (!/[^\u0000-\u007F]+/.test(tv.name)) { // Kizárjuk azokat a sorozatokat, amelyek címében kínai vagy japán karakterek találhatók, illetve amelyeknek nincs leírásuk
+                            const tvElement = document.createElement('div');
+                            tvElement.className = 'col-md-4 tv';
+                            tvElement.innerHTML = `
+                                <img src="${imageBaseUrl + tv.poster_path}" alt="${tv.name} poster" class="tv-poster">
+                                <h3 class="tv-title">${tv.name}</h3>
+                                <p class="tv-overview">${tv.overview}</p>
+                            `;
+                            tvElement.addEventListener('click', () => {
+                                window.location.href = `sorozatok.html?id=${tv.id}`;
+                            });
+                            tvContainer.appendChild(tvElement);
+                        }
+                    });
+                } else {
+                    console.error('No tv found in the response:', data);
+                }
+            })
+            .catch(error => console.error('Error fetching tv:', error));
+    }
+
+    // Keresősáv eseménykezelője
+    searchBar.addEventListener('input', function() {
+        const query = searchBar.value.trim();
+        if (query) {
+            searchTvByTitle(query);
+        } else {
+            // Alapértelmezett sorozatok betöltése, ha a keresősáv üres
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    tvContainer.innerHTML = ''; // Töröljük a korábbi sorozatokat
+                    if (data.results) {
+                        data.results.forEach(tv => {
+                            if (!/[^\u0000-\u007F]+/.test(tv.name)) { // Kizárjuk azokat a sorozatokat, amelyek címében kínai vagy japán karakterek találhatók, illetve amelyeknek nincs leírásuk
+                                const tvElement = document.createElement('div');
+                                tvElement.className = 'col-md-4 tv';
+                                tvElement.innerHTML = `
+                                    <img src="${imageBaseUrl + tv.poster_path}" alt="${tv.name} poster" class="tv-poster">
+                                    <h3 class="tv-title">${tv.name}</h3>
+                                    <p class="tv-overview">${tv.overview}</p>
+                                `;
+                                tvElement.addEventListener('click', () => {
+                                    window.location.href = `sorozatok.html?id=${tv.id}`;
+                                });
+                                tvContainer.appendChild(tvElement);
+                            }
+                        });
+                    } else {
+                        console.error('No tv found in the response:', data);
                     }
-                });
-            } else {
-                console.error('No tv found in the response:', data);
-            }
-        })
-        .catch(error => console.error('Error fetching tv:', error));
+                })
+                .catch(error => console.error('Error fetching tv:', error));
+        }
+    });
+
+    // URL paraméterek ellenőrzése
+    const urlParams = new URLSearchParams(window.location.search);
+    const tvId = urlParams.get('id');
+
+    if (tvId) {
+        // Ha van 'id' paraméter az URL-ben, akkor az adott sorozatot töltjük be
+        loadTvById(tvId);
+        // Elrejtjük a kategóriák oszlopot
+        categoryColumn.style.display = 'none';
+    } else {
+        // Alapértelmezett sorozatok betöltése
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                if (data.results) {
+                    data.results.forEach(tv => {
+                        if (!/[^\u0000-\u007F]+/.test(tv.name)) { // Kizárjuk azokat a sorozatokat, amelyek címében kínai vagy japán karakterek találhatók, illetve amelyeknek nincs leírásuk
+                            const tvElement = document.createElement('div');
+                            tvElement.className = 'col-md-4 tv';
+                            tvElement.innerHTML = `
+                                <img src="${imageBaseUrl + tv.poster_path}" alt="${tv.name} poster" class="tv-poster">
+                                <h3 class="tv-title">${tv.name}</h3>
+                                <p class="tv-overview">${tv.overview}</p>
+                            `;
+                            tvElement.addEventListener('click', () => {
+                                window.location.href = `sorozatok.html?id=${tv.id}`;
+                            });
+                            tvContainer.appendChild(tvElement);
+                        }
+                    });
+                } else {
+                    console.error('No tv found in the response:', data);
+                }
+            })
+            .catch(error => console.error('Error fetching tv:', error));
+    }
 });

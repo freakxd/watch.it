@@ -42,4 +42,15 @@ $(document).ready(function() {
             }
         });
     });
+
+    // Beállítások kezelése
+    document.getElementById('settings_profile').addEventListener('click', function() {
+        document.getElementById('profile_form').style.display = 'block';
+        document.getElementById('security_form').style.display = 'none';
+    });
+
+    document.getElementById('settings_security').addEventListener('click', function() {
+        document.getElementById('profile_form').style.display = 'none';
+        document.getElementById('security_form').style.display = 'block';
+    });
 });

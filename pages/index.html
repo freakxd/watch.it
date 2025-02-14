@@ -129,5 +129,69 @@
             </div>
         </div>
     </div>
+
+    <!-- beállítások modal -->
+    <div class="modal fade" id="modal_beallitasok" tabindex="-1" aria-labelledby="modal_beallitasokLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark bg-gradient text-light">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal_beallitasokLabel">Beállítások</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <ul class="list-group">
+                                <li class="list-group-item bg-dark bg-gradient text-light" id="settings_profile" style="cursor: pointer;">
+                                    Profil
+                                </li>
+                                <li class="list-group-item bg-dark bg-gradient text-light" id="settings_security" style="cursor: pointer;">
+                                    Biztonság
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-8">
+                            <form id="profile_form" class="was-validated" style="display: none;">
+                                <div class="mb-3 mt-3">
+                                    <label for="profile_username" class="form-label">Új felhasználónév</label>
+                                    <input type="text" class="form-control" id="profile_username" placeholder="👤" name="profile_username" required>
+                                    <div class="valid-feedback"></div>
+                                </div>
+                                <button type="submit" class="btn btn-success">Mentés</button>
+                            </form>
+                            <form id="security_form" class="was-validated" style="display: none;">
+                                <div class="mb-3 mt-3">
+                                    <label for="security_password_old" class="form-label">Régi jelszó</label>
+                                    <input type="password" class="form-control" id="security_password_old" placeholder="🔑" name="security_password_old" required>
+                                    <div class="valid-feedback"></div>
+                                </div>
+                                <div class="mb-3 mt-3">
+                                    <label for="security_password_new" class="form-label">Új jelszó</label>
+                                    <input type="password" class="form-control" id="security_password_new" placeholder="🔑" name="security_password_new" required>
+                                    <div class="valid-feedback"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="security_email_old" class="form-label">Régi e-mail cím</label>
+                                    <input type="email" class="form-control" id="security_email_old" placeholder="📧" name="security_email_old" required>
+                                    <div class="valid-feedback"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="security_email_new" class="form-label">Új e-mail cím</label>
+                                    <input type="email" class="form-control" id="security_email_new" placeholder="📧" name="security_email_new" required>
+                                    <div class="valid-feedback"></div>
+                                </div>
+                                <div class="mb-3" id="email_verification_code_div" style="display: none;">
+                                    <label for="email_verification_code" class="form-label">Megerősítő kód</label>
+                                    <input type="text" class="form-control" id="email_verification_code" placeholder="🔢" name="email_verification_code" required>
+                                    <div class="valid-feedback"></div>
+                                </div>
+                                <button type="submit" class="btn btn-success">Mentés</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

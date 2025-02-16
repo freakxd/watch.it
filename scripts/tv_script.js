@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     tvContainer.innerHTML = ''; // Töröljük a korábbi sorozatokat
                     if (data.results) {
                         data.results.forEach(tv => {
-                            if (!/[^\u0000-\u007F]+/.test(tv.name)) { // Kizárjuk azokat a sorozatokat, amelyek címében kínai vagy japán karakterek találhatók, illetve amelyeknek nincs leírásuk
+                            if (!/[^\u0000-\u007F]+/.test(tv.name)) { // Kizárjuk azokat a sorozatokat, amelyek címében kínai vagy japán karakterek találhatók
                                 const tvElement = document.createElement('div');
                                 tvElement.className = 'col-md-4 tv';
                                 tvElement.innerHTML = `

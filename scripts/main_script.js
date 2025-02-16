@@ -1,13 +1,12 @@
-window.addEventListener('load', function () {
+window.addEventListener('load', function () { //töltőképernyő ne töröld
     setTimeout(function () {
         var loadingScreen = document.getElementById('loading-screen');
         loadingScreen.classList.add('fade-out');
         setTimeout(function () {
             loadingScreen.style.display = 'none';
-        }, 1000); // Match the duration of the fade-out animation
+        }, 1000);
     }, 750);
 });
-
 
 $(document).ready(function () {
     $('#profilePictureInput').on('click').trigger('click');
@@ -71,6 +70,11 @@ $(document).ready(function () {
                     response = JSON.parse(response);
                     if (response.status === 'success') {
                         $('#div_profileAlert').html('<div class="alert alert-success">' + response.message + '</div>');
+                        if (response.redirect) {
+                            setTimeout(function() {
+                                window.location.href = response.redirect; // Átirányítás a megadott URL-re 3 másodperc után
+                            }, 3000);
+                        }
                     } else {
                         $('#div_profileAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
@@ -96,7 +100,7 @@ $(document).ready(function () {
             $.ajax({
                 url: '../backend/security_verification_code.php',
                 type: 'POST',
-                data: { code: verificationCode },
+                data: { oldPassword: oldPassword, code: verificationCode },
                 success: function (response) {
                     try {
                         response = JSON.parse(response);
@@ -112,7 +116,7 @@ $(document).ready(function () {
                                     try {
                                         response = JSON.parse(response);
                                         if (response.status === 'success') {
-                                            $('#div_passwordAlert').html('<div class="alert alert-success">A jelszó sikeresen megváltozott.</div>');
+                                            $('#div_passwordAlert').html('<div class="alert alert-success">' + response.message + '</div>');
                                         } else {
                                             $('#div_passwordAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                                         }
@@ -141,7 +145,7 @@ $(document).ready(function () {
             $.ajax({
                 url: '../backend/security_verification_code.php',
                 type: 'POST',
-                data: { email: $('#security_email_old').val() },
+                data: { oldPassword: oldPassword },
                 success: function (response) {
                     try {
                         response = JSON.parse(response);
@@ -174,7 +178,7 @@ $(document).ready(function () {
             $.ajax({
                 url: '../backend/security_verification_code.php',
                 type: 'POST',
-                data: { code: verificationCode },
+                data: { oldEmail: oldEmail, new_email: newEmail, code: verificationCode },
                 success: function (response) {
                     try {
                         response = JSON.parse(response);
@@ -219,7 +223,7 @@ $(document).ready(function () {
             $.ajax({
                 url: '../backend/security_verification_code.php',
                 type: 'POST',
-                data: { email: newEmail },
+                data: { oldEmail: oldEmail, new_email: newEmail },
                 success: function (response) {
                     try {
                         response = JSON.parse(response);

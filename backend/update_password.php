@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $sql = "SELECT password FROM account WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $userId);
+    $stmt->bind_param("s", $userId);
     $stmt->execute();
     $stmt->store_result();
     $stmt->bind_result($hashedPassword);
@@ -32,18 +32,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("si", $newHashedPassword, $userId);
             if ($stmt->execute()) {
                 $response['status'] = 'success';
-                $response['message'] = 'A jelszó sikeresen megváltozott';
+                $response['message'] = 'A jelszó sikeresen megváltozott.';
             } else {
                 $response['status'] = 'error';
-                $response['message'] = 'Nem sikerült frissíteni a jelszót';
+                $response['message'] = 'Nem sikerült frissíteni a jelszót.';
             }
         } else {
             $response['status'] = 'error';
-            $response['message'] = 'Helytelen régi jelszó';
+            $response['message'] = 'Helytelen régi jelszó.';
         }
     } else {
         $response['status'] = 'error';
-        $response['message'] = 'Felhasználó nem található';
+        $response['message'] = 'Felhasználó nem található.';
     }
 
     $stmt->close();

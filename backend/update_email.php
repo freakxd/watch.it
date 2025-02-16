@@ -6,17 +6,35 @@ $response = array();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userId = $_SESSION['user_id'];
-    $oldEmail = $_POST['security_email_old'];
-    $newEmail = $_POST['security_email_new'];
+    $oldEmail = $_POST['oldEmail'];
+    $newEmail = $_POST['newEmail'];
 
-    $sql = "UPDATE account SET email = ? WHERE email = ?";
+    // Ellenőrizzük, hogy a megadott régi e-mail cím megegyezik-e az adatbázisban tárolt e-mail címmel
+    $sql = "SELECT email FROM account WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $newEmail, $oldEmail);
-    if ($stmt->execute()) {
-        $response['status'] = 'success';
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($currentEmail);
+    $stmt->fetch();
+
+    if ($stmt->num_rows > 0 && $currentEmail === $oldEmail) {
+        $stmt->close();
+
+        // Frissítjük az e-mail címet
+        $sql = "UPDATE account SET email = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $newEmail, $userId);
+        if ($stmt->execute()) {
+            $response['status'] = 'success';
+            $response['message'] = 'Az e-mail cím sikeresen megváltozott.';
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Nem sikerült frissíteni az e-mail címet.';
+        }
     } else {
         $response['status'] = 'error';
-        $response['message'] = 'Nem sikerült frissíteni az e-mail címet';
+        $response['message'] = 'A megadott régi e-mail cím nem egyezik a jelenlegi e-mail címmel.';
     }
 
     $stmt->close();

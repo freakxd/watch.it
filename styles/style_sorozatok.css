@@ -25,6 +25,7 @@
 .category-item:hover {
     background-color: #343a40;
     color: white;
+    
 }
 
 .tv-poster:hover {
@@ -40,6 +41,7 @@ p{
     /* lista forma */
     text-align: center;
     font-weight: bold;
+
 }
 
 .form-control{ 

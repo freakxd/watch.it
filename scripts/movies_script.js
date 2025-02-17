@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Kategóriák magyar nevei
     const categoryNames = {
-        "Action": "Akció",
+        "Action": "Akció ",
         "Adventure": "Kaland",
         "Animation": "Animáció",
         "Comedy": "Vígjáték",

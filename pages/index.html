@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../styles/style_index.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../scripts/main_script.js"></script>
+    <script src="../scripts/main_script.js" defer></script>
     <script src="../scripts/ajax.js"></script>
     <link rel="stylesheet" href="../styles/style_global.css">
 </head>
@@ -34,6 +34,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="sorozatok.html">Sorozatok</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Nézet</a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item" id="fekete-feher">
+                                    Fekete/Fehér
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto" id="userMenu">
                     <li class="nav-item dropdown">
@@ -55,6 +65,11 @@
             </div>
         </div>
     </nav>
+
+    <div class="fooldallogo">
+        <img src="C:\xampp\htdocs\watch.it\images\cooltext476252660007079.png" alt="watchitneonlogo"> <!-- PLACEHOLDER PLACEHOLDER PLACEHOLDER logo ide majd másjön -->
+    </div>
+    
 
     <!-- bejelentkezés modal -->
     <div class="modal fade" id="modal_bejelentkezes" tabindex="-1" aria-labelledby="modal_bejelentkezesLabel" aria-hidden="true">

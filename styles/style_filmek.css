@@ -39,7 +39,7 @@ p {
 .list-group{ 
     /* lista forma */
     text-align: center;
-    margin-right: 100px;
+    font-weight: bold;
 }
 
 .form-control{ 

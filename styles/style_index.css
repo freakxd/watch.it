@@ -29,20 +29,13 @@
     animation: fadeOut 1s forwards;
 }
 
-body {
-    
-    background-image: url(../images/logo.png);
-    background-color: black;
-    background-size: 40%;
-    background-position: center;
-    background-repeat: no-repeat;
-    margin: 0;
-    height: 100vh;
-    width: 100vw;
-    overflow: auto;
-    backdrop-filter: blur(5px);
-}
-
 .dropdown-item:hover {
     background-color: transparent !important;
+}
+
+.fooldallogo{
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 400px;
 }

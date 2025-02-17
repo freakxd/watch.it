@@ -36,6 +36,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="sorozatok.html">Sorozatok</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Nézet</a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item" id="fekete-feher">
+                                    Fekete/Fehér
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto" id="userMenu">
                     <li class="nav-item dropdown">
@@ -131,24 +141,27 @@
             </div>
         </div>
     </div>
-
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-3">
                 <div class="mb-3">
-                    <input type="text" id="search-bar" class="form-control" placeholder="Keresés egy sorozat címére...">
+                    <a> Sorozatok </a>
+                    <input type="text" id="search-bar" class="form-control" placeholder="Keresés">
                 </div>
                 <h5 style="color: white;">Kategóriák</h5>
-                <ul id="category-list" class="list-group">
-                    <!-- Kategóriák dinamikusan betöltve -->
+                <ul id="category-list" class="list-group list-group-horizontal">
+                    
                 </ul>
+            </div>
+            <div class="kep-film">
+                <a style="font-size: 20px;"> kategoria neve </a>
             </div>
             <div class="col-md-9">
                 <div id="tv-container" class="row">
-                    <!-- Sorozatok dinamikusan betöltve -->
                 </div>
             </div>
         </div>
     </div>
+
 </body>
 </html>

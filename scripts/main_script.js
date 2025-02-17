@@ -43,6 +43,27 @@ $(document).ready(function () {
         });
     });
 
+    // Fekete/Fehér mód kezelése
+    let darkmode = localStorage.getItem('darkmode')
+    const feketeFeher = document.getElementById("fekete-feher")
+
+    const enableDarkmode = () => {
+        document.body.classList.add('darkmode')
+        localStorage.setItem('darkmode', 'active')
+    }
+
+    const disableDarkmode = () => {
+        document.body.classList.remove('darkmode')
+        localStorage.setItem('darkmode', 'null')
+    }
+
+    if(darkmode === "active") enableDarkmode()
+
+    feketeFeher.addEventListener("click", () => {
+        darkmode = localStorage.getItem('darkmode')
+        darkmode !== "active" ? enableDarkmode() : disableDarkmode()
+    })
+
     // Beállítások kezelése
     document.getElementById('settings_profile').addEventListener('click', function () {
         document.getElementById('profile_form').style.display = 'block';

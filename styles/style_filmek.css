@@ -35,3 +35,27 @@ p {
     color: white;
     font-size: 0.9em;
 }
+
+.list-group{ 
+    /* lista forma */
+    text-align: center;
+    margin-right: 100px;
+}
+
+.form-control{ 
+    /* Keresés */
+    text-align: center;
+    margin-left: 480px;
+}
+
+.col-md-9{ 
+    height: auto;
+    width: 100%;
+    background-color: rgb(37, 37, 37);
+    color: white;
+    font-weight: bold;
+    border: 7px solid #f1f1f1;
+    border-radius: 50px;
+    padding: 20px;
+    margin-top: 0; 
+}

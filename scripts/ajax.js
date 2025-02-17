@@ -88,6 +88,7 @@ $(document).ready(function() {
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Fiók</a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="../members/${response.username}.${response.user_id}.html">${response.username}</a></li>
+                            <li><a class="dropdown-item" role="button" data-bs-toggle="modal" data-bs-target="#modal_beallitasok">Beállítások</a></li>
                             <li><a class="dropdown-item" href="../backend/logout.php">Kijelentkezés</a></li>
                         </ul>
                     </li>

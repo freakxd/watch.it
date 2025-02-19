@@ -32,7 +32,7 @@
 .dropdown-item:hover {
     background-color: transparent !important;
 }
-
+/* Főoldallogó, animáció */
 #fooldallogo{
     max-width: fit-content;
     margin-left: auto;
@@ -78,5 +78,91 @@
     }
     to{
         --szog: 360deg;
+    }
+}
+body{
+    background-blend-mode: multiply;
+}
+/* Mottó animáció */
+.container{
+    display: inline-block;
+}
+.text {
+    position: absolute;
+    top: 20%;
+    color: white;
+    padding: 2rem;
+}
+.text p {
+    width: 55vm;
+    margin: 1rem 0;
+    font-weight: 300;
+}
+.text .motto{
+    font: lighter 3rem "poppins", sans-serif;
+}
+.text .motto ol{
+    list-style: none;
+    --magassag: 3.8rem;
+    height: var(--magassag);
+    line-height: var(--magassag);
+    overflow: hidden;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+}
+.text .motto ol li span{
+    font-weight: 600;
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(20deg, cyan, magenta);
+    -webkit-background-clip: text;
+    
+    white-space: nowrap;
+    border-right: .4rem solid white;
+    display: inline-block;
+    
+    animation: cursor .8s step-end infinite,
+                typing 3s steps(10) infinite alternate;
+}
+@keyframes cursor {
+    50%
+    {
+        border-color: transparent;
+    }
+    
+}
+@keyframes typing {
+    0%,10%{
+        width: 0%;
+    }
+    70%,100%{
+        width: 101%;
+    }
+    
+}
+
+.text .motto ol li{
+    animation: slide calc(3*3*4s) steps(3) infinite; 
+}
+@keyframes slide {
+    100%{
+        transform: translateY(-300%);
+    }
+}
+.text .motto ol li{
+    animation: slideup 35s infinite; 
+}
+@keyframes slideup {
+    0%,17%{
+        transform: translateY(0%);
+    }
+    30%,50%{
+        transform: translateY(-101%);
+    }
+    55%,70%{
+        transform: translateY(-201%);
+    }
+    75%,100%{
+        transform: translateY(-301%);
     }
 }

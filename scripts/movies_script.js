@@ -8,6 +8,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const categoryList = document.getElementById('category-list');
     const categoryColumn = document.querySelector('.col-md-3');
     const searchBar = document.getElementById('search-bar');
+    const commentsContainer = document.getElementById('comments-container');
+    const commentForm = document.getElementById('comment-form');
+    const commentText = document.getElementById('comment-text');
+
+    // Ellenőrizzük, hogy a felhasználó be van-e jelentkezve
+    let status = 'not_logged_in';
+    fetch('../backend/check_login.php')
+        .then(response => response.json())
+        .then(data => {
+            status = data.status;
+            if (status == "not_logged_in") {
+                commentText.disabled = true;
+                commentText.placeholder = 'Jelentkezz be, hogy véleményt írhass!';
+            }
+        })
+        .catch(error => console.error('Error checking login status:', error));
+
 
     // Kategóriák magyar nevei
     const categoryNames = {
@@ -102,74 +119,41 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p class="movie-budget"><strong>Költségvetés:</strong> $${movie.budget.toLocaleString()}</p>
                 `;
                 moviesContainer.appendChild(movieElement);
+                loadComments(movieId);
             })
             .catch(error => console.error('Error fetching movie:', error));
     }
 
-    // Filmek keresése cím alapján
-    function searchMoviesByTitle(title) {
-        const searchApiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${title}&language=hu-HU`;
-        fetch(searchApiUrl)
+    // Kommentek betöltése
+    function loadComments(movieId) {
+        fetch(`../backend/get_comments.php?movie_id=${movieId}`)
             .then(response => response.json())
             .then(data => {
-                moviesContainer.innerHTML = ''; // Töröljük a korábbi filmeket
-                if (data.results) {
-                    data.results.forEach(movie => {
-                        if (movie.overview && movie.overview !== "") { // Kizárjuk azokat a filmeket, amelyeknek nincs leírásuk
-                            const movieElement = document.createElement('div');
-                            movieElement.className = 'col-md-4 movie';
-                            movieElement.innerHTML = `
-                                <img src="${imageBaseUrl + movie.poster_path}" alt="${movie.title} poster" class="movie-poster">
-                                <h3 class="movie-title">${movie.title}</h3>
-                                <p class="movie-overview">${movie.overview}</p>
-                            `;
-                            movieElement.addEventListener('click', () => {
-                                window.location.href = `filmek.html?id=${movie.id}`;
-                            });
-                            moviesContainer.appendChild(movieElement);
-                        }
+                commentsContainer.innerHTML = ''; // Töröljük a korábbi kommenteket
+                if (data.comments && data.comments.length > 0) {
+                    data.comments.forEach((comment, index) => {
+                        const commentElement = document.createElement('div');
+                        commentElement.className = 'comment';
+                        commentElement.id = `comment-${index + 1}`;
+                        commentElement.innerHTML = `
+                            <p><strong>${comment.username}</strong>: ${comment.comment}</p>
+                            <small>${comment.created_at}</small>
+                        `;
+                        commentsContainer.appendChild(commentElement);
                     });
+
+                    // Ha több mint 10 komment van, engedélyezzük a Scrollspy-t
+                    if (data.comments.length > 10) {
+                        const scrollSpy = new bootstrap.ScrollSpy(document.body, {
+                            target: '#comments-section'
+                        });
+                    }
                 } else {
-                    console.error('No movies found in the response:', data);
+                    commentsContainer.innerHTML = '<p>Ezen a filmen nincs még vélemény.</p>';
                 }
             })
-            .catch(error => console.error('Error fetching movies:', error));
+            .catch(error => console.error('Error fetching comments:', error));
     }
-
-    // Keresősáv eseménykezelője
-    searchBar.addEventListener('input', function() {
-        const query = searchBar.value.trim();
-        if (query) {
-            searchMoviesByTitle(query);
-        } else {
-            // Alapértelmezett filmek betöltése, ha a keresősáv üres
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    moviesContainer.innerHTML = ''; // Töröljük a korábbi filmeket
-                    if (data.results) {
-                        data.results.forEach(movie => {
-                            if (movie.overview && movie.overview !== "") { // Kizárjuk azokat a filmeket, amelyeknek nincs leírásuk
-                                const movieElement = document.createElement('div');
-                                movieElement.className = 'col-md-4 movie';
-                                movieElement.innerHTML = `
-                                    <img src="${imageBaseUrl + movie.poster_path}" alt="${movie.title} poster" class="movie-poster">
-                                    <h3 class="movie-title">${movie.title}</h3>
-                                    <p class="movie-overview">${movie.overview}</p>
-                                `;
-                                movieElement.addEventListener('click', () => {
-                                    window.location.href = `filmek.html?id=${movie.id}`;
-                                });
-                                moviesContainer.appendChild(movieElement);
-                            }
-                        });
-                    } else {
-                        console.error('No movies found in the response:', data);
-                    }
-                })
-                .catch(error => console.error('Error fetching movies:', error));
-        }
-    });
 
     // URL paraméterek ellenőrzése
     const urlParams = new URLSearchParams(window.location.search);
@@ -180,6 +164,35 @@ document.addEventListener('DOMContentLoaded', function() {
         loadMovieById(movieId);
         // Elrejtjük a kategóriák oszlopot
         categoryColumn.style.display = 'none';
+
+        // Komment mentése
+        if (commentForm) {
+            commentForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const comment = commentText.value.trim();
+                const movieId = new URLSearchParams(window.location.search).get('id');
+
+                if (comment) {
+                    fetch('../backend/save_comment.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ movie_id: movieId, comment: comment })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            commentText.value = '';
+                            loadComments(movieId);
+                        } else {
+                            console.error(data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error saving comment:', error));
+                }
+            });
+        }
     } else {
         // Alapértelmezett filmek betöltése
         fetch(apiUrl)

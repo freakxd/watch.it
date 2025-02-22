@@ -59,10 +59,12 @@ $(document).ready(function () {
 
     if(darkmode === "active") enableDarkmode()
 
-    feketeFeher.addEventListener("click", () => {
-        darkmode = localStorage.getItem('darkmode')
-        darkmode !== "active" ? enableDarkmode() : disableDarkmode()
-    })
+    if (feketeFeher) {
+        feketeFeher.addEventListener("click", () => {
+            darkmode = localStorage.getItem('darkmode')
+            darkmode !== "active" ? enableDarkmode() : disableDarkmode()
+        })
+    }
 
     // Beállítások kezelése
     document.getElementById('settings_profile').addEventListener('click', function () {

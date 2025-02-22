@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +17,8 @@
     <link rel="stylesheet" href="../styles/style_filmek.css">
     <link rel="stylesheet" href="../styles/style_global.css">
 </head>
-<body>
+
+<body data-bs-spy="scroll" data-bs-target="#comments-section" data-bs-offset="0" tabindex="0">
     <div id="loading-screen">
         <img src="../images/logo.png" alt="Logo">
         <div class="spinner-border text-light" role="status">
@@ -24,7 +26,8 @@
     </div>
     <nav class="navbar navbar-expand-sm bg-dark bg-gradient navbar-dark text-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html"><img src="../images/homebutton2.png" alt="watch.it" style="width: 50px; height: 50px; border-radius: 8px;"></a>
+            <a class="navbar-brand" href="index.html"><img src="../images/homebutton2.png" alt="watch.it"
+                    style="width: 50px; height: 50px; border-radius: 8px;"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -52,12 +55,14 @@
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Fiók</a>
                         <ul class="dropdown-menu dropdown-menu-end" id="accountMenu">
                             <li>
-                                <a class="dropdown-item" href="#" role="button" data-bs-toggle="modal" data-bs-target="#modal_bejelentkezes">
+                                <a class="dropdown-item" href="#" role="button" data-bs-toggle="modal"
+                                    data-bs-target="#modal_bejelentkezes">
                                     Bejelentkezés
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#" role="button" data-bs-toggle="modal" data-bs-target="#modal_regisztracio">
+                                <a class="dropdown-item" href="#" role="button" data-bs-toggle="modal"
+                                    data-bs-target="#modal_regisztracio">
                                     Regisztráció
                                 </a>
                             </li>
@@ -68,8 +73,9 @@
         </div>
     </nav>
 
-     <!-- bejelentkezés modal -->
-     <div class="modal fade" id="modal_bejelentkezes" tabindex="-1" aria-labelledby="modal_bejelentkezesLabel" aria-hidden="true">
+    <!-- bejelentkezés modal -->
+    <div class="modal fade" id="modal_bejelentkezes" tabindex="-1" aria-labelledby="modal_bejelentkezesLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content bg-dark bg-gradient text-light">
                 <div class="modal-header">
@@ -80,12 +86,14 @@
                     <form id="login_form" method="POST" class="was-validated">
                         <div class="mb-3 mt-3">
                             <label for="login_username" class="form-label">Felhasználónév</label>
-                            <input type="text" class="form-control" id="login_username" placeholder="👤" name="login_username" required>
+                            <input type="text" class="form-control" id="login_username" placeholder="👤"
+                                name="login_username" required>
                             <div class="valid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="login_password" class="form-label">Jelszó</label>
-                            <input type="password" class="form-control" id="login_password" placeholder="🔑" name="login_password" required>
+                            <input type="password" class="form-control" id="login_password" placeholder="🔑"
+                                name="login_password" required>
                             <div class="valid-feedback"></div>
                         </div>
                         <div class="mb-3 form-check">
@@ -98,7 +106,8 @@
                     <form id="verify_form" method="POST" class="was-validated" style="display: none;">
                         <div class="mb-3">
                             <label for="verification_code" class="form-label">Bejelentkezési kód</label>
-                            <input type="text" class="form-control" id="verification_code" placeholder="🔢" name="verification_code" required>
+                            <input type="text" class="form-control" id="verification_code" placeholder="🔢"
+                                name="verification_code" required>
                             <div class="valid-feedback"></div>
                         </div>
                         <div id="div_verifyAlert"></div>
@@ -110,7 +119,8 @@
     </div>
 
     <!-- regisztráció modal -->
-    <div class="modal fade" id="modal_regisztracio" tabindex="-1" aria-labelledby="modal_regisztracioLabel" aria-hidden="true">
+    <div class="modal fade" id="modal_regisztracio" tabindex="-1" aria-labelledby="modal_regisztracioLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content bg-dark bg-gradient text-light">
                 <div class="modal-header">
@@ -121,17 +131,20 @@
                     <form id="register_form" method="POST" class="was-validated">
                         <div class="mb-3 mt-3">
                             <label for="register_username" class="form-label">Felhasználónév</label>
-                            <input type="text" class="form-control" id="register_username" placeholder="👤" name="register_username" required>
+                            <input type="text" class="form-control" id="register_username" placeholder="👤"
+                                name="register_username" required>
                             <div class="valid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="register_password" class="form-label">Jelszó</label>
-                            <input type="password" class="form-control" id="register_password" placeholder="🔑" name="register_password" required>
+                            <input type="password" class="form-control" id="register_password" placeholder="🔑"
+                                name="register_password" required>
                             <div class="valid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="register_email" class="form-label">E-mail cím</label>
-                            <input type="email" class="form-control" id="register_email" placeholder="📧" name="register_email" required>
+                            <input type="email" class="form-control" id="register_email" placeholder="📧"
+                                name="register_email" required>
                             <div class="valid-feedback"></div>
                         </div>
                         <div id="div_registerAlert"></div>
@@ -142,6 +155,80 @@
         </div>
     </div>
 
+    <!-- beállítások modal -->
+    <div class="modal fade" id="modal_beallitasok" tabindex="-1" aria-labelledby="modal_beallitasokLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark bg-gradient text-light">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal_beallitasokLabel">Beállítások</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <ul class="list-group">
+                                <li class="list-group-item bg-dark bg-gradient text-light" id="settings_profile" style="cursor: pointer;">
+                                    Profil
+                                </li>
+                                <li class="list-group-item bg-dark bg-gradient text-light" id="settings_security" style="cursor: pointer;">
+                                    Biztonság
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-8">
+                            <form id="profile_form" class="was-validated" style="display: none;">
+                                <div class="mb-3 mt-3">
+                                    <label for="profile_username" class="form-label">Új felhasználónév</label>
+                                    <input type="text" class="form-control" id="profile_username" placeholder="👤" name="profile_username" required>
+                                    <div class="valid-feedback"></div>
+                                </div>
+                                <button type="submit" class="btn btn-success">Mentés</button>
+                                <div id="div_profileAlert"></div>
+                            </form>
+                            <form id="security_password_form" class="was-validated" style="display: none;">
+                                <div class="mb-3 mt-3">
+                                    <label for="security_password_old" class="form-label">Régi jelszó</label>
+                                    <input type="password" class="form-control" id="security_password_old" placeholder="🔑" name="security_password_old" required>
+                                    <div class="valid-feedback"></div>
+                                </div>
+                                <div class="mb-3 mt-3">
+                                    <label for="security_password_new" class="form-label">Új jelszó</label>
+                                    <input type="password" class="form-control" id="security_password_new" placeholder="🔑" name="security_password_new" required>
+                                    <div class="valid-feedback"></div>
+                                </div>
+                                <div class="mb-3" id="password_verification_code_div" style="display: none;">
+                                    <label for="password_verification_code" class="form-label">Megerősítő kód</label>
+                                    <input type="text" class="form-control" id="password_verification_code" placeholder="🔢" name="password_verification_code">
+                                    <div class="valid-feedback"></div>
+                                </div>
+                                <button type="submit" class="btn btn-success">Mentés</button>
+                                <div id="div_passwordAlert"></div>
+                            </form>
+                            <form id="security_email_form" class="was-validated" style="display: none;">
+                                <div class="mb-3">
+                                    <label for="security_email_old" class="form-label">Régi e-mail cím</label>
+                                    <input type="email" class="form-control" id="security_email_old" placeholder="📧" name="security_email_old" required>
+                                    <div class="valid-feedback"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="security_email_new" class="form-label">Új e-mail cím</label>
+                                    <input type="email" class="form-control" id="security_email_new" placeholder="📧" name="security_email_new" required>
+                                    <div class="valid-feedback"></div>
+                                </div>
+                                <div class="mb-3" id="email_verification_code_div" style="display: none;">
+                                    <label for="email_verification_code" class="form-label">Megerősítő kód</label>
+                                    <input type="text" class="form-control" id="email_verification_code" placeholder="🔢" name="email_verification_code">
+                                    <div class="valid-feedback"></div>
+                                </div>
+                                <button type="submit" class="btn btn-success">Mentés</button>
+                                <div id="div_emailAlert"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container mt-5">
         <div class="row">
@@ -152,12 +239,10 @@
                 </div>
                 <h5 style="color: white;">Kategóriák</h5>
                 <ul id="category-list" class="list-group list-group-horizontal">
-                    
+
                 </ul>
             </div>
-            <div class="kep-film">
-            </div>
-            <div class="categories2">
+            <!-- <div class="categories2">
                 <div class="category2">Akció</div>
                 <div class="category2">Kaland</div>
                 <div class="category2">Animáció</div>
@@ -177,12 +262,29 @@
                 <div class="category2">Thriller</div>
                 <div class="category2">Háborús</div>
                 <div class="category2">Western</div>
-            </div>
+            </div> -->
             <div class="col-md-9">
                 <div id="movies-container" class="row">
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="movie-details" class="row">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h2>Kommentek</h2>
+                    <div id="comments-section" class="scrollspy-example" style="height: 400px; overflow-y: scroll;">
+                        <div id="comments-container"></div>
+                    </div>
+                    <form id="comment-form">
+                        <textarea id="comment-text" rows="4" placeholder="Írja meg a véleményét..."></textarea>
+                        <button type="submit">Küldés</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>

@@ -1,5 +1,7 @@
 CREATE DATABASE watchit DEFAULT CHARACTER SET UTF8 COLLATE utf8_hungarian_ci;
 
+USE watchit;
+
 CREATE TABLE `account` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(30) NOT NULL,
@@ -11,4 +13,13 @@ CREATE TABLE `account` (
   PRIMARY KEY (`id`)
 )
 
+CREATE TABLE comments (
+  id INT(11) PRIMARY KEY AUTO_INCREMENT,
+  user_id INT(11) NOT NULL,
+  movie_id INT(11) NOT NULL,
+  series_id INT(11) NOT NULL,
+  comment TEXT NOT NULL, --itt talán kéne megadni max értéket
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  FOREIGN KEY comments(user_id) REFERENCES account(id)
+)
 --phpmail jelszo: ynzd bgae pokl ukuw

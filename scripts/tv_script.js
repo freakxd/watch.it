@@ -8,6 +8,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const categoryList = document.getElementById('category-list');
     const categoryColumn = document.querySelector('.col-md-3');
     const searchBar = document.getElementById('search-bar');
+    const commentsContainer = document.getElementById('comments-container');
+    const commentForm = document.getElementById('comment-form');
+    const commentText = document.getElementById('comment-text');
+
+    // Ellenőrizzük, hogy a felhasználó be van-e jelentkezve
+    let status = 'not_logged_in';
+    fetch('../backend/check_login.php')
+        .then(response => response.json())
+        .then(data => {
+            status = data.status;
+            if (status == "not_logged_in") {
+                commentText.disabled = true;
+                commentText.placeholder = 'Jelentkezz be, hogy véleményt írhass!';
+            }
+        })
+        .catch(error => console.error('Error checking login status:', error));
 
     // Kategóriák magyar nevei
     const categoryNames = {
@@ -105,11 +121,72 @@ document.addEventListener('DOMContentLoaded', function() {
                         <p><strong>Weboldal:</strong> <a href="${tv.homepage}" target="_blank">${tv.homepage}</a></p>
                     `;
                     tvContainer.appendChild(tvElement);
+                    loadComments(tvId);
                 } else {
                     console.error('No detailed information found for tv:', tvId);
                 }
             })
             .catch(error => console.error('Error fetching tv:', error));
+    }
+
+    // Kommentek betöltése
+    function loadComments(tvId) {
+        fetch(`../backend/get_comments.php?series_id=${tvId}`)
+            .then(response => response.json())
+            .then(data => {
+                commentsContainer.innerHTML = ''; // Töröljük a korábbi kommenteket
+                if (data.comments && data.comments.length > 0) {
+                    data.comments.forEach((comment, index) => {
+                        const commentElement = document.createElement('div');
+                        commentElement.className = 'comment';
+                        commentElement.id = `comment-${index + 1}`;
+                        commentElement.innerHTML = `
+                            <p><strong>${comment.username}</strong>: ${comment.comment}</p>
+                            <small>${comment.created_at}</small>
+                        `;
+                        commentsContainer.appendChild(commentElement);
+                    });
+
+                    // Ha több mint 10 komment van, engedélyezzük a Scrollspy-t
+                    if (data.comments.length > 10) {
+                        const scrollSpy = new bootstrap.ScrollSpy(document.body, {
+                            target: '#comments-section'
+                        });
+                    }
+                } else {
+                    commentsContainer.innerHTML = '<p>Nincs komment.</p>';
+                }
+            })
+            .catch(error => console.error('Error fetching comments:', error));
+    }
+
+    // Komment mentése
+    if (commentForm) {
+        commentForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const comment = commentText.value.trim();
+            const seriesId = new URLSearchParams(window.location.search).get('id');
+
+            if (comment) {
+                fetch('../backend/save_comment.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ series_id: seriesId, comment: comment })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        commentText.value = '';
+                        loadComments(seriesId);
+                    } else {
+                        console.error(data.message);
+                    }
+                })
+                .catch(error => console.error('Error saving comment:', error));
+            }
+        });
     }
 
     // Sorozatok keresése cím alapján

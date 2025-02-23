@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const filteredUsers = filterData(data.users, searchQuery);
             const paginatedUsers = paginate(filteredUsers, currentPage, itemsPerPage);
             html += '<table class="table table-dark table-striped">';
-            html += '<thead><tr><th>ID</th><th>Felhasználónév</th><th>Jelszó</th><th>Email</th><th>Rang</th><th>Létrehozva</th></tr></thead>';
+            html += '<thead><tr><th>ID</th><th>Felhasználónév</th><th>Jelszó</th><th>Email</th><th>Rang</th><th>Létrehozva</th><th></th></tr></thead>';
             html += '<tbody>';
             paginatedUsers.forEach(user => {
                 const roleOptions = `
@@ -49,6 +49,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td contenteditable="true" data-id="${user.id}" data-field="email">${user.email}</td>
                     <td>${roleOptions}</td>
                     <td>${user.created_at}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm delete-btn" data-id="${user.id}" data-type="user" style="display: flex;">🗑️</button>
+                        <div class="confirm-delete" style="display: none;">
+                            <button class="btn btn-sm btn-success confirm-yes" data-id="${user.id}" data-type="user">Igen</button>
+                            <button class="btn btn-sm btn-secondary confirm-no">Nem</button>
+                        </div>
+                        <span class="delete-feedback" style="display: none; margin-left: 10px;"></span>
+                    </td>
                 </tr>`;
             });
             html += '</tbody></table>';
@@ -59,10 +67,25 @@ document.addEventListener('DOMContentLoaded', function() {
             const filteredComments = filterData(data.comments, searchQuery);
             const paginatedComments = paginate(filteredComments, currentPage, itemsPerPage);
             html += '<table class="table table-dark table-striped">';
-            html += '<thead><tr><th>ID</th><th>Felhasználó ID</th><th>Film ID</th><th>Sorozat ID</th><th>Komment</th><th>Létrehozva</th></tr></thead>';
+            html += '<thead><tr><th>ID</th><th>Felhasználó ID</th><th>Film ID</th><th>Sorozat ID</th><th>Komment</th><th>Létrehozva</th><th></th></tr></thead>';
             html += '<tbody>';
             paginatedComments.forEach(comment => {
-                html += `<tr><td>${comment.id}</td><td>${comment.user_id}</td><td>${comment.movie_id}</td><td>${comment.series_id}</td><td>${comment.comment}</td><td>${comment.created_at}</td></tr>`;
+                html += `<tr>
+                    <td>${comment.id}</td>
+                    <td>${comment.user_id}</td>
+                    <td>${comment.movie_id}</td>
+                    <td>${comment.series_id}</td>
+                    <td>${comment.comment}</td>
+                    <td>${comment.created_at}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm delete-btn" data-id="${comment.id}" data-type="comment">🗑️</button>
+                        <div class="confirm-delete" style="display: none;">
+                            <button class="btn btn-sm btn-success confirm-yes" data-id="${comment.id}" data-type="comment">Igen</button>
+                            <button class="btn btn-sm btn-secondary confirm-no">Nem</button>
+                        </div>
+                        <span class="delete-feedback" style="display: none; margin-left: 10px;"></span>
+                    </td>
+                </tr>`;
             });
             html += '</tbody></table>';
             html += renderPagination(filteredComments.length, currentPage, itemsPerPage);
@@ -179,6 +202,62 @@ document.addEventListener('DOMContentLoaded', function() {
                 event.preventDefault();
                 currentPage = parseInt(this.textContent);
                 updateTable(contentType, data);
+            });
+        });
+
+        // Eseménykezelő a törléshez
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.dataset.id;
+                const type = this.dataset.type;
+                const confirmDeleteDiv = this.nextElementSibling;
+                confirmDeleteDiv.style.display = 'flex';
+            });
+        });
+
+        // Eseménykezelő az "Igen" gombhoz
+        document.querySelectorAll('.confirm-yes').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.dataset.id;
+                const type = this.dataset.type;
+                const confirmDeleteDiv = this.parentElement;
+                const feedbackSpan = confirmDeleteDiv.nextElementSibling;
+
+                fetch(`../backend/admin_torles.php`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: id, type: type })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        feedbackSpan.innerHTML = '✔️';
+                        feedbackSpan.style.display = 'inline-block';
+                        setTimeout(() => feedbackSpan.style.display = 'none', 5000);
+                        loadContent(contentType);
+                    } else {
+                        feedbackSpan.innerHTML = '❌';
+                        feedbackSpan.style.display = 'inline-block';
+                        setTimeout(() => feedbackSpan.style.display = 'none', 5000);
+                        console.error(data.message);
+                    }
+                })
+                .catch(error => {
+                    feedbackSpan.innerHTML = '❌';
+                    feedbackSpan.style.display = 'inline-block';
+                    setTimeout(() => feedbackSpan.style.display = 'none', 5000);
+                    console.error('Error deleting item:', error);
+                });
+            });
+        });
+
+        // Eseménykezelő a "Nem" gombhoz
+        document.querySelectorAll('.confirm-no').forEach(button => {
+            button.addEventListener('click', function() {
+                const confirmDeleteDiv = this.parentElement;
+                confirmDeleteDiv.style.display = 'none';
             });
         });
     }

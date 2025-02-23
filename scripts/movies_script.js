@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error checking login status:', error));
 
-
     // Kategóriák magyar nevei
     const categoryNames = {
         "Action": "Akció ",
@@ -55,8 +54,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data.genres) {
                 data.genres.forEach(genre => {
-                    const categoryItem = document.createElement('li');
-                    categoryItem.className = 'list-group-item category-item';
+                    const categoryItem = document.createElement('div');
+                    categoryItem.className = 'category2';
                     categoryItem.textContent = categoryNames[genre.name] || genre.name; // Magyar név vagy angol név, ha nincs fordítás
                     categoryItem.dataset.genreId = genre.id;
                     categoryItem.addEventListener('click', () => loadMoviesByCategory(genre.id));
@@ -78,14 +77,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.results) {
                     data.results.forEach(movie => {
                         const movieElement = document.createElement('div');
-                        movieElement.className = 'col-md-4 movie';
+                        movieElement.className = 'col-md-3 movie'; // Módosítva, hogy 4 film legyen egy sorban
                         movieElement.innerHTML = `
                             <img src="${imageBaseUrl + movie.poster_path}" alt="${movie.title} poster" class="movie-poster">
                             <h3 class="movie-title">${movie.title}</h3>
                             <p class="movie-overview">${movie.overview}</p>
                         `;
                         movieElement.addEventListener('click', () => {
-                            window.location.href = `filmek.html?id=${movie.id}`;
+                            window.location.href = `filmek?id=${movie.id}`;
                         });
                         moviesContainer.appendChild(movieElement);
                     });
@@ -155,6 +154,69 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => console.error('Error fetching comments:', error));
     }
 
+    // Filmek keresése cím alapján
+    function searchMoviesByTitle(title) {
+        const searchApiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${title}&language=hu-HU`;
+        fetch(searchApiUrl)
+            .then(response => response.json())
+            .then(data => {
+                moviesContainer.innerHTML = ''; // Töröljük a korábbi filmeket
+                if (data.results) {
+                    data.results.forEach(movie => {
+                        const movieElement = document.createElement('div');
+                        movieElement.className = 'col-md-3 movie'; // Módosítva, hogy 4 film legyen egy sorban
+                        movieElement.innerHTML = `
+                            <img src="${imageBaseUrl + movie.poster_path}" alt="${movie.title} poster" class="movie-poster">
+                            <h3 class="movie-title">${movie.title}</h3>
+                            <p class="movie-overview">${movie.overview}</p>
+                        `;
+                        movieElement.addEventListener('click', () => {
+                            window.location.href = `filmek?id=${movie.id}`;
+                        });
+                        moviesContainer.appendChild(movieElement);
+                    });
+                } else {
+                    console.error('No movies found in the response:', data);
+                }
+            })
+            .catch(error => console.error('Error fetching movies:', error));
+    }
+
+    // Keresősáv eseménykezelője
+    searchBar.addEventListener('input', function() {
+        const query = searchBar.value.trim();
+        if (query) {
+            searchMoviesByTitle(query);
+        } else {
+            // Alapértelmezett filmek betöltése, ha a keresősáv üres
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    moviesContainer.innerHTML = ''; // Töröljük a korábbi filmeket
+                    if (data.results) {
+                        data.results.forEach(movie => {
+                            if (movie.overview && movie.overview !== "") { // Kizárjuk azokat a filmeket, amelyeknek nincs leírásuk
+                                const movieElement = document.createElement('div');
+                                movieElement.className = 'col-md-3 movie'; // Módosítva, hogy 4 film legyen egy sorban
+                                movieElement.innerHTML = `
+                                    <img src="${imageBaseUrl + movie.poster_path}" alt="${movie.title} poster" class="movie-poster">
+                                    <h3 class="movie-title">${movie.title}</h3>
+                                    <p class="movie-overview">${movie.overview}</p>
+                                `;
+                                movieElement.addEventListener('click', () => {
+                                    window.location.href = `filmek?id=${movie.id}`;
+                                });
+                                moviesContainer.appendChild(movieElement);
+                            }
+                        });
+                    } else {
+                        console.error('No movies found in the response:', data);
+                    }
+                })
+                .catch(error => console.error('Error fetching movies:', error));
+        }
+    });
+
     // URL paraméterek ellenőrzése
     const urlParams = new URLSearchParams(window.location.search);
     const movieId = urlParams.get('id');
@@ -202,14 +264,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     data.results.forEach(movie => {
                         if (movie.overview && movie.overview !== "") { // Kizárjuk azokat a filmeket, amelyeknek nincs leírásuk
                             const movieElement = document.createElement('div');
-                            movieElement.className = 'col-md-4 movie';
+                            movieElement.className = 'col-md-3 movie'; // Módosítva, hogy 4 film legyen egy sorban
                             movieElement.innerHTML = `
                                 <img src="${imageBaseUrl + movie.poster_path}" alt="${movie.title} poster" class="movie-poster">
                                 <h3 class="movie-title">${movie.title}</h3>
                                 <p class="movie-overview">${movie.overview}</p>
                             `;
                             movieElement.addEventListener('click', () => {
-                                window.location.href = `filmek.html?id=${movie.id}`;
+                                window.location.href = `filmek?id=${movie.id}`;
                             });
                             moviesContainer.appendChild(movieElement);
                         }
@@ -219,5 +281,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(error => console.error('Error fetching movies:', error));
+    }
+
+    const commentSection = document.getElementById('comments');
+    if (!movieId) {
+        commentSection.style.display = 'none';
     }
 });

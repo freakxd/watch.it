@@ -8,6 +8,6 @@ setcookie("user_id", "", time() - 3600, "/");
 setcookie("username", "", time() - 3600, "/");
 
 // Átirányítás a kezdőlapra
-header("Location: ../pages/index.html");
+header("Location: ../pages/index");
 exit();
 ?>

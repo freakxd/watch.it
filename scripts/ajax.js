@@ -48,7 +48,7 @@ $(document).ready(function() {
                 if (response.status === 'success') {
                     $('#div_verifyAlert').html('<div class="alert alert-success">' + response.message + '</div>');
                     // Átirányítás a profil oldalra vagy más oldalra
-                    window.location.href = '../pages/index.html';
+                    window.location.href = '../pages/index';
                 } else {
                     $('#div_verifyAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
@@ -85,7 +85,7 @@ $(document).ready(function() {
             if (response.status === 'logged_in') {
                 let adminLink = '';
                 if (response.role >= 1) {
-                    adminLink = '<li><a class="dropdown-item" href="../pages/admin.html">Admin Irányítópult</a></li>';
+                    adminLink = '<li><a class="dropdown-item" href="../pages/admin">Admin Irányítópult</a></li>';
                 }
                 $('#userMenu').html(`
                     <li class="nav-item dropdown">

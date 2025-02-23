@@ -24,7 +24,7 @@
     </div>
     <nav class="navbar navbar-expand-sm bg-dark bg-gradient navbar-dark text-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html"><img src="../images/homebutton2.png" alt="watch.it"
+            <a class="navbar-brand" href="index"><img src="../images/homebutton2.png" alt="watch.it"
                     style="width: 50px; height: 50px; border-radius: 8px;"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -32,10 +32,10 @@
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="filmek.html">Filmek</a>
+                        <a class="nav-link" href="filmek">Filmek</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="sorozatok.html">Sorozatok</a>
+                        <a class="nav-link" href="sorozatok">Sorozatok</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Nézet</a>
@@ -236,31 +236,9 @@
                     <input type="text" id="search-bar" class="form-control" placeholder="Keresés">
                 </div>
                 <h5 style="color: white;">Kategóriák</h5>
-                <ul id="category-list" class="list-group list-group-horizontal">
-
-                </ul>
+                <div id="category-list" class="categories2">
+                </div>
             </div>
-            <!-- <div class="categories2">
-                <div class="category2">Akció</div>
-                <div class="category2">Kaland</div>
-                <div class="category2">Animáció</div>
-                <div class="category2">Vígjáték</div>
-                <div class="category2">Bűnügyi</div>
-                <div class="category2">Dokumentum</div>
-                <div class="category2">Dráma</div>
-                <div class="category2">Családi</div>
-                <div class="category2">Fantasy</div>
-                <div class="category2">Történelmi</div>
-                <div class="category2">Horror</div>
-                <div class="category2">Zenés</div>
-                <div class="category2">Rejtély</div>
-                <div class="category2">Romantikus</div>
-                <div class="category2">Sci-Fi</div>
-                <div class="category2">TV film</div>
-                <div class="category2">Thriller</div>
-                <div class="category2">Háborús</div>
-                <div class="category2">Western</div>
-            </div> -->
             <div class="col-md-9">
                 <div id="movies-container" class="row">
                 </div>
@@ -270,7 +248,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" id="comments">
                     <h2>Kommentek</h2>
                     <div id="comments-section" class="scrollspy-example" style="height: 400px; overflow-y: scroll;">
                         <div id="comments-container"></div>

@@ -7,12 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
         success: function(response) {
             if (response.status !== 'logged_in' || response.role < 1) {
                 // Ha a felhasználó nincs bejelentkezve vagy nem jogosult, átirányítjuk a főoldalra
-                window.location.href = '../pages/index.html';
+                window.location.href = '../pages/index';
             }
         },
         error: function() {
             // Ha hiba történt az ellenőrzés során, átirányítjuk a főoldalra
-            window.location.href = '../pages/index.html';
+            window.location.href = '../pages/index';
         }
     });
 });

@@ -51,8 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data.genres) {
                 data.genres.forEach(genre => {
-                    const categoryItem = document.createElement('li');
-                    categoryItem.className = 'list-group-item category-item';
+                    const categoryItem = document.createElement('div');
+                    categoryItem.className = 'category2';
                     categoryItem.textContent = categoryNames[genre.name] || genre.name; // Magyar név vagy angol név, ha nincs fordítás
                     categoryItem.dataset.genreId = genre.id;
                     categoryItem.addEventListener('click', () => loadTvByCategory(genre.id));
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <p class="tv-overview">${tv.overview}</p>
                             `;
                             tvElement.addEventListener('click', () => {
-                                window.location.href = `sorozatok.html?id=${tv.id}`;
+                                window.location.href = `sorozatok?id=${tv.id}`;
                             });
                             tvContainer.appendChild(tvElement);
                         }
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <p class="tv-overview">${tv.overview}</p>
                             `;
                             tvElement.addEventListener('click', () => {
-                                window.location.href = `sorozatok.html?id=${tv.id}`;
+                                window.location.href = `sorozatok?id=${tv.id}`;
                             });
                             tvContainer.appendChild(tvElement);
                         }
@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <p class="tv-overview">${tv.overview}</p>
                                 `;
                                 tvElement.addEventListener('click', () => {
-                                    window.location.href = `sorozatok.html?id=${tv.id}`;
+                                    window.location.href = `sorozatok?id=${tv.id}`;
                                 });
                                 tvContainer.appendChild(tvElement);
                             }
@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <p class="tv-overview">${tv.overview}</p>
                             `;
                             tvElement.addEventListener('click', () => {
-                                window.location.href = `sorozatok.html?id=${tv.id}`;
+                                window.location.href = `sorozatok?id=${tv.id}`;
                             });
                             tvContainer.appendChild(tvElement);
                         }
@@ -289,5 +289,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(error => console.error('Error fetching tv:', error));
+    }
+
+    const commentSection = document.getElementById('comments');
+    if (!tvId) {
+        commentSection.style.display = 'none';
     }
 });

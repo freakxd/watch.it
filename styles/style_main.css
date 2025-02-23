@@ -1,0 +1,440 @@
+#loading-screen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999;
+}
+#loading-screen img {
+    width: 150px;
+    margin-bottom: 20px;
+}
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+.fade-out {
+    animation: fadeOut 1s forwards;
+}
+
+.dropdown-item:hover {
+    background-color: transparent !important;
+}
+/* Főoldallogó, animáció */
+#fooldallogo{
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 200px;
+}
+.card{
+    margin: 0 auto;
+    padding: 2em;
+    width: 300px;
+    background: #1c1f2b;
+    text-align: center;
+    border-radius: 10px;
+    position: relative;
+    
+}
+@property --szog{
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+.card::after, .card::before{
+    content: '';
+    position: absolute;
+    height: 110%;
+    width: 103%;
+    background-image: conic-gradient(from var(--szog), purple, cyan, rgb(0, 81, 255),purple);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+    padding: 10px;
+    border-radius: 10px;
+    animation: 3s spin linear infinite;
+}
+.card::before{
+    filter: blur(1.5rem);
+    opacity: 0.5;
+}
+@keyframes spin {
+    from{
+        --szog: 0deg;
+    }
+    to{
+        --szog: 360deg;
+    }
+}
+body{
+    background-blend-mode: multiply;
+}
+/* Mottó animáció */
+.container{
+    display: inline-block;
+}
+.text {
+    position: absolute;
+    top: 20%;
+    color: white;
+    padding: 2rem;
+}
+.text p {
+    width: 55vm;
+    margin: 1rem 0;
+    font-weight: 300;
+}
+.text .motto{
+    font: lighter 3rem "poppins", sans-serif;
+}
+.text .motto ol{
+    list-style: none;
+    --magassag: 3.8rem;
+    height: var(--magassag);
+    line-height: var(--magassag);
+    overflow: hidden;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+}
+.text .motto ol li span{
+    font-weight: 600;
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(20deg, cyan, magenta);
+    -webkit-background-clip: text;
+    
+    white-space: nowrap;
+    border-right: .4rem solid white;
+    display: inline-block;
+    
+    animation: cursor .8s step-end infinite,
+                typing 3s steps(10) infinite alternate;
+}
+@keyframes cursor {
+    50%
+    {
+        border-color: transparent;
+    }
+    
+}
+@keyframes typing {
+    0%,10%{
+        width: 0%;
+    }
+    70%,100%{
+        width: 101%;
+    }
+    
+}
+
+.text .motto ol li{
+    animation: slide calc(3*3*4s) steps(3) infinite; 
+}
+@keyframes slide {
+    100%{
+        transform: translateY(-300%);
+    }
+}
+.text .motto ol li{
+    animation: slideup 35s infinite; 
+}
+@keyframes slideup {
+    0%,17%{
+        transform: translateY(0%);
+    }
+    30%,50%{
+        transform: translateY(-101%);
+    }
+    55%,70%{
+        transform: translateY(-201%);
+    }
+    75%,100%{
+        transform: translateY(-301%);
+    }
+}
+
+/* --------------------------------------- */
+/* --------------------------------------- */
+/* --------------------------------------- */
+
+:root{
+
+    --base-color: white;
+    --base-variant: #e8e9ed;
+    --text-color: #111528;
+    --secondary-text: #232738;
+    --primary-color: #3a435d;
+    --accent-color: #0071ff;
+
+}
+
+
+.darkmode{
+
+    --base-color: #1c1f2b;
+    --base-variant: #101425;
+    --text-color: #ffffff;
+    --secondary-text: #a4a5b8;
+    --primary-color: #3a435d;
+    --accent-color: #0071ff;
+}
+
+
+body{
+    min-height: 100vh;
+    background-color: var(--base-color);
+    color: var(--text-color);
+    background-size: 40%;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: auto;
+
+}
+
+
+.nav-link {
+
+    color: white;
+
+}
+
+#loading-screen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999;
+}
+#loading-screen img {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+/* ------------------------------------------ */
+/* ------------------------------------------ */
+/* ------------------------------------------ */
+
+.movie {
+    margin-bottom: 20px;
+}
+
+.movie-poster {
+    width: 100%;
+    height: auto;
+}
+
+.movie-title {
+    color: white;
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+.movie-overview {
+    color: white;
+    font-size: 0.9em;
+}
+
+.category-item {
+    cursor: pointer;
+}
+
+.category-item:hover {
+    background-color: #343a40;
+    color: white;
+}
+
+.movie-poster:hover {
+    cursor: pointer;
+}
+
+p {
+    color: white;
+    font-size: 0.9em;
+}
+
+.list-group{ 
+    /* lista forma */
+    text-align: center;
+    font-weight: bold;
+}
+
+.form-control{ 
+    /* KeresÃ©s */
+    text-align: center;
+}
+
+.col-md-9{ 
+    height: auto;
+    width: 100%;
+    background-color: rgb(37, 37, 37);
+    color: white;
+    font-weight: bold;
+    border: 7px solid #f1f1f1;
+    border-radius: 50px;
+    padding: 20px;
+    margin-top: 0; 
+}
+.categories2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+.category2 {
+    padding: 10px 15px;
+    background: white;
+    color: black;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+.category2:hover {
+    background: gray;
+    color: white;
+}
+
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */
+
+.text-left {
+    text-align: left;
+}
+.custom-height-header {
+    height: 200px;
+    display: flex;
+    align-items: start;
+}
+.custom-height-footer {
+    height: 600px;
+    display: flex;
+    align-items: start;
+}
+.members-profilepicture {
+    width: 180px;
+    height: 180px;
+    border-radius: 20px;
+    overflow: hidden; /* Biztosítja, hogy a kép ne lógjon ki a div-ből */
+}
+.members-profilepicture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Biztosítja, hogy a kép kitöltse a div-et, megtartva az arányokat */
+}
+.members-profilepicture-comment{
+    width: 60px;
+    height: 60px;
+    border-radius: 100px;
+    border: 1px solid #e0e0e0;
+}
+.ms-3 {
+    margin-left: 1rem;
+}
+.nav-link {
+    color: white;
+}
+.nav-link.hover{
+    color: white;
+}
+.nav-link.active {
+    color: black !important;
+}
+
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */
+
+.tv {
+    margin-bottom: 20px;
+}
+
+.tv-poster {
+    width: 100%;
+    height: auto;
+}
+
+.tv-title {
+    color: white;
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+.tv-overview {
+    color: white;
+    font-size: 0.9em;
+}
+
+.category-item {
+    cursor: pointer;
+}
+
+.category-item:hover {
+    background-color: #343a40;
+    color: white;
+    
+}
+
+.tv-poster:hover {
+    cursor: pointer;
+}
+
+p{
+    color: white;
+    font-size: 0.9em;
+}
+
+.list-group{ 
+    /* lista forma */
+    text-align: center;
+    font-weight: bold;
+
+}
+
+.form-control{ 
+    /* Keresés */
+    text-align: center;
+    
+}
+
+.col-md-9{ 
+
+    /* api */
+    height: auto;
+    width: 100%;
+    background-color: rgb(37, 37, 37);
+    color: white;
+    font-weight: bold;
+    border: 7px solid #f1f1f1;
+    border-radius: 50px;
+    padding: 20px;
+    margin-top: 0; 
+
+}
+
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+

@@ -32,6 +32,21 @@
 .dropdown-item:hover {
     background-color: transparent !important;
 }
+
+.modal-header{
+    color: var(--base-color); 
+    background-color: var(--text-color);
+}
+
+.modal-body{
+    color: var(--base-color); 
+    background-color: var(--text-color);
+}
+
+.form-check{
+    text-align: center;
+}
+
 /* Főoldallogó, animáció */
 #fooldallogo{
     max-width: fit-content;
@@ -218,7 +233,6 @@ body{
 
 }
 
-
 .nav-link {
     color: white;
 }
@@ -289,11 +303,16 @@ p {
 
 
 .categories2 {
+    /* kategoriak */
     display: inline-flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
     margin-top: 20px;
+    border: 3px solid var(--text-color);
+    border-radius: 50px;
+    padding: 20px;
+    
 }
 .category2 {
     padding: 10px 15px;
@@ -307,6 +326,13 @@ p {
 .category2:hover {
     background: gray;
     color: white;
+}
+
+.kategoriaszoveg {
+    color: var(--text-color);
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: center;
 }
 
 /* ----------------------------------------------- */
@@ -347,14 +373,13 @@ p {
     margin-left: 1rem;
 }
 
-
 .mb-3 {
     /* Keresés mező */
-    background-color: var(--secondary-text);
+    background-color: var(--text-color);
     padding: 5px;
     border-radius: 10px;
-    border: 3px solid var(--text-color);
-    color: var(--filsor-color);
+    color: var(--filsor-color); 
+    text-align: center;
 }
 
 .nav-link {
@@ -426,7 +451,7 @@ p{
     font-weight: bold;
     border: 3px solid var(--text-color);
     border-radius: 50px;
-    padding: 20px;
+    padding: 25px;
     margin-top: 0;
 }
 
@@ -470,4 +495,9 @@ a img.icon {
 
 .navbar {
     z-index: 3; 
+}
+
+navbar-nav ms-auto {
+    background-color: var(--base-variant);
+    color: var(--text-color);
 }

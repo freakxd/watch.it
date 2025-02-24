@@ -38,16 +38,17 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 200px;
+    position: relative; 
 }
+
 .card{
     margin: 0 auto;
     padding: 2em;
     width: 300px;
-    background: #1c1f2b;
+    background: var(--text-color);
     text-align: center;
     border-radius: 10px;
     position: relative;
-    
 }
 @property --szog{
     syntax: "<angle>";
@@ -71,6 +72,7 @@
 .card::before{
     filter: blur(1.5rem);
     opacity: 0.5;
+    z-index: 1;
 }
 @keyframes spin {
     from{
@@ -218,9 +220,7 @@ body{
 
 
 .nav-link {
-
     color: white;
-
 }
 
 #loading-screen {
@@ -347,12 +347,16 @@ p {
     margin-left: 1rem;
 }
 
+
 .mb-3 {
+    /* Keresés mező */
     background-color: var(--secondary-text);
     padding: 5px;
     border-radius: 10px;
+    border: 3px solid var(--text-color);
     color: var(--filsor-color);
 }
+
 .nav-link {
     color: white;
 }
@@ -420,7 +424,7 @@ p{
     background-color: var(--base-variant);
     color: var(--text-color);
     font-weight: bold;
-    border: 7px solid var(--text-color);
+    border: 3px solid var(--text-color);
     border-radius: 50px;
     padding: 20px;
     margin-top: 0;
@@ -430,3 +434,40 @@ p{
 /* ---------------------------------------- */
 /* ---------------------------------------- */
 
+svg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1; 
+}
+
+.links {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 18px;
+    font-family: sans-serif;
+    z-index: -2; 
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    margin-left: 1em;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a img.icon {
+    display: inline-block;
+    height: 1em;
+    margin: 0 0 -0.1em 0.3em;
+}
+
+.navbar {
+    z-index: 3; 
+}

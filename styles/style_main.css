@@ -101,32 +101,43 @@ body{
     background-blend-mode: multiply;
 }
 /* Mottó animáció */
-.container{
-    display: inline-block;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+    font-family: "poppins", sans-serif;    
+    
 }
-.text {
+body{
+    min-height: 100vh;
+    background: #0000;
+    background-blend-mode: multiply;
+    background-color: black;
+}
+.wrapper{
     position: absolute;
     top: 50%;
     left: 49.5%;
-    transform: translate(-50%, -50%);
     color: white;
     padding: 2rem;
-    margin-top: 100px;
+    transform: translate(-50%, -50%);
+    margin-top: 50px;
 }
-.text p {
-    width: 55vm;
+.wrapper p {
+    width: 55%;
     margin: 1rem 0;
     font-weight: 300;
 }
-.text .motto{
+.wrapper .content{
     font: lighter 3rem "poppins", sans-serif;
 }
-.text .motto ol{
+.wrapper .content ol {
     list-style: none;
-    --magassag: 3.8rem;
-    height: var(--magassag);
-    line-height: var(--magassag);
-    overflow: hidden;
+    --height: 3.8rem;
+    height: var(--height);
+    line-height: var(--height);
+
+  overflow: hidden; 
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-start;
@@ -134,59 +145,58 @@ body{
     font-weight: 550;
     text-align: center;
 }
-.text .motto ol li span{
-
-    -webkit-text-fill-color: transparent;
-    background: linear-gradient(20deg, cyan, magenta);
-    -webkit-background-clip: text;
-    
-    white-space: nowrap;
-    border-right: .1rem solid white;
-    display: inline-block;
-    
-    animation: cursor .8s step-end infinite,
-                typing 2s steps(12) infinite alternate;
+.wrapper .content ol li{
+  animation: slideup 8s infinite;  
 }
-@keyframes cursor {
-    50%
-    {
+@keyframes slideup{
+    0%,15%{
+        transform: translateY(0%);
+    }
+    35%,50%{
+        transform: translateY(-100%);
+    }
+    55%,75%{
+        transform: translateY(-200%);
+    }
+ }
+.wrapper .content ol li{
+    
+   animation: slide 8s infinite;
+   }
+.wrapper .content ol li{
+    
+    animation: slide calc(3*2*2s) steps(3) infinite; 
+   }
+   @keyframes slide{
+    100%{
+        transform: translateY(-300%);
+    }
+ }
+ 
+.wrapper .content ol li span{
+   font-weight: 600;
+   -webkit-text-fill-color: transparent;
+   background: linear-gradient(20deg, cyan, magenta);
+   -webkit-background-clip: text;
+
+   white-space: nowrap;
+   border-right: .1rem solid white;
+   display: inline-block;
+   animation: cursor .8s step-end infinite,
+                typing 2s steps(10) infinite alternate;
+             
+}
+@keyframes cursor{
+    50%{
         border-color: transparent;
     }
-    
 }
-@keyframes typing {
+@keyframes typing{
     0%,10%{
         width: 0%;
     }
     70%,100%{
-        width: 100%;
-    }
-    
-}
-
-.text .motto ol li{
-    animation: slide calc(3*3*4s) steps(3) infinite;  /* az idozitest javitani kell */
-}
-@keyframes slide {
-    100%{
-        transform: translateY(-300%);
-    }
-}
-.text .motto ol li{
-    animation: slideup 35s infinite; 
-}
-@keyframes slideup {
-    0%,17%{
-        transform: translateY(0%);
-    }
-    30%,50%{
-        transform: translateY(-101%);
-    }
-    55%,70%{
-        transform: translateY(-201%);
-    }
-    75%,100%{
-        transform: translateY(-301%);
+        width: 101%;
     }
 }
 
@@ -500,4 +510,7 @@ a img.icon {
 navbar-nav ms-auto {
     background-color: var(--base-variant);
     color: var(--text-color);
+}
+#bio{
+    color: white;
 }

@@ -21,12 +21,11 @@
     </div>
     <nav class="navbar navbar-expand-sm bg-dark bg-gradient navbar-dark text-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index"><img src="../images/homebutton2.png" alt="watch.it" style="width: 50px; height: 50px; border-radius: 8px;"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index">Főoldal</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="filmek">Filmek</a>
                     </li>
@@ -64,8 +63,6 @@
             </div>
         </div>
     </nav>
-
-
     <!-- SVG háttér animáció -->
     <svg preserveAspectRatio="xMidYMid slice" viewBox="10 10 80 80">
         <defs>
@@ -109,11 +106,13 @@
     <!-- szoveg -->
     <div class="wrapper">
         <h1 class="content">
-         
             <ol>
-                <li><span>Read It</span></li>
-                <li><span>Write It</span></li>
-                <li><span>Watch It</span></li>
+                <li><span>read it</span></li>
+                <li><span>write it</span></li>
+                <li><span>watch it</span></li>
+                <li><span>read it</span></li>
+                <li><span>write it</span></li>
+                <li><span>watch it</span></li>
             </ol>
         </h1>
     </div>
@@ -128,12 +127,12 @@
                 </div>
                 <div class="modal-body">
                     <form id="login_form" method="POST" class="was-validated">
-                        <div class="mb-3 mt-3">
+                        <div class="mb-3 mt-3 felhasznalo">
                             <label for="login_username" class="form-label">Felhasználónév</label>
                             <input type="text" class="form-control" id="login_username" placeholder="👤" name="login_username" required>
                             <div class="valid-feedback"></div>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 jelszo">
                             <label for="login_password" class="form-label">Jelszó</label>
                             <input type="password" class="form-control" id="login_password" placeholder="🔑" name="login_password" required>
                             <div class="valid-feedback"></div>

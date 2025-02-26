@@ -33,14 +33,20 @@
     background-color: transparent !important;
 }
 
+/* --------------------------------------- */
+/* --------------------------------------- */
+/* --------------------------------------- */
+
+/* bejelentkezes/regisztaracio felulet */
+
 .modal-header{
-    color: var(--base-color); 
-    background-color: var(--text-color);
+    color: var(--text-color); 
+    background-color: var(--bejreg-color);
 }
 
 .modal-body{
-    color: var(--base-color); 
-    background-color: var(--text-color);
+    color: var(--text-color); 
+    background-color: var(--bejreg-color);
 }
 
 .form-check{
@@ -100,14 +106,9 @@
 body{
     background-blend-mode: multiply;
 }
+
 /* Mottó animáció */
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; 
-    font-family: "poppins", sans-serif;    
-    
-}
+
 body{
     min-height: 100vh;
     background: #0000;
@@ -122,6 +123,8 @@ body{
     padding: 2rem;
     transform: translate(-50%, -50%);
     margin-top: 50px;
+    margin-right: 10px;
+    text-align: center;
 }
 .wrapper p {
     width: 55%;
@@ -136,8 +139,7 @@ body{
     --height: 3.8rem;
     height: var(--height);
     line-height: var(--height);
-
-  overflow: hidden; 
+    overflow: hidden; 
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-start;
@@ -146,45 +148,27 @@ body{
     text-align: center;
 }
 .wrapper .content ol li{
-  animation: slideup 8s infinite;  
+  animation: slideup 12s infinite;
 }
 @keyframes slideup{
-    0%,15%{
+    0%,20%{
         transform: translateY(0%);
     }
-    35%,50%{
+    25%,45%{
         transform: translateY(-100%);
     }
-    55%,75%{
+    50%,70%{
         transform: translateY(-200%);
     }
- }
-.wrapper .content ol li{
-    
-   animation: slide 8s infinite;
-   }
-.wrapper .content ol li{
-    
-    animation: slide calc(3*2*2s) steps(3) infinite; 
-   }
-   @keyframes slide{
-    100%{
+    75%,100%{
         transform: translateY(-300%);
     }
  }
- 
 .wrapper .content ol li span{
    font-weight: 600;
    -webkit-text-fill-color: transparent;
    background: linear-gradient(20deg, cyan, magenta);
    -webkit-background-clip: text;
-
-   white-space: nowrap;
-   border-right: .1rem solid white;
-   display: inline-block;
-   animation: cursor .8s step-end infinite,
-                typing 2s steps(10) infinite alternate;
-             
 }
 @keyframes cursor{
     50%{
@@ -205,7 +189,6 @@ body{
 /* --------------------------------------- */
 
 :root{
-
     --base-color: white;
     --base-variant: #e8e9ed;
     --text-color: #111528;
@@ -213,12 +196,11 @@ body{
     --secondary-text: #232738;
     --primary-color: #3a435d;
     --accent-color: #0071ff;
-
+    --bejreg-color: #ffffff;
 }
 
 
 .darkmode{
-
     --base-color: #1c1f2b;
     --base-variant: #101425;
     --text-color: #ffffff;
@@ -226,6 +208,7 @@ body{
     --secondary-text: #a4a5b8;
     --primary-color: #3a435d;
     --accent-color: #0071ff;
+    --bejreg-color: #111528;
 }
 
 
@@ -240,7 +223,6 @@ body{
     height: 100vh;
     width: 100vw;
     overflow: auto;
-
 }
 
 .nav-link {
@@ -322,7 +304,7 @@ p {
     border: 3px solid var(--text-color);
     border-radius: 50px;
     padding: 20px;
-    
+    background-color: var(--base-variant);
 }
 .category2 {
     padding: 10px 15px;
@@ -366,12 +348,12 @@ p {
     width: 180px;
     height: 180px;
     border-radius: 20px;
-    overflow: hidden; /* Biztosítja, hogy a kép ne lógjon ki a div-ből */
+    overflow: hidden; 
 }
 .members-profilepicture img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Biztosítja, hogy a kép kitöltse a div-et, megtartva az arányokat */
+    object-fit: cover; 
 }
 .members-profilepicture-comment{
     width: 60px;
@@ -385,10 +367,10 @@ p {
 
 .mb-3 {
     /* Keresés mező */
-    background-color: var(--text-color);
+    background-color: var(--bejreg-color);
     padding: 5px;
     border-radius: 10px;
-    color: var(--filsor-color); 
+    color: var(--text-color); 
     text-align: center;
 }
 
@@ -469,6 +451,8 @@ p{
 /* ---------------------------------------- */
 /* ---------------------------------------- */
 
+/* index hatteranimacio */ 
+
 svg {
     position: fixed;
     top: 0;
@@ -503,14 +487,110 @@ a img.icon {
     margin: 0 0 -0.1em 0.3em;
 }
 
+
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+
+/* navbar menu */
+
 .navbar {
     z-index: 3; 
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    display: flex;
+    justify-content: center; 
+    margin-left: 10px;
 }
 
-navbar-nav ms-auto {
-    background-color: var(--base-variant);
-    color: var(--text-color);
+.navbar-nav {
+    display: flex;
+    justify-content: center; 
+    width: 100%; 
 }
+
+.navbar-nav .nav-link {
+    color: var(--text-color) !important;
+    font-weight: bold;
+}
+
+.navbar-toggler {
+    border: none !important;
+}
+
+.navbar-toggler-icon {
+    background-image: none !important;
+    color: var(--text-color) !important;
+}
+
 #bio{
     color: white;
 }
+
+.nav-item {
+    padding: 25px;
+    margin-left: 180px;
+    font-size: 18px;
+    font-family: sans-serif;
+}
+
+
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+
+
+/* filmek/sorozat hatteranimacio */
+
+html {
+    height:100%;
+  }
+  
+  body {
+    margin:0;
+  }
+  
+  .bg {
+    animation:slide 10s ease-in-out infinite alternate;
+    background-image: linear-gradient(-60deg, rgb(47, 32, 247) 50%, rgb(216, 209, 209) 50%);
+    bottom:0;
+    left:-50%;
+    opacity:0.6;
+    position:fixed;
+    right:-50%;
+    top:0;
+    z-index:-1;
+  }
+
+  .darkmode .bg {
+    background-image: linear-gradient(-60deg, rgb(1, 22, 78) 50%, rgb(128, 126, 126) 50%);
+}
+  
+  .bg2 {
+    animation-direction:alternate-reverse;
+    animation-duration:9s;
+  }
+  
+  .bg3 {
+    animation-duration:14s;
+  }
+  
+  h1 {
+    font-family:monospace;
+  }
+  
+  @keyframes slide {
+    0% {
+      transform:translateX(-25%);
+    }
+    100% {
+      transform:translateX(25%);
+    }
+  }
+
+
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+

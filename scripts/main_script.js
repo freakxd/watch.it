@@ -89,21 +89,15 @@ $(document).ready(function () {
             type: 'POST',
             data: { username: newUsername },
             success: function(response) {
-                try {
-                    response = JSON.parse(response);
-                    if (response.status === 'success') {
-                        $('#div_profileAlert').html('<div class="alert alert-success">' + response.message + '</div>');
-                        if (response.redirect) {
-                            setTimeout(function() {
-                                window.location.href = response.redirect; // Átirányítás a megadott URL-re 3 másodperc után
-                            }, 3000);
-                        }
-                    } else {
-                        $('#div_profileAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
+                if (response.status === 'success') {
+                    $('#div_profileAlert').html('<div class="alert alert-success">' + response.message + '</div>');
+                    if (response.redirect) {
+                        setTimeout(function() {
+                            window.location.href = response.redirect; // Átirányítás a megadott URL-re 3 másodperc után
+                        }, 3000);
                     }
-                } catch (e) {
-                    console.error('JSON parse error: ', e);
-                    console.error('Response: ', response);
+                } else {
+                    $('#div_profileAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -125,39 +119,27 @@ $(document).ready(function () {
                 type: 'POST',
                 data: { oldPassword: oldPassword, code: verificationCode },
                 success: function (response) {
-                    try {
-                        response = JSON.parse(response);
-                        if (response.status === 'success') {
-                            $.ajax({
-                                url: '../backend/update_password.php',
-                                type: 'POST',
-                                data: {
-                                    oldPassword: oldPassword,
-                                    newPassword: newPassword
-                                },
-                                success: function (response) {
-                                    try {
-                                        response = JSON.parse(response);
-                                        if (response.status === 'success') {
-                                            $('#div_passwordAlert').html('<div class="alert alert-success">' + response.message + '</div>');
-                                        } else {
-                                            $('#div_passwordAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
-                                        }
-                                    } catch (e) {
-                                        console.error('JSON parse error: ', e);
-                                        console.error('Response: ', response);
-                                    }
-                                },
-                                error: function (jqXHR, textStatus, errorThrown) {
-                                    console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
+                    if (response.status === 'success') {
+                        $.ajax({
+                            url: '../backend/update_password.php',
+                            type: 'POST',
+                            data: {
+                                oldPassword: oldPassword,
+                                newPassword: newPassword
+                            },
+                            success: function (response) {
+                                if (response.status === 'success') {
+                                    $('#div_passwordAlert').html('<div class="alert alert-success">' + response.message + '</div>');
+                                } else {
+                                    $('#div_passwordAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                                 }
-                            });
-                        } else {
-                            $('#div_passwordAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
-                        }
-                    } catch (e) {
-                        console.error('JSON parse error: ', e);
-                        console.error('Response: ', response);
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
+                            }
+                        });
+                    } else {
+                        $('#div_passwordAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -170,17 +152,11 @@ $(document).ready(function () {
                 type: 'POST',
                 data: { oldPassword: oldPassword },
                 success: function (response) {
-                    try {
-                        response = JSON.parse(response);
-                        if (response.status === 'success') {
-                            $('#password_verification_code_div').show();
-                            $('#div_passwordAlert').html('<div class="alert alert-success">Megerősítő kódot küldtünk az e-mail címére.</div>');
-                        } else {
-                            $('#div_passwordAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
-                        }
-                    } catch (e) {
-                        console.error('JSON parse error: ', e);
-                        console.error('Response: ', response);
+                    if (response.status === 'success') {
+                        $('#password_verification_code_div').show();
+                        $('#div_passwordAlert').html('<div class="alert alert-success">Megerősítő kódot küldtünk az e-mail címére.</div>');
+                    } else {
+                        $('#div_passwordAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -203,39 +179,27 @@ $(document).ready(function () {
                 type: 'POST',
                 data: { oldEmail: oldEmail, new_email: newEmail, code: verificationCode },
                 success: function (response) {
-                    try {
-                        response = JSON.parse(response);
-                        if (response.status === 'success') {
-                            $.ajax({
-                                url: '../backend/update_email.php',
-                                type: 'POST',
-                                data: {
-                                    oldEmail: oldEmail,
-                                    newEmail: newEmail
-                                },
-                                success: function (response) {
-                                    try {
-                                        response = JSON.parse(response);
-                                        if (response.status === 'success') {
-                                            $('#div_emailAlert').html('<div class="alert alert-success">Az e-mail cím sikeresen megváltozott.</div>');
-                                        } else {
-                                            $('#div_emailAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
-                                        }
-                                    } catch (e) {
-                                        console.error('JSON parse error: ', e);
-                                        console.error('Response: ', response);
-                                    }
-                                },
-                                error: function (jqXHR, textStatus, errorThrown) {
-                                    console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
+                    if (response.status === 'success') {
+                        $.ajax({
+                            url: '../backend/update_email.php',
+                            type: 'POST',
+                            data: {
+                                oldEmail: oldEmail,
+                                newEmail: newEmail
+                            },
+                            success: function (response) {
+                                if (response.status === 'success') {
+                                    $('#div_emailAlert').html('<div class="alert alert-success">Az e-mail cím sikeresen megváltozott.</div>');
+                                } else {
+                                    $('#div_emailAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                                 }
-                            });
-                        } else {
-                            $('#div_emailAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
-                        }
-                    } catch (e) {
-                        console.error('JSON parse error: ', e);
-                        console.error('Response: ', response);
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
+                            }
+                        });
+                    } else {
+                        $('#div_emailAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -248,17 +212,11 @@ $(document).ready(function () {
                 type: 'POST',
                 data: { oldEmail: oldEmail, new_email: newEmail },
                 success: function (response) {
-                    try {
-                        response = JSON.parse(response);
-                        if (response.status === 'success') {
-                            $('#email_verification_code_div').show();
-                            $('#div_emailAlert').html('<div class="alert alert-success">Megerősítő kódot küldtünk az új e-mail címére.</div>');
-                        } else {
-                            $('#div_emailAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
-                        }
-                    } catch (e) {
-                        console.error('JSON parse error: ', e);
-                        console.error('Response: ', response);
+                    if (response.status === 'success') {
+                        $('#email_verification_code_div').show();
+                        $('#div_emailAlert').html('<div class="alert alert-success">Megerősítő kódot küldtünk az új e-mail címére.</div>');
+                    } else {
+                        $('#div_emailAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -266,5 +224,76 @@ $(document).ready(function () {
                 }
             });
         }
+    });
+
+    // Elfelejtett jelszó
+    $('#forgotpassword_form').on('submit', function(event) {
+        event.preventDefault();
+        var email = $('#forgotpassword_email').val();
+
+        $.ajax({
+            url: '../backend/forgot_password.php',
+            type: 'POST',
+            data: { forgotpassword_email: email },
+            success: function(response) {
+                if (response.status === 'success') {
+                    $('#div_forgotpasswordAlert').html('<div class="alert alert-success">' + response.message + '</div>');
+                    $('#forgotpassword_form').hide();
+                    $('#verify_form_forgotpassword').show();
+                } else {
+                    $('#div_forgotpasswordAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
+            }
+        });
+    });
+
+    // Megerősítőkód ellenőrzése
+    $('#verify_form_forgotpassword').on('submit', function(event) {
+        event.preventDefault();
+        var verificationCode = $('#verification_code_forgotpassword').val();
+
+        $.ajax({
+            url: '../backend/verify_forgotpassword_code.php',
+            type: 'POST',
+            data: { verification_code: verificationCode },
+            success: function(response) {
+                if (response.status === 'success') {
+                    $('#div_verifyAlert_forgotpassword').html('<div class="alert alert-success">' + response.message + '</div>');
+                    $('#modal_forgotpassword').modal('hide');
+                    $('#modal_newpassword').modal('show');
+                } else {
+                    $('#div_verifyAlert_forgotpassword').html('<div class="alert alert-danger">' + response.message + '</div>');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
+            }
+        });
+    });
+
+    // Új jelszó megadása
+    $('#newpassword_form').on('submit', function(event) {
+        event.preventDefault();
+        var newPassword = $('#new_password').val();
+        var verificationCode = $('#verification_code_forgotpassword').val();
+
+        $.ajax({
+            url: '../backend/new_password.php',
+            type: 'POST',
+            data: { new_password: newPassword, verification_code: verificationCode },
+            success: function(response) {
+                if (response.status === 'success') {
+                    $('#div_newpasswordAlert').html('<div class="alert alert-success">' + response.message + '</div>');
+                } else {
+                    $('#div_newpasswordAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
+            }
+        });
     });
 });

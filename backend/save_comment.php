@@ -7,7 +7,7 @@ $response = array();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_SESSION['user_id'])) {
         $response['status'] = 'error';
-        $response['message'] = 'Be kell jelentkeznie a kommenteléshez.';
+        $response['message'] = 'Be kell jelentkeznie a vélemény írásához.';
     } else {
         $userId = $_SESSION['user_id'];
         $data = json_decode(file_get_contents('php://input'), true);
@@ -23,15 +23,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->bind_param("iis", $userId, $id, $comment);
                 if ($stmt->execute()) {
                     $response['status'] = 'success';
-                    $response['message'] = 'Komment sikeresen mentve.';
+                    $response['message'] = 'Véleménye sikeresen mentve.';
                 } else {
                     $response['status'] = 'error';
-                    $response['message'] = 'Hiba történt a komment mentése során.';
+                    $response['message'] = 'Hiba történt a vélemény mentése során.';
                 }
                 $stmt->close();
             } else {
                 $response['status'] = 'error';
-                $response['message'] = 'A komment nem lehet üres.';
+                $response['message'] = 'A vélemény nem lehet üres.';
             }
         } else {
             $response['status'] = 'error';

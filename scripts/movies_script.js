@@ -98,6 +98,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Egy adott film betöltése
     function loadMovieById(movieId) {
         const movieApiUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=hu-HU`;
+        const videoApiUrl = `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}&language=hu-HU`;
+
         fetch(movieApiUrl)
             .then(response => response.json())
             .then(movie => {
@@ -118,6 +120,35 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p class="movie-budget"><strong>Költségvetés:</strong> $${movie.budget.toLocaleString()}</p>
                 `;
                 moviesContainer.appendChild(movieElement);
+
+                // Fetch and display the trailer
+                fetch(videoApiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.results && data.results.length > 0) {
+                            const trailer = data.results.find(video => video.type === 'Trailer' && video.site === 'YouTube');
+                            if (trailer) {
+                                const trailerElement = document.createElement('div');
+                                trailerElement.className = 'col-md-8 trailer';
+                                trailerElement.innerHTML = `
+                                    <h4>Előzetes</h4>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/${trailer.key}" frameborder="0" allowfullscreen></iframe>
+                                `;
+                                moviesContainer.appendChild(trailerElement);
+                            }
+                        }
+                        else{
+                            const trailerElement = document.createElement('div');
+                            trailerElement.className = 'col-md-8 trailer';
+                            trailerElement.innerHTML = `
+                                <h4>Előzetes</h4>
+                                <p>Nincs elérhető előzetes.</p>
+                            `;
+                            moviesContainer.appendChild(trailerElement);
+                        }
+                    })
+                    .catch(error => console.error('Error fetching trailer:', error));
+
                 loadComments(movieId);
             })
             .catch(error => console.error('Error fetching movie:', error));

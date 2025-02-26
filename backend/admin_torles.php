@@ -21,7 +21,6 @@ if ($type === 'user') {
     }
     $stmt->close();
 } elseif ($type === 'comment') {
-    // Komment törlése
     $stmt = $conn->prepare("DELETE FROM comments WHERE id = ?");
     $stmt->bind_param("i", $id);
     if ($stmt->execute()) {

@@ -97,6 +97,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Egy adott sorozat betöltése
     function loadTvById(tvId) {
         const tvApiUrl = `https://api.themoviedb.org/3/tv/${tvId}?api_key=${apiKey}&language=hu-HU`;
+        const videoApiUrl = `https://api.themoviedb.org/3/tv/${tvId}/videos?api_key=${apiKey}&language=hu-HU`;
+
         fetch(tvApiUrl)
             .then(response => response.json())
             .then(tv => {
@@ -121,7 +123,37 @@ document.addEventListener('DOMContentLoaded', function() {
                         <p><strong>Weboldal:</strong> <a href="${tv.homepage}" target="_blank">${tv.homepage}</a></p>
                     `;
                     tvContainer.appendChild(tvElement);
-                    loadComments(tvId);
+
+                    // Fetch and display the trailer
+                    fetch(videoApiUrl)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.results && data.results.length > 0) {
+                                const trailer = data.results.find(video => video.type === 'Trailer' && video.site === 'YouTube');
+                                if (trailer) {
+                                    const trailerElement = document.createElement('div');
+                                    trailerElement.className = 'col-md-8 trailer';
+                                    trailerElement.innerHTML = `
+                                        <h4>Trailer</h4>
+                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/${trailer.key}" frameborder="0" allowfullscreen></iframe>
+                                    `;
+                                    tvContainer.appendChild(trailerElement);
+                                }
+                            }
+                            else{
+                                const trailerElement = document.createElement('div');
+                                trailerElement.className = 'col-md-8 trailer';
+                                trailerElement.innerHTML = `
+                                    <h4>Trailer</h4>
+                                    <p>Nincs elérhető előzetes.</p>
+                                `;
+                                tvContainer.appendChild(trailerElement);
+                            }
+
+                            // Kommentek betöltése
+                            loadComments(tvId);
+                        })
+                        .catch(error => console.error('Error fetching trailer:', error));
                 } else {
                     console.error('No detailed information found for tv:', tvId);
                 }
@@ -154,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
                     }
                 } else {
-                    commentsContainer.innerHTML = '<p>Nincs komment.</p>';
+                    commentsContainer.innerHTML = '<p>Nincs még vélemény.</p>';
                 }
             })
             .catch(error => console.error('Error fetching comments:', error));

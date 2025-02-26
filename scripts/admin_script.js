@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const filteredComments = filterData(data.comments, searchQuery);
             const paginatedComments = paginate(filteredComments, currentPage, itemsPerPage);
             html += '<table class="table table-dark table-striped">';
-            html += '<thead><tr><th>ID</th><th>Felhasználó ID</th><th>Film ID</th><th>Sorozat ID</th><th>Komment</th><th>Létrehozva</th><th></th></tr></thead>';
+            html += '<thead><tr><th>ID</th><th>Felhasználó ID</th><th>Film ID</th><th>Sorozat ID</th><th>Vélemény</th><th>Létrehozva</th><th></th></tr></thead>';
             html += '<tbody>';
             paginatedComments.forEach(comment => {
                 html += `<tr>
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             html += '</tbody></table>';
             html += renderPagination(filteredComments.length, currentPage, itemsPerPage);
-            html += `<p>Összes komment: ${data.total_comments}</p>`;
+            html += `<p>Összes vélemény: ${data.total_comments}</p>`;
         }
         return html;
     }
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     html += '<h2>Statisztikák</h2>';
                     html += `<p>Összes felhasználó: ${data.total_users}</p>`;
                     html += `<p>Összes admin: ${data.total_admins}</p>`;
-                    html += `<p>Összes komment: ${data.total_comments}</p>`;
+                    html += `<p>Összes vélemény: ${data.total_comments}</p>`;
                 }
                 html += '<div id="table-container">';
                 html += renderTable(contentType, data);

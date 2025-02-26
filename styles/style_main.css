@@ -49,10 +49,6 @@
     background-color: var(--bejreg-color);
 }
 
-.form-check{
-    text-align: center;
-}
-
 /* Főoldallogó, animáció */
 #fooldallogo{
     max-width: fit-content;
@@ -365,13 +361,13 @@ p {
     margin-left: 1rem;
 }
 
-.mb-3 {
+.keresomezo {
     /* Keresés mező */
     background-color: var(--bejreg-color);
     padding: 5px;
     border-radius: 10px;
     color: var(--text-color); 
-    text-align: center;
+    /* text-align: center; */
 }
 
 .nav-link {
@@ -475,10 +471,6 @@ a {
     text-decoration: none;
     color: black;
     margin-left: 1em;
-}
-
-a:hover {
-    text-decoration: underline;
 }
 
 a img.icon {

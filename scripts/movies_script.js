@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Egy adott film betöltése
     function loadMovieById(movieId) {
         const movieApiUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=hu-HU`;
-        const videoApiUrl = `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}&language=hu-HU`;
+        const videoApiUrl = `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`;
 
         fetch(movieApiUrl)
             .then(response => response.json())

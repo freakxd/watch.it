@@ -103,12 +103,14 @@
                             <label class="form-check-label" for="stay_logged_in">Maradj bejelentkezve</label>
                             <span class="float-end" role="button" data-bs-toggle="modal"
                                 data-bs-target="#modal_forgotpassword" id="forgotpassword_button">Elfelejtett
-                                jelszó?</span>
+                                jelszó?
+                            </span>
                         </div>
                         <div id="div_loginAlert"></div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-success">Bejelentkezés</button>
-                        </div>
+                        <button type="submit" class="btn btn-success">Bejelentkezés</button>
+                        <span style="margin-top: 8px;" class="float-end" role="button" data-bs-toggle="modal"
+                        data-bs-target="#modal_regisztracio">Nincs még fiókod?
+                        </span>
                     </form>
                     <form id="verify_form" method="POST" class="was-validated" style="display: none;">
                         <div class="mb-3">
@@ -156,6 +158,9 @@
                         </div>
                         <div id="div_registerAlert"></div>
                         <button type="submit" class="btn btn-success">Regisztráció</button>
+                        <span style="margin-top: 8px;" class="float-end" role="button" data-bs-toggle="modal"
+                        data-bs-target="#modal_bejelentkezes">Van már fiókod?
+                        </span>
                     </form>
                 </div>
             </div>

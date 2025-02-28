@@ -296,4 +296,62 @@ $(document).ready(function () {
             }
         });
     });
+
+    // Legújabb filmek és sorozatok betöltése
+    const apiKey = '5b10ee05a53140a03e252ca409834183';
+    const latestMoviesUrl = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=hu-HU`;
+    const topRatedMoviesUrl = `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=hu-HU`;
+    const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
+
+    fetch(latestMoviesUrl)
+        .then(response => response.json())
+        .then(data => {
+            const latestMoviesSeriesContainer = $('#latestMoviesCarousel .carousel-inner');
+            
+            let itemsPerSlide = 5;
+            let carouselItem = $('<div class="carousel-item"></div>');
+            data.results.forEach((movie, index) => {
+                if (index % itemsPerSlide === 0) {
+                    carouselItem = $('<div class="carousel-item"></div>');
+                    if (index === 0) {
+                        carouselItem.addClass('active');
+                    }
+                    latestMoviesSeriesContainer.append(carouselItem);
+                }
+                carouselItem.append(`
+                    <div class="col-md-2 d-inline-block">
+                        <a href="../pages/filmek?id=${movie.id}">
+                            <img style="margin-left:90px; width: 200px; height: 300px;" src="${imageBaseUrl + movie.poster_path}" alt="${movie.title}" class="img-fluid">
+                        </a>
+                    </div>
+                `);
+            });
+        })
+        .catch(error => console.error('Error fetching latest movies:', error));
+
+    // Legjobban értékelt filmek és sorozatok betöltése
+    fetch(topRatedMoviesUrl)
+        .then(response => response.json())
+        .then(data => {
+            const topRatedMoviesSeriesContainer = $('#topRatedMoviesCarousel .carousel-inner');
+            let itemsPerSlide = 5;
+            let carouselItem = $('<div class="carousel-item"></div>');
+            data.results.forEach((movie, index) => {
+                if (index % itemsPerSlide === 0) {
+                    carouselItem = $('<div class="carousel-item"></div>');
+                    if (index === 0) {
+                        carouselItem.addClass('active');
+                    }
+                    topRatedMoviesSeriesContainer.append(carouselItem);
+                }
+                carouselItem.append(`
+                    <div class="col-md-2 d-inline-block">
+                        <a href="../pages/filmek?id=${movie.id}">
+                            <img style="margin-left:90px; width: 200px; height: 300px;" src="${imageBaseUrl + movie.poster_path}" alt="${movie.title}" class="img-fluid">
+                        </a>
+                    </div>
+                `);
+            });
+        })
+        .catch(error => console.error('Error fetching top-rated movies:', error));
 });

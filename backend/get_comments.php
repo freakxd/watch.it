@@ -2,6 +2,7 @@
 include 'db.php';
 
 $response = array();
+$response['comments'] = array();
 
 if (isset($_GET['movie_id']) || isset($_GET['series_id'])) {
     $id = isset($_GET['movie_id']) ? $_GET['movie_id'] : $_GET['series_id'];
@@ -17,12 +18,10 @@ if (isset($_GET['movie_id']) || isset($_GET['series_id'])) {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    $comments = array();
     while ($row = $result->fetch_assoc()) {
-        $comments[] = $row;
+        $response['comments'][] = $row;
     }
 
-    $response['comments'] = $comments;
     $stmt->close();
 }
 

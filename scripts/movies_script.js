@@ -167,13 +167,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.comments && data.comments.length > 0) {
                     data.comments.forEach((comment, index) => {
                         const commentElement = document.createElement('div');
-                        commentElement.className = 'comment';
+                        commentElement.className = 'custom-comment-card bg-light text-dark mb-3';
                         commentElement.id = `comment-${index + 1}`;
                         commentElement.innerHTML = `
-                            <p><strong>${comment.username}</strong>: ${comment.comment}</p>
-                            <p>Értékelés: ${comment.rating} / 5</p>
-                            <p>Ajánlás: ${comment.recommended ? 'Igen' : 'Nem'}</p>
-                            <small>${comment.created_at}</small>
+                            <div class="custom-comment-card-body">
+                                <h5 class="custom-comment-card-title">${comment.username}</h5>
+                                <p class="custom-comment-card-text">${comment.comment}</p>
+                                <p class="custom-comment-card-text"><strong>Értékelés:</strong> ${comment.rating} / 5</p>
+                                <p class="custom-comment-card-text"><strong>Ajánlás:</strong> ${comment.recommended ? 'Igen' : 'Nem'}</p>
+                                <p class="custom-comment-card-text"><small class="text-muted">${comment.created_at}</small></p>
+                            </div>
                         `;
                         commentsContainer.appendChild(commentElement);
                     });
@@ -189,6 +192,41 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(error => console.error('Error fetching comments:', error));
+    }
+
+    // Komment mentése
+    if (commentForm) {
+        commentForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const comment = commentText.value.trim();
+            const rating = ratingSelect.value;
+            const recommended = recommendedSelect.value;
+            const movieId = new URLSearchParams(window.location.search).get('id');
+
+            if (comment && rating && recommended) {
+                fetch('../backend/save_comment.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ movie_id: movieId, comment: comment, rating: rating, recommended: recommended })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        commentText.value = '';
+                        ratingSelect.value = '1';
+                        recommendedSelect.value = '1';
+                        loadComments(movieId);
+                    } else {
+                        console.error(data.message);
+                    }
+                })
+                .catch(error => console.error('Error saving comment:', error));
+            } else {
+                console.error('Minden mezőt ki kell tölteni.');
+            }
+        });
     }
 
     // Filmek keresése cím alapján
@@ -263,41 +301,6 @@ document.addEventListener('DOMContentLoaded', function() {
         loadMovieById(movieId);
         // Elrejtjük a kategóriák oszlopot
         categoryColumn.style.display = 'none';
-
-        // Komment mentése
-        if (commentForm) {
-            commentForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const comment = commentText.value.trim();
-                const rating = ratingSelect.value;
-                const recommended = recommendedSelect.value;
-                const movieId = new URLSearchParams(window.location.search).get('id');
-
-                if (comment && rating && recommended) {
-                    fetch('../backend/save_comment.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ movie_id: movieId, comment: comment, rating: rating, recommended: recommended })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status === 'success') {
-                            commentText.value = '';
-                            ratingSelect.value = '1';
-                            recommendedSelect.value = '1';
-                            loadComments(movieId);
-                        } else {
-                            console.error(data.message);
-                        }
-                    })
-                    .catch(error => console.error('Error saving comment:', error));
-                } else {
-                    console.error('Minden mezőt ki kell tölteni.');
-                }
-            });
-        }
     } else {
         // Alapértelmezett filmek betöltése
         fetch(apiUrl)

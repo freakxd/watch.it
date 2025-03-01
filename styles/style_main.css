@@ -589,3 +589,33 @@ html {
 .carousel-item:hover .poszterkep:not(:hover) {
     filter: blur(3px) brightness(0.7);
 }
+
+/* ---------------------------------------- */
+
+.custom-comment-card {
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    width: 100%;
+    max-width: 900px;
+}
+
+.custom-comment-card-body {
+    padding: 0.5rem;
+}
+
+.custom-comment-card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.custom-comment-card-text {
+    margin-bottom: 0.5rem;
+    color: black;
+}
+
+.custom-comment-card-text small {
+    color: #6c757d;
+}

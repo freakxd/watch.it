@@ -174,13 +174,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.comments && data.comments.length > 0) {
                     data.comments.forEach((comment, index) => {
                         const commentElement = document.createElement('div');
-                        commentElement.className = 'comment';
+                        commentElement.className = 'custom-comment-card bg-light text-dark mb-3';
                         commentElement.id = `comment-${index + 1}`;
                         commentElement.innerHTML = `
-                            <p><strong>${comment.username}</strong>: ${comment.comment}</p>
-                            <p>Értékelés: ${comment.rating} / 5</p>
-                            <p>Ajánlás: ${comment.recommended ? 'Igen' : 'Nem'}</p>
-                            <small>${comment.created_at}</small>
+                            <div class="custom-comment-card-body">
+                                <h5 class="custom-comment-card-title">${comment.username}</h5>
+                                <p class="custom-comment-card-text">${comment.comment}</p>
+                                <p class="custom-comment-card-text"><strong>Értékelés:</strong> ${comment.rating} / 5</p>
+                                <p class="custom-comment-card-text"><strong>Ajánlás:</strong> ${comment.recommended ? 'Igen' : 'Nem'}</p>
+                                <p class="custom-comment-card-text"><small class="text-muted">${comment.created_at}</small></p>
+                            </div>
                         `;
                         commentsContainer.appendChild(commentElement);
                     });

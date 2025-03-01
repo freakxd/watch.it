@@ -162,6 +162,16 @@
                         data-bs-target="#modal_bejelentkezes">Van már fiókod?
                         </span>
                     </form>
+                    <form id="verify_form_register" method="POST" class="was-validated" style="display: none;">
+                        <div class="mb-3">
+                            <label for="verification_code_register" class="form-label">Megerősítő kód</label>
+                            <input type="text" class="form-control" id="verification_code_register" placeholder="🔢"
+                                name="verification_code_register" required>
+                            <div class="valid-feedback"></div>
+                        </div>
+                        <div id="div_verifyAlert_register"></div>
+                        <button type="submit" class="btn btn-success">Kód ellenőrzése</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -330,12 +340,25 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12" id="comments">
-                        <h2>Kommentek</h2>
+                        <h2>Vélemények</h2>
                         <div id="comments-section" class="scrollspy-example" style="height: 400px; overflow-y: scroll;">
                             <div id="comments-container"></div>
                         </div>
                         <form id="comment-form">
-                            <textarea id="comment-text" rows="4" placeholder="Írja meg a véleményét..."></textarea>
+                            <textarea style="width: 930px;" id="comment-text" rows="8" placeholder="Írja meg a véleményét..."></textarea>
+                            <label for="rating">Értékelés (1-5):</label>
+                            <select id="rating">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                            <label for="recommended">Ajánlja a sorozatot?</label>
+                            <select id="recommended">
+                                <option value="1">Igen</option>
+                                <option value="0">Nem</option>
+                            </select>
                             <button type="submit">Küldés</button>
                         </form>
                     </div>

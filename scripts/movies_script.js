@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const commentsContainer = document.getElementById('comments-container');
     const commentForm = document.getElementById('comment-form');
     const commentText = document.getElementById('comment-text');
+    const ratingSelect = document.getElementById('rating');
+    const recommendedSelect = document.getElementById('recommended');
 
     // Ellenőrizzük, hogy a felhasználó be van-e jelentkezve
     let status = 'not_logged_in';
@@ -21,6 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (status == "not_logged_in") {
                 commentText.disabled = true;
                 commentText.placeholder = 'Jelentkezz be, hogy véleményt írhass!';
+                ratingSelect.disabled = true;
+                recommendedSelect.disabled = true;
             }
         })
         .catch(error => console.error('Error checking login status:', error));
@@ -167,6 +171,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         commentElement.id = `comment-${index + 1}`;
                         commentElement.innerHTML = `
                             <p><strong>${comment.username}</strong>: ${comment.comment}</p>
+                            <p>Értékelés: ${comment.rating} / 5</p>
+                            <p>Ajánlás: ${comment.recommended ? 'Igen' : 'Nem'}</p>
                             <small>${comment.created_at}</small>
                         `;
                         commentsContainer.appendChild(commentElement);
@@ -263,26 +269,32 @@ document.addEventListener('DOMContentLoaded', function() {
             commentForm.addEventListener('submit', function(event) {
                 event.preventDefault();
                 const comment = commentText.value.trim();
+                const rating = ratingSelect.value;
+                const recommended = recommendedSelect.value;
                 const movieId = new URLSearchParams(window.location.search).get('id');
 
-                if (comment) {
+                if (comment && rating && recommended) {
                     fetch('../backend/save_comment.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ movie_id: movieId, comment: comment })
+                        body: JSON.stringify({ movie_id: movieId, comment: comment, rating: rating, recommended: recommended })
                     })
                     .then(response => response.json())
                     .then(data => {
                         if (data.status === 'success') {
                             commentText.value = '';
+                            ratingSelect.value = '1';
+                            recommendedSelect.value = '1';
                             loadComments(movieId);
                         } else {
                             console.error(data.message);
                         }
                     })
                     .catch(error => console.error('Error saving comment:', error));
+                } else {
+                    console.error('Minden mezőt ki kell tölteni.');
                 }
             });
         }

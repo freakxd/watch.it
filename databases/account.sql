@@ -19,6 +19,8 @@ CREATE TABLE comments (
   movie_id INT(11) NOT NULL,
   series_id INT(11) NOT NULL,
   comment TEXT NOT NULL, --itt talán kéne megadni max értéket
+  rating INT(1) NOT NULL DEFAULT(0),
+  recommended BOOLEAN,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   FOREIGN KEY comments(user_id) REFERENCES account(id)
 )

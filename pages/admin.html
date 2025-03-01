@@ -153,6 +153,16 @@
                         data-bs-target="#modal_bejelentkezes">Van már fiókod?
                         </span>
                     </form>
+                    <form id="verify_form_register" method="POST" class="was-validated" style="display: none;">
+                        <div class="mb-3">
+                            <label for="verification_code_register" class="form-label">Megerősítő kód</label>
+                            <input type="text" class="form-control" id="verification_code_register" placeholder="🔢"
+                                name="verification_code_register" required>
+                            <div class="valid-feedback"></div>
+                        </div>
+                        <div id="div_verifyAlert_register"></div>
+                        <button type="submit" class="btn btn-success">Kód ellenőrzése</button>
+                    </form>
                 </div>
             </div>
         </div>

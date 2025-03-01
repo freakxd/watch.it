@@ -574,3 +574,18 @@ html {
 /* ---------------------------------------- */
 /* ---------------------------------------- */
 /* ---------------------------------------- */
+
+.poszterkep {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    transform-origin: center center;
+    border-radius: 20px;
+}
+
+.poszterkep:hover {
+    transform: translateZ(0) scale(1.01) translateY(0);
+    z-index: 10;
+}
+
+.carousel-item:hover .poszterkep:not(:hover) {
+    filter: blur(3px) brightness(0.7);
+}

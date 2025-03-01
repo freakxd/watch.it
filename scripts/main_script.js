@@ -321,7 +321,7 @@ $(document).ready(function () {
                 carouselItem.append(`
                     <div class="col-md-2 d-inline-block">
                         <a href="../pages/filmek?id=${movie.id}">
-                            <img style="margin-left:90px; width: 200px; height: 300px;" src="${imageBaseUrl + movie.poster_path}" alt="${movie.title}" class="img-fluid">
+                            <img class="poszterkep" style="margin-left:90px; width: 200px; height: 300px;" src="${imageBaseUrl + movie.poster_path}" alt="${movie.title}" class="img-fluid">
                         </a>
                     </div>
                 `);
@@ -347,7 +347,7 @@ $(document).ready(function () {
                 carouselItem.append(`
                     <div class="col-md-2 d-inline-block">
                         <a href="../pages/filmek?id=${movie.id}">
-                            <img style="margin-left:90px; width: 200px; height: 300px;" src="${imageBaseUrl + movie.poster_path}" alt="${movie.title}" class="img-fluid">
+                            <img class="poszterkep" style="margin-left:90px; width: 200px; height: 300px;" src="${imageBaseUrl + movie.poster_path}" alt="${movie.title}" class="img-fluid">
                         </a>
                     </div>
                 `);

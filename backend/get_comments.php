@@ -8,7 +8,7 @@ if (isset($_GET['movie_id']) || isset($_GET['series_id'])) {
     $id = isset($_GET['movie_id']) ? $_GET['movie_id'] : $_GET['series_id'];
     $type = isset($_GET['movie_id']) ? 'movie_id' : 'series_id';
 
-    $sql = "SELECT account.username, comments.comment, comments.rating, comments.recommended, comments.created_at 
+    $sql = "SELECT account.username, comments.comment, comments.rating, comments.recommended, comments.created_at, comments.user_id 
             FROM comments 
             JOIN account ON comments.user_id = account.id 
             WHERE comments.$type = ? 

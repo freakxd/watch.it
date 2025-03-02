@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const apiKey = '5b10ee05a53140a03e252ca409834183';
     const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=hu-HU`;
     const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const commentsContainer = document.getElementById('comments-container');
     const commentForm = document.getElementById('comment-form');
     const commentText = document.getElementById('comment-text');
-    const ratingSelect = document.getElementById('rating');
-    const recommendedSelect = document.getElementById('recommended');
+    const recommendedCheckbox = document.getElementById('cb5');
+    const reviewSummary = document.getElementById('review-summary');
 
     // Ellenőrizzük, hogy a felhasználó be van-e jelentkezve
     let status = 'not_logged_in';
@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (status == "not_logged_in") {
                 commentText.disabled = true;
                 commentText.placeholder = 'Jelentkezz be, hogy véleményt írhass!';
-                ratingSelect.disabled = true;
-                recommendedSelect.disabled = true;
+                document.querySelectorAll('.rating input').forEach(input => input.disabled = true);
+                recommendedCheckbox.disabled = true;
             }
         })
         .catch(error => console.error('Error checking login status:', error));
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 moviesContainer.appendChild(trailerElement);
                             }
                         }
-                        else{
+                        else {
                             const trailerElement = document.createElement('div');
                             trailerElement.className = 'col-md-8 trailer';
                             trailerElement.innerHTML = `
@@ -163,32 +163,65 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(`../backend/get_comments.php?movie_id=${movieId}`)
             .then(response => response.json())
             .then(data => {
-                commentsContainer.innerHTML = ''; // Töröljük a korábbi kommenteket
+                commentsContainer.innerHTML = '';
                 if (data.comments && data.comments.length > 0) {
+                    let totalRating = 0;
+                    let recommendedCount = 0;
+                    let notRecommendedCount = 0;
+
                     data.comments.forEach((comment, index) => {
+                        totalRating += parseInt(comment.rating, 10);  // Számoljuk a teljes értékelést
+                        if (comment.recommended) {
+                            recommendedCount++;
+                        } else {
+                            notRecommendedCount++;
+                        }
+
                         const commentElement = document.createElement('div');
                         commentElement.className = 'custom-comment-card bg-light text-dark mb-3';
                         commentElement.id = `comment-${index + 1}`;
                         commentElement.innerHTML = `
                             <div class="custom-comment-card-body">
-                                <h5 class="custom-comment-card-title">${comment.username}</h5>
+                                <div class="comment-header">
+                                    <h5 class="custom-comment-card-title">${comment.username}</h5>
+                                    <div class="checkbox-wrapper-10">
+                                        <input type="checkbox" id="cb-${index}" class="tgl tgl-flip" ${comment.recommended ? 'checked' : ''} disabled>
+                                        <label for="cb-${index}" data-tg-on="Ajánlom a filmet!" data-tg-off="Nem ajánlom a filmet." class="tgl-btn"></label>
+                                    </div>
+                                    <div class="rating">
+                                        ${[5, 4, 3, 2, 1].map(value => `
+                                            <input value="${value}" name="rate-${index}" id="star${value}-${index}" type="radio" ${comment.rating == value ? 'checked' : ''} disabled>
+                                            <label title="text" for="star${value}-${index}"></label>
+                                        `).join('')}
+                                    </div>
+                                </div>
                                 <p class="custom-comment-card-text">${comment.comment}</p>
-                                <p class="custom-comment-card-text"><strong>Értékelés:</strong> ${comment.rating} / 5</p>
-                                <p class="custom-comment-card-text"><strong>Ajánlás:</strong> ${comment.recommended ? 'Igen' : 'Nem'}</p>
                                 <p class="custom-comment-card-text"><small class="text-muted">${comment.created_at}</small></p>
                             </div>
                         `;
                         commentsContainer.appendChild(commentElement);
                     });
 
-                    // Ha több mint 10 komment van, engedélyezzük a Scrollspy-t
-                    if (data.comments.length > 10) {
-                        const scrollSpy = new bootstrap.ScrollSpy(document.body, {
-                            target: '#comments-section'
-                        });
-                    }
+                    const averageRating = Math.round(totalRating / data.comments.length);  // Átlagos értékelés kiszámítása
+                    reviewSummary.innerHTML = `
+                        <div class="checkbox-wrapper-10">
+                            <input type="checkbox" class="tgl tgl-flip" checked disabled>
+                            <label data-tg-on="Ajánlott: ${recommendedCount}" data-tg-off="Ajánlott: ${recommendedCount}" class="tgl-btn"></label>
+                        </div>
+                        <div class="checkbox-wrapper-10" style="margin-left: 10px;">
+                            <input type="checkbox" class="tgl tgl-flip" disabled>
+                            <label data-tg-off="Nem ajánlott: ${notRecommendedCount}" class="tgl-btn" style="color: red;"></label>
+                        </div>
+                        <div class="rating">
+                            ${[5, 4, 3, 2, 1].map(value => `
+                                <input value="${value}" name="average-rate" id="average-star${value}" type="radio" ${averageRating == value ? 'checked' : ''} disabled>
+                                <label title="text" for="average-star${value}"></label>
+                            `).join('')}
+                        </div>
+                    `;
                 } else {
                     commentsContainer.innerHTML = '<p>Ezen a filmen nincs még vélemény.</p>';
+                    reviewSummary.innerHTML = '';
                 }
             })
             .catch(error => console.error('Error fetching comments:', error));
@@ -196,14 +229,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Komment mentése
     if (commentForm) {
-        commentForm.addEventListener('submit', function(event) {
+        commentForm.addEventListener('submit', function (event) {
             event.preventDefault();
             const comment = commentText.value.trim();
-            const rating = ratingSelect.value;
-            const recommended = recommendedSelect.value;
+            const rating = document.querySelector('.rating input:checked').value; // A felhasználó által választott értékelés
+            const recommended = recommendedCheckbox.checked ? 1 : 0;
             const movieId = new URLSearchParams(window.location.search).get('id');
 
-            if (comment && rating && recommended) {
+            if (comment && rating && recommended !== null) {
                 fetch('../backend/save_comment.php', {
                     method: 'POST',
                     headers: {
@@ -211,18 +244,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                     body: JSON.stringify({ movie_id: movieId, comment: comment, rating: rating, recommended: recommended })
                 })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        commentText.value = '';
-                        ratingSelect.value = '1';
-                        recommendedSelect.value = '1';
-                        loadComments(movieId);
-                    } else {
-                        console.error(data.message);
-                    }
-                })
-                .catch(error => console.error('Error saving comment:', error));
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            commentText.value = '';
+                            document.querySelector('.rating input:checked').checked = false;
+                            recommendedCheckbox.checked = false;
+                            loadComments(movieId);  // Frissíteni a kommenteket és az átlagos értékelést
+                        } else {
+                            console.error(data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error saving comment:', error));
             } else {
                 console.error('Minden mezőt ki kell tölteni.');
             }
@@ -258,7 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Keresősáv eseménykezelője
-    searchBar.addEventListener('input', function() {
+    searchBar.addEventListener('input', function () {
         const query = searchBar.value.trim();
         if (query) {
             searchMoviesByTitle(query);

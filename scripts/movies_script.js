@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
         commentForm.addEventListener('submit', function (event) {
             event.preventDefault();
             const comment = commentText.value.trim();
-            const rating = document.querySelector('.rating input:checked').value; // A felhasználó által választott értékelés
+            const rating = document.querySelector('.rating input[name="rate"]:checked').value; // A felhasználó által választott értékelés
             const recommended = recommendedCheckbox.checked ? 1 : 0;
             const movieId = new URLSearchParams(window.location.search).get('id');
 
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     .then(data => {
                         if (data.status === 'success') {
                             commentText.value = '';
-                            document.querySelector('.rating input:checked').checked = false;
+                            document.querySelector('.rating input[name="rate"]:checked').checked = false;
                             recommendedCheckbox.checked = false;
                             loadComments(movieId);  // Frissíteni a kommenteket és az átlagos értékelést
                         } else {

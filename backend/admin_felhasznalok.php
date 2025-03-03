@@ -11,11 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $data['email'];
     $role = $data['role'];
 
-    // Ha a jelszó mező nem üres, akkor kódoljuk a jelszót
     if (!empty($password)) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     } else {
-        // Ha a jelszó mező üres, akkor ne változtassuk meg a jelszót
         $sql = "SELECT password FROM account WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id);

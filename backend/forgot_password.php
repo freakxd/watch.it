@@ -31,21 +31,18 @@ if ($stmt->num_rows > 0) {
     $stmt->execute();
     $stmt->close();
 
-    // E-mail küldése a megerősítőkóddal
     $mail = new PHPMailer(true);
 
     try {
-        // SMTP beállítások
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com'; // SMTP szerver címe
+        $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'noreply.watch.it@gmail.com'; // SMTP felhasználónév
-        $mail->Password = 'ynzd bgae pokl ukuw'; // Alkalmazásjelszó
+        $mail->Username = 'noreply.watch.it@gmail.com';
+        $mail->Password = 'ynzd bgae pokl ukuw';
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
-        // E-mail beállítások
-        $mail->CharSet = 'UTF-8'; // Karakterkódolás beállítása
+        $mail->CharSet = 'UTF-8';
         $mail->setFrom('noreply.watch.it@gmail.com', 'watch.it');
         $mail->addAddress($email);
         $mail->isHTML(true);

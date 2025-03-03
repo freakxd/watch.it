@@ -37,7 +37,7 @@
 /* --------------------------------------- */
 /* --------------------------------------- */
 
-/* bejelentkezes/regisztaracio felulet */
+/* bejelentkezes/regisztracio felulet */
 
 .modal-header{
     color: var(--text-color); 
@@ -49,7 +49,6 @@
     background-color: var(--bejreg-color);
 }
 
-/* Főoldallogó, animáció */
 #fooldallogo{
     max-width: fit-content;
     margin-left: auto;
@@ -103,7 +102,6 @@ body{
     background-blend-mode: multiply;
 }
 
-/* Mottó animáció */
 
 body{
     min-height: 100vh;
@@ -363,7 +361,6 @@ p {
 }
 
 .keresomezo {
-    /* Keresés mező */
     background-color: var(--bejreg-color);
     padding: 5px;
     border-radius: 10px;

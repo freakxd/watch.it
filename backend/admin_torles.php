@@ -1,7 +1,6 @@
 <?php
 header('Content-Type: application/json');
 
-// Adatbázis kapcsolat beillesztése
 include 'db.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
@@ -11,7 +10,6 @@ $type = $data['type'];
 $response = ['status' => 'error', 'message' => 'Invalid type'];
 
 if ($type === 'user') {
-    // Felhasználó törlése
     $stmt = $conn->prepare("DELETE FROM account WHERE id = ?");
     $stmt->bind_param("i", $id);
     if ($stmt->execute()) {

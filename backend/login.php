@@ -1,6 +1,6 @@
 <?php
 include 'db.php';
-require '../vendor/autoload.php'; // PHPMailer autoload
+require '../vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -38,28 +38,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt->close();
 
-    // Kód generálása és e-mail küldése
-    $verification_code = rand(100000, 999999); // 6 számjegyű kód generálása
+    $verification_code = rand(100000, 999999);
     $stmt = $conn->prepare("UPDATE account SET verification_code = ? WHERE id = ?");
     $stmt->bind_param("si", $verification_code, $user_id);
     $stmt->execute();
     $stmt->close();
 
-    // E-mail küldése a felhasználónak a kóddal
     $mail = new PHPMailer(true);
 
     try {
-        // SMTP beállítások
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com'; // SMTP szerver címe
+        $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'noreply.watch.it@gmail.com'; // SMTP felhasználónév
-        $mail->Password = 'ynzd bgae pokl ukuw'; // Alkalmazásjelszó
+        $mail->Username = 'noreply.watch.it@gmail.com';
+        $mail->Password = 'ynzd bgae pokl ukuw';
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
-        // E-mail beállítások
-        $mail->CharSet = 'UTF-8'; // Karakterkódolás beállítása
+        $mail->CharSet = 'UTF-8';
         $mail->setFrom('noreply.watch.it@gmail.com', 'watch.it');
         $mail->addAddress($email, $username);
         $mail->isHTML(true);

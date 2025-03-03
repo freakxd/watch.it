@@ -43,14 +43,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt->close();
 
-    // Bejelentkezés sikeres
     session_start();
     $_SESSION['user_id'] = $user_id;
     $_SESSION['username'] = $username;
 
     if ($stay_logged_in) {
-        setcookie("user_id", $user_id, time() + (86400 * 30), "/"); // 30 napig érvényes süti
-        setcookie("username", $username, time() + (86400 * 30), "/"); // 30 napig érvényes süti
+        setcookie("user_id", $user_id, time() + (86400 * 30), "/");
+        setcookie("username", $username, time() + (86400 * 30), "/");
     }
 
     $response['status'] = 'success';

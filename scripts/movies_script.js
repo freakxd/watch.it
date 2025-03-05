@@ -224,11 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
         commentForm.addEventListener('submit', function (event) {
             event.preventDefault();
             const comment = commentText.value.trim();
-<<<<<<< HEAD
-            const rating = document.querySelector('.rating input[name="rate"]:checked').value; // A felhasználó által választott értékelés
-=======
             const rating = document.querySelector('.rating input[name="rate"]:checked').value;
->>>>>>> 8e3af63a05fb67450dee8e0833f430be629fbb6a
             const recommended = recommendedCheckbox.checked ? 1 : 0;
             const movieId = new URLSearchParams(window.location.search).get('id');
 

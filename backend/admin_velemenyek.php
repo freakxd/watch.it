@@ -3,7 +3,7 @@ include 'db.php';
 
 $response = array();
 
-$sql = "SELECT id, user_id, movie_id, series_id, comment, created_at FROM comments";
+$sql = "SELECT id, user_id, movie_id, series_id, comment, rating, recommended, created_at FROM comments";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

@@ -1,4 +1,4 @@
-window.addEventListener('load', function () { //töltőképernyő ne töröld
+window.addEventListener('load', function () { //töltőképernyő
     setTimeout(function () {
         var loadingScreen = document.getElementById('loading-screen');
         loadingScreen.classList.add('fade-out');
@@ -24,10 +24,10 @@ $(document).ready(function () {
             success: function (response) {
                 try {
                     if (typeof response === 'string') {
-                        response = JSON.parse(response); // JSON válasz dekódolása
+                        response = JSON.parse(response);
                     }
                     if (response.status === 'success') {
-                        var randomParam = new Date().getTime(); // Véletlenszerű paraméter
+                        var randomParam = new Date().getTime();
                         $('#profilePictureDiv').html('<img src="' + response.filePath + '?t=' + randomParam + '" alt="Profilkép" class="img-fluid">');
                     } else {
                         $('#div_profileAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
@@ -43,7 +43,6 @@ $(document).ready(function () {
         });
     });
 
-    // Fekete/Fehér mód kezelése
     let darkmode = localStorage.getItem('darkmode')
     const feketeFeher = document.getElementById("fekete-feher")
 
@@ -66,7 +65,6 @@ $(document).ready(function () {
         })
     }
 
-    // Beállítások kezelése
     document.getElementById('settings_profile').addEventListener('click', function () {
         document.getElementById('profile_form').style.display = 'block';
         document.getElementById('security_password_form').style.display = 'none';
@@ -79,7 +77,6 @@ $(document).ready(function () {
         document.getElementById('security_email_form').style.display = 'block';
     });
 
-    // Profil név változtatása
     $('#profile_form').on('submit', function(event) {
         event.preventDefault();
         var newUsername = $('#profile_username').val();
@@ -93,7 +90,7 @@ $(document).ready(function () {
                     $('#div_profileAlert').html('<div class="alert alert-success">' + response.message + '</div>');
                     if (response.redirect) {
                         setTimeout(function() {
-                            window.location.href = response.redirect; // Átirányítás a megadott URL-re 3 másodperc után
+                            window.location.href = response.redirect;
                         }, 3000);
                     }
                 } else {
@@ -106,7 +103,6 @@ $(document).ready(function () {
         });
     });
 
-    // Jelszó változtatása
     $('#security_password_form').on('submit', function (event) {
         event.preventDefault();
         var oldPassword = $('#security_password_old').val();
@@ -166,7 +162,6 @@ $(document).ready(function () {
         }
     });
 
-    // E-mail cím változtatása
     $('#security_email_form').on('submit', function (event) {
         event.preventDefault();
         var oldEmail = $('#security_email_old').val();
@@ -226,7 +221,6 @@ $(document).ready(function () {
         }
     });
 
-    // Elfelejtett jelszó
     $('#forgotpassword_form').on('submit', function(event) {
         event.preventDefault();
         var email = $('#forgotpassword_email').val();
@@ -250,7 +244,6 @@ $(document).ready(function () {
         });
     });
 
-    // Megerősítőkód ellenőrzése
     $('#verify_form_forgotpassword').on('submit', function(event) {
         event.preventDefault();
         var verificationCode = $('#verification_code_forgotpassword').val();
@@ -274,7 +267,6 @@ $(document).ready(function () {
         });
     });
 
-    // Új jelszó megadása
     $('#newpassword_form').on('submit', function(event) {
         event.preventDefault();
         var newPassword = $('#new_password').val();
@@ -297,7 +289,6 @@ $(document).ready(function () {
         });
     });
 
-    // Legújabb filmek és sorozatok betöltése
     const apiKey = '5b10ee05a53140a03e252ca409834183';
     const latestMoviesUrl = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=hu-HU`;
     const topRatedMoviesUrl = `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=hu-HU`;
@@ -329,7 +320,6 @@ $(document).ready(function () {
         })
         .catch(error => console.error('Error fetching latest movies:', error));
 
-    // Legjobban értékelt filmek és sorozatok betöltése
     fetch(topRatedMoviesUrl)
         .then(response => response.json())
         .then(data => {

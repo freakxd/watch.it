@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'db.php';
-require '../vendor/autoload.php'; // PHPMailer autoload
+require '../vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -11,13 +11,11 @@ $response = array();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $verificationCode = rand(100000, 999999);
 
-    // Ellenőrizzük, hogy jelszó vagy e-mail cím változtatásról van-e szó
     if (isset($_POST['new_email'])) {
         $userId = $_SESSION['user_id'];
         $oldEmail = $_POST['oldEmail'];
         $newEmail = $_POST['new_email'];
 
-        // Ellenőrizzük, hogy a megadott régi e-mail cím megegyezik-e az adatbázisban tárolt e-mail címmel
         $sql = "SELECT email FROM account WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $userId);
@@ -33,27 +31,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $subject = 'Megerősítő kód az e-mail cím változtatásához';
             $body = "Kedves Felhasználó,<br><br>Az Ön megerősítő kódja az e-mail cím változtatásához: <b>$verificationCode</b><br><br>Üdvözlettel,<br>watch.it";
 
-            // Kód mentése az adatbázisba
             $stmt = $conn->prepare("UPDATE account SET verification_code = ? WHERE id = ?");
             $stmt->bind_param("si", $verificationCode, $userId);
             $stmt->execute();
             $stmt->close();
 
-            // E-mail küldése a felhasználónak a kóddal
             $mail = new PHPMailer(true);
 
             try {
-                // SMTP beállítások
                 $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com'; // SMTP szerver címe
+                $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'noreply.watch.it@gmail.com'; // SMTP felhasználónév
-                $mail->Password = 'ynzd bgae pokl ukuw'; // Alkalmazásjelszó
+                $mail->Username = 'noreply.watch.it@gmail.com';
+                $mail->Password = 'ynzd bgae pokl ukuw';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
-                // E-mail beállítások
-                $mail->CharSet = 'UTF-8'; // Karakterkódolás beállítása
+                $mail->CharSet = 'UTF-8';
                 $mail->setFrom('noreply.watch.it@gmail.com', 'watch.it');
                 $mail->addAddress($newEmail);
                 $mail->isHTML(true);
@@ -88,27 +82,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $subject = 'Megerősítő kód a jelszó változtatásához';
             $body = "Kedves Felhasználó,<br><br>Az Ön megerősítő kódja a jelszó változtatásához: <b>$verificationCode</b><br><br>Üdvözlettel,<br>watch.it";
 
-            // Kód mentése az adatbázisba
             $stmt = $conn->prepare("UPDATE account SET verification_code = ? WHERE id = ?");
             $stmt->bind_param("si", $verificationCode, $userId);
             $stmt->execute();
             $stmt->close();
 
-            // E-mail küldése a felhasználónak a kóddal
             $mail = new PHPMailer(true);
 
             try {
-                // SMTP beállítások
                 $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com'; // SMTP szerver címe
+                $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'noreply.watch.it@gmail.com'; // SMTP felhasználónév
-                $mail->Password = 'ynzd bgae pokl ukuw'; // Alkalmazásjelszó
+                $mail->Username = 'noreply.watch.it@gmail.com';
+                $mail->Password = 'ynzd bgae pokl ukuw';
                 $mail->SMTPSecure = 'tls';
                 $mail->Port = 587;
 
-                // E-mail beállítások
-                $mail->CharSet = 'UTF-8'; // Karakterkódolás beállítása
+                $mail->CharSet = 'UTF-8';
                 $mail->setFrom('noreply.watch.it@gmail.com', 'watch.it');
                 $mail->addAddress($email);
                 $mail->isHTML(true);

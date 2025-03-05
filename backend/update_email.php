@@ -9,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $oldEmail = $_POST['oldEmail'];
     $newEmail = $_POST['newEmail'];
 
-    // Ellenőrizzük, hogy a megadott régi e-mail cím megegyezik-e az adatbázisban tárolt e-mail címmel
     $sql = "SELECT email FROM account WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $userId);
@@ -21,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->num_rows > 0 && $currentEmail === $oldEmail) {
         $stmt->close();
 
-        // Frissítjük az e-mail címet
         $sql = "UPDATE account SET email = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("si", $newEmail, $userId);

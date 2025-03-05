@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const filteredComments = filterData(data.comments, searchQuery);
             const paginatedComments = paginate(filteredComments, currentPage, itemsPerPage);
             html += '<table class="table table-dark table-striped">';
-            html += '<thead><tr><th>ID</th><th>Felhasználó ID</th><th>Film ID</th><th>Sorozat ID</th><th>Vélemény</th><th>Létrehozva</th><th></th></tr></thead>';
+            html += '<thead><tr><th>ID</th><th>Felhasználó ID</th><th>Film ID</th><th>Sorozat ID</th><th>Vélemény</th><th>Értékelés</th><th>Ajánlja?</th><th>Létrehozva</th><th></th></tr></thead>';
             html += '<tbody>';
             paginatedComments.forEach(comment => {
                 html += `<tr>
@@ -76,6 +76,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>${comment.movie_id}</td>
                     <td>${comment.series_id}</td>
                     <td>${comment.comment}</td>
+                    <td>${comment.rating}</td>
+                    <td>${comment.recommended}</td>
                     <td>${comment.created_at}</td>
                     <td>
                         <button class="btn btn-danger btn-sm delete-btn" data-id="${comment.id}" data-type="comment">🗑️</button>
@@ -98,7 +100,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const tableHtml = renderTable(contentType, data);
         document.getElementById('table-container').innerHTML = tableHtml;
 
-        // Eseménykezelő a cellák szerkesztéséhez
         document.querySelectorAll('[contenteditable="true"]').forEach(cell => {
             cell.addEventListener('keydown', function(event) {
                 if (event.key === 'Enter') {
@@ -151,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Eseménykezelő a legördülő menühöz
         document.querySelectorAll('select[data-field="role"]').forEach(select => {
             select.addEventListener('change', function() {
                 const id = this.dataset.id;
@@ -196,7 +196,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Eseménykezelő a lapozáshoz
         document.querySelectorAll('.page-link').forEach(link => {
             link.addEventListener('click', function(event) {
                 event.preventDefault();
@@ -205,7 +204,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Eseménykezelő a törléshez
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', function() {
                 const id = this.dataset.id;
@@ -215,7 +213,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Eseménykezelő az "Igen" gombhoz
         document.querySelectorAll('.confirm-yes').forEach(button => {
             button.addEventListener('click', function() {
                 const id = this.dataset.id;
@@ -253,7 +250,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Eseménykezelő a "Nem" gombhoz
         document.querySelectorAll('.confirm-no').forEach(button => {
             button.addEventListener('click', function() {
                 const confirmDeleteDiv = this.parentElement;
@@ -284,7 +280,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 html += '</div>';
                 adminContent.innerHTML = html;
 
-                // Eseménykezelő a keresősávhoz
                 if (contentType === 'felhasznalok') {
                     document.getElementById('searchUsers').addEventListener('input', function(event) {
                         searchQuery = event.target.value;

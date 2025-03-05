@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const recommendedCheckbox = document.getElementById('cb5');
     const reviewSummary = document.getElementById('review-summary');
 
-    // Ellenőrizzük, hogy a felhasználó be van-e jelentkezve
     let userId = null;
     let status = 'not_logged_in';
     fetch('../backend/check_login.php')
@@ -31,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => console.error('Error checking login status:', error));
 
-    // Kategóriák magyar nevei
     const categoryNames = {
         "Action & Adventure": "Akció és Kaland",
         "Animation": "Animáció",
@@ -51,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function () {
         "Western": "Western"
     };
 
-    // Kategóriák betöltése
     fetch(categoryUrl)
         .then(response => response.json())
         .then(data => {
@@ -59,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 data.genres.forEach(genre => {
                     const categoryItem = document.createElement('div');
                     categoryItem.className = 'category2';
-                    categoryItem.textContent = categoryNames[genre.name] || genre.name; // Magyar név vagy angol név, ha nincs fordítás
+                    categoryItem.textContent = categoryNames[genre.name] || genre.name;
                     categoryItem.dataset.genreId = genre.id;
                     categoryItem.addEventListener('click', () => loadTvByCategory(genre.id));
                     categoryList.appendChild(categoryItem);
@@ -70,16 +67,15 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => console.error('Error fetching genres:', error));
 
-    // Sorozatok betöltése kategória alapján
     function loadTvByCategory(genreId) {
         const categoryApiUrl = `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&with_genres=${genreId}&language=hu-HU`;
         fetch(categoryApiUrl)
             .then(response => response.json())
             .then(data => {
-                tvContainer.innerHTML = ''; // Töröljük a korábbi sorozatokat
+                tvContainer.innerHTML = '';
                 if (data.results) {
                     data.results.forEach(tv => {
-                        if (!/[^\u0000-\u007F]+/.test(tv.name)) { // Kizárjuk azokat a sorozatokat, amelyek címében kínai vagy japán karakterek találhatók, illetve amelyeknek nincs leírásuk
+                        if (!/[^\u0000-\u007F]+/.test(tv.name)) {
                             const tvElement = document.createElement('div');
                             tvElement.className = 'col-md-4 tv';
                             tvElement.innerHTML = `
@@ -100,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Error fetching tv:', error));
     }
 
-    // Egy adott sorozat betöltése
     function loadTvById(tvId) {
         const tvApiUrl = `https://api.themoviedb.org/3/tv/${tvId}?api_key=${apiKey}&language=hu-HU`;
         const videoApiUrl = `https://api.themoviedb.org/3/tv/${tvId}/videos?api_key=${apiKey}`;
@@ -108,8 +103,8 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch(tvApiUrl)
             .then(response => response.json())
             .then(tv => {
-                if (!/[^\u0000-\u007F]+/.test(tv.name)) { // Kizárjuk azokat a sorozatokat, amelyek címében kínai vagy japán karakterek találhatók, illetve amelyeknek nincs leírásuk
-                    tvContainer.innerHTML = ''; // Töröljük a korábbi sorozatokat
+                if (!/[^\u0000-\u007F]+/.test(tv.name)) {
+                    tvContainer.innerHTML = '';
                     const tvElement = document.createElement('div');
                     tvElement.className = 'col-md-4 tv';
                     tvElement.innerHTML = `
@@ -130,7 +125,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     `;
                     tvContainer.appendChild(tvElement);
 
-                    // Fetch and display the trailer
                     fetch(videoApiUrl)
                         .then(response => response.json())
                         .then(data => {
@@ -156,7 +150,6 @@ document.addEventListener('DOMContentLoaded', function () {
                                 tvContainer.appendChild(trailerElement);
                             }
 
-                            // Kommentek betöltése
                             loadComments(tvId);
                         })
                         .catch(error => console.error('Error fetching trailer:', error));
@@ -167,12 +160,11 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Error fetching tv:', error));
     }
 
-    // Kommentek betöltése
     function loadComments(tvId) {
         fetch(`../backend/get_comments.php?series_id=${tvId}`)
             .then(response => response.json())
             .then(data => {
-                commentsContainer.innerHTML = ''; // Töröljük a korábbi kommenteket
+                commentsContainer.innerHTML = '';
                 if (data.comments && data.comments.length > 0) {
                     let totalRating = 0;
                     let recommendedCount = 0;
@@ -229,7 +221,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         </div>
                     `;
 
-                    // Ha több mint 10 komment van, engedélyezzük a Scrollspy-t
                     if (data.comments.length > 10) {
                         const scrollSpy = new bootstrap.ScrollSpy(document.body, {
                             target: '#comments-section'
@@ -243,7 +234,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Error fetching comments:', error));
     }
 
-    // Komment mentése
     if (commentForm) {
         commentForm.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -278,16 +268,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Sorozatok keresése cím alapján
     function searchTvByTitle(title) {
         const searchApiUrl = `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${title}&language=hu-HU`;
         fetch(searchApiUrl)
             .then(response => response.json())
             .then(data => {
-                tvContainer.innerHTML = ''; // Töröljük a korábbi sorozatokat
+                tvContainer.innerHTML = '';
                 if (data.results) {
                     data.results.forEach(tv => {
-                        if (!/[^\u0000-\u007F]+/.test(tv.name)) { // Kizárjuk azokat a sorozatokat, amelyek címében kínai vagy japán karakterek találhatók, illetve amelyeknek nincs leírásuk
+                        if (!/[^\u0000-\u007F]+/.test(tv.name)) {
                             const tvElement = document.createElement('div');
                             tvElement.className = 'col-md-4 tv';
                             tvElement.innerHTML = `
@@ -308,20 +297,18 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Error fetching tv:', error));
     }
 
-    // Keresősáv eseménykezelője
     searchBar.addEventListener('input', function () {
         const query = searchBar.value.trim();
         if (query) {
             searchTvByTitle(query);
         } else {
-            // Alapértelmezett sorozatok betöltése, ha a keresősáv üres
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
-                    tvContainer.innerHTML = ''; // Töröljük a korábbi sorozatokat
+                    tvContainer.innerHTML = '';
                     if (data.results) {
                         data.results.forEach(tv => {
-                            if (!/[^\u0000-\u007F]+/.test(tv.name)) { // Kizárjuk azokat a sorozatokat, amelyek címében kínai vagy japán karakterek találhatók
+                            if (!/[^\u0000-\u007F]+/.test(tv.name)) {
                                 const tvElement = document.createElement('div');
                                 tvElement.className = 'col-md-4 tv';
                                 tvElement.innerHTML = `
@@ -343,23 +330,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // URL paraméterek ellenőrzése
     const urlParams = new URLSearchParams(window.location.search);
     const tvId = urlParams.get('id');
 
     if (tvId) {
-        // Ha van 'id' paraméter az URL-ben, akkor az adott sorozatot töltjük be
         loadTvById(tvId);
-        // Elrejtjük a kategóriák oszlopot
         categoryColumn.style.display = 'none';
     } else {
-        // Alapértelmezett sorozatok betöltése
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
                 if (data.results) {
                     data.results.forEach(tv => {
-                        if (!/[^\u0000-\u007F]+/.test(tv.name)) { // Kizárjuk azokat a sorozatokat, amelyek címében kínai vagy japán karakterek találhatók, illetve amelyeknek nincs leírásuk
+                        if (!/[^\u0000-\u007F]+/.test(tv.name)) {
                             const tvElement = document.createElement('div');
                             tvElement.className = 'col-md-4 tv';
                             tvElement.innerHTML = `

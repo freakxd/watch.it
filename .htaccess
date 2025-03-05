@@ -1,11 +1,9 @@
 RewriteEngine On
 
-# Eltünteti a .html kiterjesztést az URL-ek végéről
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.html -f
 RewriteRule ^(.*)$ $1.html [L]
 
-# Eltünteti a .html kiterjesztést az URL-ek végéről a linkekben
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([^\.]+)$ $1.html [L]

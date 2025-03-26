@@ -43,6 +43,8 @@ $(document).ready(function () {
         });
     });
 
+    // fekete-fehér mód
+
     let darkmode = localStorage.getItem('darkmode')
     const feketeFeher = document.getElementById("fekete-feher")
 

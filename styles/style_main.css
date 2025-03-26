@@ -48,16 +48,15 @@
     color: var(--text-color); 
     background-color: var(--bejreg-color);
 }
+ /* Főoldallogó, animáció  */
 
-#fooldallogo{
-    max-width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 200px;
-    position: relative; 
+#fooldallogo {
+    margin: auto;
+    margin-top: 250px;
+    padding: 35px;
 }
 
-.card{
+.card {
     margin: 0 auto;
     padding: 2em;
     width: 300px;
@@ -65,43 +64,105 @@
     text-align: center;
     border-radius: 10px;
     position: relative;
+    z-index: 5; 
 }
-@property --szog{
+
+@property --szog {
     syntax: "<angle>";
     initial-value: 0deg;
     inherits: false;
 }
-.card::after, .card::before{
+
+.card::after, .card::before {
     content: '';
     position: absolute;
     height: 110%;
     width: 103%;
-    background-image: conic-gradient(from var(--szog), purple, cyan, rgb(0, 81, 255),purple);
+    background-image: conic-gradient(from var(--szog), purple, cyan, rgb(0, 81, 255), purple);
     top: 50%;
     left: 50%;
     translate: -50% -50%;
-    z-index: -1;
     padding: 10px;
     border-radius: 10px;
     animation: 3s spin linear infinite;
+    opacity: 0.4;
+    z-index: -1; 
 }
-.card::before{
+
+.card::before {
     filter: blur(1.5rem);
-    opacity: 0.5;
-    z-index: 1;
+    opacity: 0.1;
 }
+
 @keyframes spin {
-    from{
+    from {
         --szog: 0deg;
     }
-    to{
+    to {
         --szog: 360deg;
     }
 }
+
 body{
     background-blend-mode: multiply;
 }
 
+/* lefele nyilacska */
+
+body {
+    background:#0b1d2a;
+}
+
+.arrows {
+	width: 60px;
+	height: 72px;
+	position: absolute;
+	left: 50%;
+	margin-left: -30px;
+	bottom: 20px;
+    margin-top: 600px;
+}
+
+.arrows path {
+	stroke: #2994D1;
+	fill: transparent;
+	stroke-width: 1px;	
+	animation: arrow 2s infinite;
+	-webkit-animation: arrow 2s infinite; 
+}
+
+@keyframes arrow
+{
+    0% {opacity:0}
+    40% {opacity:1}
+    80% {opacity:0}
+    100% {opacity:0}
+}
+
+@-webkit-keyframes arrow /*Safari and Chrome*/
+{
+    0% {opacity:0}
+    40% {opacity:1}
+    80% {opacity:0}
+    100% {opacity:0}
+}
+
+.arrows path.a1 {
+	animation-delay:-1s;
+	-webkit-animation-delay:-1s; /* Safari 和 Chrome */
+}
+
+.arrows path.a2 {
+	animation-delay:-0.5s;
+	-webkit-animation-delay:-0.5s; /* Safari 和 Chrome */
+}
+
+.arrows path.a3 {	
+	animation-delay:0s;
+	-webkit-animation-delay:0s; /* Safari 和 Chrome */
+}
+
+ /* Mottó animáció  */
 
 body{
     min-height: 100vh;
@@ -112,12 +173,13 @@ body{
 .wrapper{
     position: absolute;
     top: 50%;
-    left: 49.5%;
+    left: 49.7%;
     color: white;
     padding: 2rem;
     transform: translate(-50%, -50%);
-    margin-top: 100px;
-    margin-right: 10px;
+    margin-top: 70px;
+    text-align: center;
+    z-index: 2;
 }
 .wrapper p {
     width: 55%;
@@ -176,6 +238,7 @@ body{
         width: 101%;
     }
 }
+
 
 /* --------------------------------------- */
 /* --------------------------------------- */
@@ -441,6 +504,18 @@ p{
     margin-top: 0;
 }
 
+.col-md-9-filmsor {
+    /* api */
+    height: auto;
+    background-color: var(--base-variant);
+    color: var(--text-color);
+    font-weight: bold;
+    border: 3px solid var(--text-color);
+    border-radius: 50px;
+    padding: 25px;
+    margin-top: 0;
+}
+
 /* ---------------------------------------- */
 /* ---------------------------------------- */
 /* ---------------------------------------- */
@@ -455,6 +530,7 @@ svg {
     height: 100vh;
     z-index: -1; 
 }
+
 
 .links {
     position: fixed;
@@ -477,6 +553,35 @@ a img.icon {
     margin: 0 0 -0.1em 0.3em;
 }
 
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.out-top {
+    animation: rotate 50s linear infinite;
+    transform-origin: 13px 25px;
+}
+
+.in-top {
+    animation: rotate 50s linear infinite;
+    transform-origin: 13px 25px;
+}
+
+.out-bottom {
+    animation: rotate 40s linear infinite;
+    transform-origin: 84px 93px;
+}
+
+.in-bottom {
+    animation: rotate 40s linear infinite;
+    transform-origin: 84px 93px;
+}
 
 /* ---------------------------------------- */
 /* ---------------------------------------- */
@@ -867,3 +972,25 @@ html {
 #review-summary .rating label {
     margin: 0;
 }
+
+.mt-5 {
+    margin: 20px auto;  /* Alap margó */
+}
+
+
+@media (min-width: 768px) {
+    .mt-5 {
+        margin: 40px auto; /* Nagyobb margó nagyobb képernyőkön */
+    }
+}
+
+
+@media (max-width: 767px) {
+    .mt-5 {
+        margin: 10px auto; /* Kisebb margó kisebb képernyőkön */
+    }
+}
+
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+/* ---------------------------------------- */

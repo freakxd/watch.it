@@ -71,7 +71,34 @@
         </div>
     </nav>
 
-    <div class="container" id="latest-movies-series" style="padding: 30px;">
+    <!-- logo -->
+    <div class="card" id="fooldallogo" style="z-index: 2; position: relative;">
+        <img src="../images/watchitneon.png" alt="watchitneonlogo">
+    </div> 
+    <!-- szoveg -->
+    <div class="wrapper">
+        <h1 class="content">
+            <ol>
+                <li><span>read it</span></li>
+                <li><span>type it</span></li>
+                <li><span>watch it</span></li>
+                <li><span>read it</span></li>
+                <li><span>type it</span></li>
+                <li><span>watch it</span></li>
+            </ol>
+        </h1>
+    </div>
+
+    <!-- nyilak -->
+    <svg class="arrows">
+        <path class="a1" d="M0 0 L30 32 L60 0"></path>
+        <path class="a2" d="M0 20 L30 52 L60 20"></path>
+        <path class="a3" d="M0 40 L30 72 L60 40"></path>
+    </svg>
+
+    <!-- filmek és sorozatok -->
+
+    <div class="container" id="latest-movies-series" style="padding: 30px; margin-top: 550px;">
         <h2 class="text-center">Legújabb filmek és sorozatok</h2>
         <div id="latestMoviesCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="20000">
             <div class="carousel-inner"></div>
@@ -101,40 +128,9 @@
         </div>
     </div>
 
-    <!-- svg hatter animacio -->
-    <svg preserveAspectRatio="xMidYMid slice" viewBox="10 10 80 80">
+    <!-- SVG háttér animáció -->
+    <svg preserveAspectRatio="xMidYMid slice" viewBox="10 10 80 80" class="svg-background" style="z-index: 1; position: absolute;">
         <defs>
-            <style>
-                @keyframes rotate {
-                    0% {
-                        transform: rotate(0deg);
-                    }
-
-                    100% {
-                        transform: rotate(360deg);
-                    }
-                }
-
-                .out-top {
-                    animation: rotate 20s linear infinite;
-                    transform-origin: 13px 25px;
-                }
-
-                .in-top {
-                    animation: rotate 10s linear infinite;
-                    transform-origin: 13px 25px;
-                }
-
-                .out-bottom {
-                    animation: rotate 25s linear infinite;
-                    transform-origin: 84px 93px;
-                }
-
-                .in-bottom {
-                    animation: rotate 15s linear infinite;
-                    transform-origin: 84px 93px;
-                }
-            </style>
         </defs>
         <path fill="#9b5de5" class="out-top"
             d="M37-5C25.1-14.7,5.7-19.1-9.2-10-28.5,1.8-32.7,31.1-19.8,49c15.5,21.5,52.6,22,67.2,2.3C59.4,35,53.7,8.5,37-5Z" />
@@ -146,25 +142,6 @@
             d="M102,67.1c-9.6-6.1-22-3.1-29.5,2-15.4,10.7-19.6,37.5-7.6,47.8s35.9,3.9,44.5-12.5C115.5,92.6,113.9,74.6,102,67.1Z" />
     </svg>
 
-    <!-- ideiglenes kivéve mert bugol az animáció, logo lejjebb kerül -->
-
-    <!-- logo -->
-    <!-- <div class="card" id="fooldallogo">
-        <img src="../images/watchitneon.png" alt="watchitneonlogo">
-    </div> -->
-    <!-- szoveg -->
-    <!-- <div class="wrapper">
-        <h1 class="content">
-            <ol>
-                <li><span>read it</span></li>
-                <li><span>write it</span></li>
-                <li><span>watch it</span></li>
-                <li><span>read it</span></li>
-                <li><span>write it</span></li>
-                <li><span>watch it</span></li>
-            </ol>
-        </h1>
-    </div> -->
 
     <!-- bejelentkezés modal -->
     <div class="modal fade" id="modal_bejelentkezes" tabindex="-1" aria-labelledby="modal_bejelentkezesLabel"
@@ -252,16 +229,6 @@
                         <span style="margin-top: 8px;" class="float-end" role="button" data-bs-toggle="modal"
                         data-bs-target="#modal_bejelentkezes">Van már fiókod?
                         </span>
-                    </form>
-                    <form id="verify_form_register" method="POST" class="was-validated" style="display: none;">
-                        <div class="mb-3">
-                            <label for="verification_code_register" class="form-label">Megerősítő kód</label>
-                            <input type="text" class="form-control" id="verification_code_register" placeholder="🔢"
-                                name="verification_code_register" required>
-                            <div class="valid-feedback"></div>
-                        </div>
-                        <div id="div_verifyAlert_register"></div>
-                        <button type="submit" class="btn btn-success">Kód ellenőrzése</button>
                     </form>
                 </div>
             </div>
@@ -388,7 +355,7 @@
         </div>
     </div>
 
-    <!-- új jelszó modal -->
+    <!-- Új jelszó modal -->
     <div class="modal fade" id="modal_newpassword" tabindex="-1" aria-labelledby="modal_newpasswordLabel"
         aria-hidden="true">
         <div class="modal-dialog">

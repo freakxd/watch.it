@@ -11,17 +11,17 @@ CREATE TABLE `account` (
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
   `verification_code` int(6) NOT NULL,
   PRIMARY KEY (`id`)
-)
+);
 
 CREATE TABLE comments (
   id INT(11) PRIMARY KEY AUTO_INCREMENT,
   user_id INT(11) NOT NULL,
   movie_id INT(11) NOT NULL,
   series_id INT(11) NOT NULL,
-  comment TEXT NOT NULL, --itt talán kéne megadni max értéket
+  comment TEXT NOT NULL,
   rating INT(1) NOT NULL DEFAULT(0),
   recommended BOOLEAN,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   FOREIGN KEY comments(user_id) REFERENCES account(id)
-)
+);
 --phpmail jelszo: ynzd bgae pokl ukuw

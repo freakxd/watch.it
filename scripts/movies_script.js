@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     </div>
                                 </div>
                                 <p class="custom-comment-card-text">${comment.comment}</p>
-                                <p class="custom-comment-card-text"><small class="text-muted">${comment.created_at}</small></p>
+                                <p class="custom-comment-card-text"><small>${comment.created_at}</small></p>
                             </div>
                         `;
                         commentsContainer.appendChild(commentElement);

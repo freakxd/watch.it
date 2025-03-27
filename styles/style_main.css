@@ -741,10 +741,6 @@ html {
     color: var(--text-color);
 }
 
-.custom-comment-card-text small {
-    color: #6c757d;
-}
-
 .form-group {
     display: flex;
     align-items: center;
@@ -1012,20 +1008,20 @@ html {
 }
 
 .mt-5 {
-    margin: 20px auto;  /* Alap margó */
+    margin: 20px auto;
 }
 
 
 @media (min-width: 768px) {
     .mt-5 {
-        margin: 40px auto; /* Nagyobb margó nagyobb képernyőkön */
+        margin: 40px auto;
     }
 }
 
 
 @media (max-width: 767px) {
     .mt-5 {
-        margin: 10px auto; /* Kisebb margó kisebb képernyőkön */
+        margin: 10px auto;
     }
 }
 

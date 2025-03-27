@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 trailerElement.className = 'col-md-8 trailer';
                                 trailerElement.innerHTML = `
                                     <h4>Előzetes</h4>
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/${trailer.key}" frameborder="0" allowfullscreen></iframe>
+                                    <iframe width="450" height="315" src="https://www.youtube.com/embed/${trailer.key}" frameborder="0" allowfullscreen></iframe>
                                 `;
                                 moviesContainer.appendChild(trailerElement);
                             }
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
 
                         const commentElement = document.createElement('div');
-                        commentElement.className = 'custom-comment-card bg-light text-dark mb-3';
+                        commentElement.className = 'custom-comment-card';
                         commentElement.id = `comment-${index + 1}`;
                         commentElement.innerHTML = `
                             <div class="custom-comment-card-body">

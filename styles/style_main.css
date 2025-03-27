@@ -266,7 +266,7 @@ body{
     --primary-color: #3a435d;
     --accent-color: #0071ff;
     --bejreg-color: #111528;
-    --comment-color: grey;
+    --comment-color: rgb(27, 28, 51);
 }
 
 
@@ -694,14 +694,35 @@ html {
     filter: blur(3px) brightness(0.7);
 }
 
+/* youtube trailer */
+
+.trailer iframe {
+    width: 100%; 
+    height: auto; 
+    aspect-ratio: 16 / 9; 
+    max-width: 100%; 
+    border: none; 
+}
+
 /* kommentek */
+
+#comments-section {
+    height: 400px;
+    overflow-y: scroll; 
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+}
+
+#comments-section::-webkit-scrollbar {
+    display: none; 
+}
 
 .custom-comment-card {
     margin-bottom: 1rem;
     border: 1px solid #ddd;
     border-radius: 0.5rem;
     padding: 1rem;
-    background-color: #f8f9fa;
+    background-color: var(--comment-color);
     width: 100%;
     max-width: 900px;
 }
@@ -717,7 +738,7 @@ html {
 
 .custom-comment-card-text {
     margin-bottom: 0.5rem;
-    color: black;
+    color: var(--text-color);
 }
 
 .custom-comment-card-text small {
@@ -747,7 +768,11 @@ html {
 /* rating */
 
 .rating {
+    display: flex;
     align-items: center;
+    flex-direction: row-reverse; /* Csillagok jobbról balra */
+    justify-content: center;
+    gap: 5px;
 }
 
 .rating:not(:checked) > input {
@@ -759,7 +784,7 @@ html {
     float: right;
     cursor: pointer;
     font-size: 30px;
-    color: #666;
+    color: var(--primary-color);
   }
   
   .rating:not(:checked) > label:before {
@@ -785,6 +810,18 @@ html {
 
   /* recommend */
 
+  .tgl-btn {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+    width: 8em; 
+    height: 1.5em; 
+    font-size: 0.8em; 
+    padding: 1px; 
+}
+  
   .checkbox-wrapper-10 {
     display: flex;
     align-items: center;
@@ -924,6 +961,7 @@ html {
   }
 
   /* vélemény beírás */
+
 #comment-form textarea{
     width: 100%;
     height: 100px;

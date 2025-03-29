@@ -21,48 +21,34 @@
         <div class="spinner-border text-light" role="status">
         </div>
     </div>
-    <nav class="navbar navbar-expand-sm bg-dark bg-gradient navbar-dark text-light">
+    <nav class="navbar navbar-expand-lg bg-dark bg-gradient navbar-dark text-light">
         <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+            <a class="navbar-brand" href="index">watch.it®</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Navigáció váltása">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index">Főoldal</a>
-                    </li>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto"></ul>
+                <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="filmek">Filmek</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="sorozatok">Sorozatok</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Nézet</a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                <a class="dropdown-item" id="fekete-feher">
-                                    Fekete/Fehér
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
-                <ul class="navbar-nav" id="userMenu">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Fiók</a>
-                        <ul class="dropdown-menu dropdown-menu-end" id="accountMenu">
+                        <ul class="dropdown-menu dropdown-menu-end">
                             <li>
                                 <a class="dropdown-item" href="#" role="button" data-bs-toggle="modal"
-                                    data-bs-target="#modal_bejelentkezes">
-                                    Bejelentkezés
-                                </a>
+                                    data-bs-target="#modal_bejelentkezes">Bejelentkezés</a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="#" role="button" data-bs-toggle="modal"
-                                    data-bs-target="#modal_regisztracio">
-                                    Regisztráció
-                                </a>
+                                    data-bs-target="#modal_regisztracio">Regisztráció</a>
                             </li>
                         </ul>
                     </li>
@@ -75,26 +61,18 @@
     <div class="card" id="fooldallogo" style="z-index: 2; position: relative;">
         <img src="../images/watchitneon.png" alt="watchitneonlogo">
     </div> 
-    <!-- szoveg -->
-    <div class="wrapper">
-        <h1 class="content">
-            <ol>
-                <li><span>read it</span></li>
-                <li><span>type it</span></li>
-                <li><span>watch it</span></li>
-                <li><span>read it</span></li>
-                <li><span>type it</span></li>
-                <li><span>watch it</span></li>
-            </ol>
-        </h1>
-    </div>
-
+   
     <!-- nyilak -->
     <svg class="arrows">
         <path class="a1" d="M0 0 L30 32 L60 0"></path>
         <path class="a2" d="M0 20 L30 52 L60 20"></path>
         <path class="a3" d="M0 40 L30 72 L60 40"></path>
     </svg>
+
+    <!-- fekete-feher nézet gomb -->
+    <div class="toggle-theme">
+        <a id="fekete-feher" style="margin-right: 10px;">Téma</a>
+    </div>
 
     <!-- filmek és sorozatok -->
 

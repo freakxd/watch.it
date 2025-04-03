@@ -12,11 +12,23 @@ if (isset($_GET['movie_id']) || isset($_GET['series_id'])) {
     $id = isset($_GET['movie_id']) ? $_GET['movie_id'] : $_GET['series_id'];
     $type = isset($_GET['movie_id']) ? 'movie_id' : 'series_id';
 
-    $sql = "SELECT comments.id, account.username, comments.comment, comments.rating, comments.recommended, comments.created_at, comments.user_id 
-            FROM comments 
-            JOIN account ON comments.user_id = account.id 
-            WHERE comments.$type = ? 
-            ORDER BY comments.created_at DESC";
+    $sql = "SELECT 
+                comments.id, 
+                comments.comment, 
+                comments.rating, 
+                comments.recommended, 
+                comments.created_at, 
+                comments.user_id, 
+                account.username,
+                COALESCE(SUM(CASE WHEN commentlikes.likes = 1 THEN 1 ELSE 0 END), 0) AS like_count,
+                COALESCE(SUM(CASE WHEN commentlikes.likes = 0 THEN 1 ELSE 0 END), 0) AS dislike_count
+            FROM comments
+            LEFT JOIN account ON comments.user_id = account.id
+            LEFT JOIN commentlikes ON comments.id = commentlikes.comment_id
+            WHERE comments.movie_id = ?
+            GROUP BY comments.id
+            ORDER BY comments.created_at DESC
+            ";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();

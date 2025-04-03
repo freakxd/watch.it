@@ -207,7 +207,16 @@ document.addEventListener('DOMContentLoaded', function () {
                                 </div>
                                 <p class="custom-comment-card-text">${comment.comment}</p>
                                 <p class="custom-comment-card-text"><small>${comment.created_at}</small></p>
-                            
+                                ${status === 'logged_in' ? `
+                                    <div class="like-dislike-container">
+                                        <button class="like-btn btn btn-success" data-comment-id="${comment.id}">
+                                            👍 ${comment.like_count}
+                                        </button>
+                                        <button class="dislike-btn btn btn-danger" data-comment-id="${comment.id}">
+                                            👎 ${comment.dislike_count}
+                                        </button>
+                                    </div>
+                                ` : ''}
                             </div>
                         `;
                         commentsContainer.appendChild(commentElement);
@@ -308,6 +317,33 @@ document.addEventListener('DOMContentLoaded', function () {
             const deleteButton = deleteContainer.querySelector('.delete-comment-btn');
             confirmButtons.style.display = 'none';
             deleteButton.style.display = 'inline-block';
+        }
+    });
+
+    commentsContainer.addEventListener('click', function (event) {
+        const target = event.target;
+    
+        if (target.classList.contains('like-btn') || target.classList.contains('dislike-btn')) {
+            const commentId = target.dataset.commentId;
+            const likeType = target.classList.contains('like-btn') ? 1 : 0;
+    
+            fetch('../backend/like_comment.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ comment_id: commentId, like_type: likeType })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        const movieId = new URLSearchParams(window.location.search).get('id');
+                        loadComments(movieId);
+                    } else {
+                        alert(data.message || 'Hiba történt a like/dislike mentése során.');
+                    }
+                })
+                .catch(error => console.error('Error liking/disliking comment:', error));
         }
     });
 

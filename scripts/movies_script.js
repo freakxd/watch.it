@@ -294,7 +294,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (target.classList.contains('confirm-delete-btn')) {
             const commentId = target.dataset.commentId;
 
-            console.log('Törlésre küldött komment ID:', commentId);
 
             fetch('../backend/delete_comment.php', {
                 method: 'POST',
@@ -305,7 +304,6 @@ document.addEventListener('DOMContentLoaded', function () {
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Törlés válasz:', data);
                     if (data.status === 'success') {
                         const movieId = new URLSearchParams(window.location.search).get('id');
                         loadComments(movieId);

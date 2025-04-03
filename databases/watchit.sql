@@ -29,7 +29,7 @@ CREATE TABLE commentlikes (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     comment_id INT NOT NULL,
-    like INT(1) NOT NULL DEFAULT 0,
+    likes INT(1) NOT NULL DEFAULT 0,
     liked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES account(id),
     FOREIGN KEY (comment_id) REFERENCES comments(id),

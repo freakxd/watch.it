@@ -30,11 +30,6 @@ try {
                     $user_id = $stmt->insert_id;
                     $response['status'] = 'success';
                     $response['message'] = 'Sikeres regisztráció';
-
-                    $template = file_get_contents('../members/username.id.html');
-                    $new_content = str_replace(['User Name'], [$username], $template);
-                    $new_filename = "../members/{$username}.{$user_id}.html";
-                    file_put_contents($new_filename, $new_content);
                 } else {
                     throw new Exception('Hiba: ' . $stmt->error);
                 }

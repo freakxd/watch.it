@@ -786,10 +786,6 @@ html {
     gap: 20px;
 }
 
-.comment-header{
-    pointer-events: none;
-}
-
 #review-summary{
     pointer-events: none;
 }

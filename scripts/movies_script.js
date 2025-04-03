@@ -15,11 +15,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const reviewSummary = document.getElementById('review-summary');
 
     let status = 'not_logged_in';
+    let current_user_role = 0;
+    let current_user_id = null;
+
     fetch('../backend/check_login.php')
         .then(response => response.json())
         .then(data => {
             status = data.status;
-            if (status == "not_logged_in") {
+            current_user_role = data.role;
+            current_user_id = data.user_id;
+
+            if (status === "not_logged_in") {
                 commentText.disabled = true;
                 commentText.placeholder = 'Jelentkezz be, hogy véleményt írhass!';
                 document.querySelectorAll('.rating input').forEach(input => input.disabled = true);
@@ -162,7 +168,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     let recommendedCount = 0;
                     let notRecommendedCount = 0;
 
+
                     data.comments.forEach((comment, index) => {
+
                         totalRating += parseInt(comment.rating, 10);
                         if (comment.recommended) {
                             recommendedCount++;
@@ -177,19 +185,29 @@ document.addEventListener('DOMContentLoaded', function () {
                             <div class="custom-comment-card-body">
                                 <div class="comment-header">
                                     <h5 class="custom-comment-card-title">${comment.username}</h5>
-                                    <div class="checkbox-wrapper-10">
+                                    <div class="checkbox-wrapper-10" style="pointer-events: none;">
                                         <input type="checkbox" id="cb-${index}" class="tgl tgl-flip" ${comment.recommended ? 'checked' : ''} disabled>
                                         <label for="cb-${index}" data-tg-on="Ajánlom a filmet!" data-tg-off="Nem ajánlom a filmet." class="tgl-btn"></label>
                                     </div>
-                                    <div class="rating">
+                                    <div class="rating" style="pointer-events: none;">
                                         ${[5, 4, 3, 2, 1].map(value => `
                                             <input value="${value}" name="rate-${index}" id="star${value}-${index}" type="radio" ${comment.rating == value ? 'checked' : ''} disabled>
                                             <label title="text" for="star${value}-${index}"></label>
                                         `).join('')}
                                     </div>
+                                    ${current_user_role === 1 || parseInt(comment.user_id, 10) === parseInt(current_user_id, 10) ? `
+                                        <div class="delete-comment-container">
+                                            <button class="delete-comment-btn btn btn-danger btn-sm" data-comment-id="${comment.id}">🗑️</button>
+                                            <div class="confirm-buttons" style="display: none;">
+                                                <button class="confirm-delete-btn btn btn-sm btn-success" data-comment-id="${comment.id}">Igen</button>
+                                                <button class="cancel-delete-btn btn btn-sm btn-secondary">Nem</button>
+                                            </div>
+                                        </div>
+                                    ` : ''}
                                 </div>
                                 <p class="custom-comment-card-text">${comment.comment}</p>
                                 <p class="custom-comment-card-text"><small>${comment.created_at}</small></p>
+                            
                             </div>
                         `;
                         commentsContainer.appendChild(commentElement);
@@ -253,6 +271,45 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    commentsContainer.addEventListener('click', function (event) {
+        const target = event.target;
+
+        if (target.classList.contains('delete-comment-btn')) {
+            const deleteContainer = target.closest('.delete-comment-container');
+            const confirmButtons = deleteContainer.querySelector('.confirm-buttons');
+            confirmButtons.style.display = 'block';
+            target.style.display = 'none';
+        }
+
+        if (target.classList.contains('confirm-delete-btn')) {
+            const commentId = target.dataset.commentId;
+
+            fetch('../backend/delete_comment.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ comment_id: commentId })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        const movieId = new URLSearchParams(window.location.search).get('id');
+                        loadComments(movieId);
+                    }
+                })
+                .catch(error => console.error('Error deleting comment:', error));
+        }
+
+        if (target.classList.contains('cancel-delete-btn')) {
+            const deleteContainer = target.closest('.delete-comment-container');
+            const confirmButtons = deleteContainer.querySelector('.confirm-buttons');
+            const deleteButton = deleteContainer.querySelector('.delete-comment-btn');
+            confirmButtons.style.display = 'none';
+            deleteButton.style.display = 'inline-block';
+        }
+    });
 
     function searchMoviesByTitle(title) {
         const searchApiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${title}&language=hu-HU`;

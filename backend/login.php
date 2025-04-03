@@ -19,12 +19,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $sql = "SELECT id, password, email FROM account WHERE username = ?";
+    $sql = "SELECT id, password, email, role FROM account WHERE username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $stmt->store_result();
-    $stmt->bind_result($user_id, $hashed_password, $email);
+    $stmt->bind_result($user_id, $hashed_password, $email, $role);
     $stmt->fetch();
 
     if ($stmt->num_rows == 0 || !password_verify($password, $hashed_password)) {
@@ -37,6 +37,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $stmt->close();
+
+    session_start();
+    $_SESSION['user_id'] = $user_id;
+    $_SESSION['username'] = $username;
+    $_SESSION['role'] = $role;
 
     $verification_code = rand(100000, 999999);
     $stmt = $conn->prepare("UPDATE account SET verification_code = ? WHERE id = ?");

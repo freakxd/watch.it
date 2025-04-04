@@ -199,8 +199,8 @@ document.addEventListener('DOMContentLoaded', function () {
                                         <div class="delete-comment-container">
                                             <button class="delete-comment-btn btn btn-danger btn-sm" data-comment-id="${comment.id}">🗑️</button>
                                             <div class="confirm-buttons" style="display: none;">
-                                                <button class="confirm-delete-btn btn btn-sm btn-success" data-comment-id="${comment.id}">Igen</button>
-                                                <button class="cancel-delete-btn btn btn-sm btn-secondary">Nem</button>
+                                                <button class="confirm-delete-btn btn btn-sm btn-success" data-comment-id="${comment.id}">✓</button>
+                                                <button class="cancel-delete-btn btn btn-sm btn-secondary" style="background-color: red;">✗</button>
                                             </div>
                                         </div>
                                     ` : ''}

@@ -33,6 +33,7 @@
     background-color: transparent !important;
 }
 
+
 /* --------------------------------------- */
 /* --------------------------------------- */
 /* --------------------------------------- */
@@ -116,11 +117,12 @@ body {
 .arrows {
 	width: 60px;
 	height: 72px;
-	position: absolute;
+	position: relative;
 	left: 50%;
 	margin-left: -30px;
+    margin-top: 150px;
 	bottom: 20px;
-    margin-top: 600px;
+    z-index: 10;
 }
 
 .arrows path {
@@ -234,6 +236,11 @@ body{
     height: auto;
 }
 
+.movie-poster, .poszterkep {
+    position: relative; 
+    z-index: 10; 
+}
+
 .movie-title {
     color: var(--text-color);
     font-size: 1.2em;
@@ -268,7 +275,6 @@ p {
     text-align: center;
     font-weight: bold;
 }
-
 
 .categories2 {
     /* kategoriak */
@@ -593,22 +599,21 @@ a img.icon {
 }
 
 .navbar-toggler {
+    padding: 10px; 
     border: none; 
-    outline: none; 
-    padding: 0; 
-    margin-right: 40px;
+    outline: none !important; 
+    box-shadow: none !important;
+    background-color: transparent; 
 }
 
 .navbar-toggler-icon {
+    width: 30px; 
+    height: 3px; 
     background-color: var(--text-color); 
-    width: 30px;
-    height: 3px;
     display: block;
     position: relative;
-    border-radius: 2px;
+    border-radius: 2px; 
 }
-
-
 
 .navbar-toggler-icon::before,
 .navbar-toggler-icon::after {
@@ -659,6 +664,12 @@ a img.icon {
 
 .toggle-theme:hover {
     background-color: grey; 
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin-top: 80px; /* Mobil nézetben nagyobb távolság */
+    }
 }
 
 
@@ -1065,3 +1076,17 @@ html {
 /* ---------------------------------------- */
 /* ---------------------------------------- */
 /* ---------------------------------------- */
+
+/* komment törlés */
+
+.confirm-delete-btn {
+    background-color: green; 
+    color: white !important;
+    border: none;  
+}
+
+.cancel-delete-btn {
+    background-color: red; 
+    color: white !important;
+    border: none; 
+}

@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    
     $stmt = $conn->prepare("SELECT id FROM comments WHERE id = ?");
     $stmt->bind_param("i", $comment_id);
     $stmt->execute();
@@ -21,22 +22,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(['status' => 'error', 'message' => 'A komment nem található.']);
         exit;
     }
+
     
-    $stmt = $conn->prepare("SELECT id FROM commentlikes WHERE user_id = ? AND comment_id = ?");
+    $stmt = $conn->prepare("SELECT likes FROM commentlikes WHERE user_id = ? AND comment_id = ?");
     $stmt->bind_param("ii", $user_id, $comment_id);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        $stmt = $conn->prepare("UPDATE commentlikes SET likes = ?, liked_at = NOW() WHERE user_id = ? AND comment_id = ?");
-        $stmt->bind_param("iii", $like_type, $user_id, $comment_id);
-        if ($stmt->execute()) {
-            echo json_encode(['status' => 'success', 'message' => 'Like/Dislike frissítve.']);
+        $existing_like = $result->fetch_assoc()['likes'];
+
+        if ($existing_like == $like_type) {
+            
+            $stmt = $conn->prepare("DELETE FROM commentlikes WHERE user_id = ? AND comment_id = ?");
+            $stmt->bind_param("ii", $user_id, $comment_id);
+            if ($stmt->execute()) {
+                echo json_encode(['status' => 'success', 'message' => 'Like/Dislike törölve.']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Hiba történt a like/dislike törlése során.']);
+            }
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'Hiba történt a like/dislike frissítése során.']);
+            
+            $stmt = $conn->prepare("UPDATE commentlikes SET likes = ?, liked_at = NOW() WHERE user_id = ? AND comment_id = ?");
+            $stmt->bind_param("iii", $like_type, $user_id, $comment_id);
+            if ($stmt->execute()) {
+                echo json_encode(['status' => 'success', 'message' => 'Like/Dislike frissítve.']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Hiba történt a like/dislike frissítése során.']);
+            }
         }
     } else {
-        // Új like/dislike hozzáadása
+        
         $stmt = $conn->prepare("INSERT INTO commentlikes (user_id, comment_id, likes) VALUES (?, ?, ?)");
         $stmt->bind_param("iii", $user_id, $comment_id, $like_type);
         if ($stmt->execute()) {

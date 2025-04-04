@@ -643,35 +643,43 @@ a img.icon {
 }
 
 .toggle-theme {
-    position: fixed;
-    top: 875px; 
-    right: 20px;
-    width: 80px; 
+    position: fixed; 
+    bottom: 20px; 
+    right: 20px; 
     background-color: var(--text-color); 
     color: var(--bejreg-color); 
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
+    padding: 10px 15px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: 14px; 
     z-index: 1000; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: background-color 0.3s ease, transform 0.3s ease; 
     text-align: center; 
 }
 
 .toggle-theme:hover {
     background-color: grey; 
+    transform: scale(1.1); 
 }
 
 @media (max-width: 768px) {
-    .container {
-        margin-top: 80px; /* Mobil nézetben nagyobb távolság */
+    .toggle-theme {
+        bottom: 15px; 
+        right: 15px; 
+        padding: 8px 12px; 
+        font-size: 12px; 
     }
 }
 
+@media (max-width: 480px) {
+    .toggle-theme {
+        bottom: 10px; 
+        right: 10px; 
+        padding: 6px 10px; 
+        font-size: 10px; 
+    }
+}
 
 /* ---------------------------------------- */
 /* ---------------------------------------- */

@@ -449,6 +449,14 @@ svg {
     z-index: -1; 
 }
 
+body {
+    min-height: 100vh; 
+    width: 100%; 
+    overflow-x: hidden; 
+    margin: 0;
+    padding: 0;
+}
+
 
 .links {
     position: fixed;

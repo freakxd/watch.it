@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     reviewSummary.innerHTML = `
                         <div class="checkbox-wrapper-10">
                             <input type="checkbox" class="tgl tgl-flip" checked disabled>
-                            <label data-tg-on="Ajánlott: ${recommendedCount}" data-tg-off="Ajánlott: ${recommendedCount}" class="tgl-btn"></label>
+                            <label data-tg-on="Ajánlott: ${recommendedCount}" data-tg-off="Ajánlott: ${recommendedCount}" class="tgl-btn" style="margin-left: 7px;"></label>
                         </div>
                         <div class="checkbox-wrapper-10" style="margin-left: 10px;">
                             <input type="checkbox" class="tgl tgl-flip" disabled>

@@ -1084,13 +1084,13 @@ html {
     user-select: none;
     width: 8em; 
     height: 1.5em; 
-    font-size: 0.8em; 
-    padding: 1px; 
+    font-size: 0.8em;
+    padding: 1px;
 }
-  
   .checkbox-wrapper-10 {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
   .checkbox-wrapper-10 {
@@ -1455,4 +1455,17 @@ html {
         flex-direction: column; 
         gap: 10px; 
     }
+
+    #review-summary {
+        display: flex;
+        flex-direction: column; 
+        align-items: center;  
+        gap: 20px;
+        padding: 20px;
+    }
+
+    #review-summary .checkbox-wrapper-10 {
+        order: 1; 
+    }
+    
 }

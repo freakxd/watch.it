@@ -60,7 +60,6 @@ $(document).ready(function () {
         feketeFeher.checked = false; 
     };
 
-    
     if (darkmode === "active") {
         enableDarkmode();
     } else {
@@ -78,19 +77,6 @@ $(document).ready(function () {
     }
 
     // Profil beállítások megjelenítése
-
-    document.getElementById('settings_profile').addEventListener('click', function () {
-        document.getElementById('profile_form').style.display = 'block';
-        document.getElementById('security_password_form').style.display = 'none';
-        document.getElementById('security_email_form').style.display = 'none';
-    });
-
-    document.getElementById('settings_security').addEventListener('click', function () {
-        document.getElementById('profile_form').style.display = 'none';
-        document.getElementById('security_password_form').style.display = 'block';
-        document.getElementById('security_email_form').style.display = 'block';
-    });
-
     $('#profile_form').on('submit', function(event) {
         event.preventDefault();
         var newUsername = $('#profile_username').val();
@@ -358,4 +344,12 @@ $(document).ready(function () {
             });
         })
         .catch(error => console.error('Error fetching top-rated movies:', error));
+
+        $(".arrows").on("click", function() {
+            var targetElement = document.querySelector(".latest-movies-title");
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        });
+
 });

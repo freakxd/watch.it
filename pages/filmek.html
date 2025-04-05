@@ -15,6 +15,7 @@
     <script src="../scripts/main_script.js"></script>
     <script src="../scripts/ajax.js"></script>
     <script src="../scripts/movies_script.js"></script>
+    <script src="../scripts/topmovies_script.js"></script>
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#comments-section" data-bs-offset="0" tabindex="0">
@@ -314,7 +315,7 @@
 
     <div class="container mt-5">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3 sidebar">
                 <div class="mb-3 keresomezo">
                     <a> Filmek </a>
                     <input type="text" id="search-bar" class="form-control" placeholder="Keresés">
@@ -324,6 +325,8 @@
                 </div>
                 <div id="category-list" class="categories2">
                 </div>
+
+
             </div>
             <div class="col-md-9">
                 <div id="movies-container" class="row">
@@ -342,7 +345,7 @@
                             <div id="comments-container"></div>
                         </div>
                         <form id="comment-form">
-                            <textarea rows="8" style="margin-top: 30px;" id="comment-text"
+                            <textarea rows="8" style="margin: top 30px;" id="comment-text"
                                 placeholder="Írja meg véleményét..."></textarea>
                             <br>
                             <div class="form-group">
@@ -369,7 +372,22 @@
                     </div>
                 </div>
             </div>
-        </div>
+            <!-- jobboldali Sidebar: Top Movies and Latest Releases -->
+            <div class="col-md-3 tmlr">
+                <div class="custom-top-section">
+                    <h4>Top filmek</h4>
+                    <div id="custom-top-movies" class="custom-list-group mb-4">
+                        
+                    
+                    </div>
+                </div>
+                <div class="custom-latest-section">
+                    <h4>Legújabb megjelenések</h4>
+                    <div id="custom-latest-releases" class="custom-list-group">
+                    
+                    </div>
+                </div>
+            </div>
     </div>
 
     <!-- lábléc -->

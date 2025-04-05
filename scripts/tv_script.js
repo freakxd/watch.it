@@ -112,20 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const tvElement = document.createElement('div');
                     tvElement.className = 'col-md-4 tv';
                     tvElement.innerHTML = `
-                        <img src="${imageBaseUrl + tv.poster_path}" alt="${tv.name} poster" class="tv-poster">
-                        <h3 class="tv-title">${tv.name}</h3>
-                        <p class="tv-overview">${tv.overview}</p>
-                        <p><strong>Eredeti cím:</strong> ${tv.original_name}</p>
-                        <p><strong>Első adás dátuma:</strong> ${tv.first_air_date}</p>
-                        <p><strong>Értékelés:</strong> ${tv.vote_average} (${tv.vote_count} szavazat)</p>
-                        <p><strong>Nyelv:</strong> ${tv.original_language}</p>
-                        <p><strong>Státusz:</strong> ${tv.status}</p>
-                        <p><strong>Tagline:</strong> ${tv.tagline}</p>
-                        <p><strong>Gyártó cégek:</strong> ${tv.production_companies.map(company => company.name).join(', ')}</p>
-                        <p><strong>Gyártó országok:</strong> ${tv.production_countries.map(country => country.name).join(', ')}</p>
-                        <p><strong>Epizódok száma:</strong> ${tv.number_of_episodes}</p>
-                        <p><strong>Évadok száma:</strong> ${tv.number_of_seasons}</p>
-                        <p><strong>Weboldal:</strong> <a href="${tv.homepage}" target="_blank">${tv.homepage}</a></p>
+                        <img src="${imageBaseUrl + tv.poster_path}" alt="${tv.name} poster" class="tv-poster"> 
                     `;
                     tvContainer.appendChild(tvElement);
 
@@ -153,6 +140,25 @@ document.addEventListener('DOMContentLoaded', function () {
                                 `;
                                 tvContainer.appendChild(trailerElement);
                             }
+                            const tvElement = document.createElement('div');
+                    tvElement.className = 'col-md-12';
+                    tvElement.innerHTML = `
+                        
+                        <h3 class="tv-title">${tv.name}</h3>
+                       <p class="tv-overview">${tv.overview}</p>
+                        <p><strong>Eredeti cím:</strong> ${tv.original_name}</p>
+                        <p><strong>Első adás dátuma:</strong> ${tv.first_air_date}</p>
+                        <p><strong>Értékelés:</strong> ${tv.vote_average} (${tv.vote_count} szavazat)</p>
+                        <p><strong>Nyelv:</strong> ${tv.original_language}</p>
+                        <p><strong>Státusz:</strong> ${tv.status}</p>
+                        <p><strong>Tagline:</strong> ${tv.tagline}</p>
+                        <p><strong>Gyártó cégek:</strong> ${tv.production_companies.map(company => company.name).join(', ')}</p>
+                        <p><strong>Gyártó országok:</strong> ${tv.production_countries.map(country => country.name).join(', ')}</p>
+                        <p><strong>Epizódok száma:</strong> ${tv.number_of_episodes}</p>
+                        <p><strong>Évadok száma:</strong> ${tv.number_of_seasons}</p> 
+                        <p><strong>Weboldal:</strong> <a href="${tv.homepage}" target="_blank">${tv.homepage}</a></p>
+                    `;
+                    tvContainer.appendChild(tvElement);
 
                             loadComments(tvId);
                         })

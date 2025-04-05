@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         movieElement.innerHTML = `
                             <img src="${imageBaseUrl + movie.poster_path}" alt="${movie.title} poster" class="movie-poster">
                             <h3 class="movie-title">${movie.title}</h3>
-                            <p class="movie-overview">${movie.overview}</p>
+                            <p class="movie-overview limited-overview">${movie.overview}</p>
                         `;
                         movieElement.addEventListener('click', () => {
                             window.location.href = `filmek?id=${movie.id}`;
@@ -113,16 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 movieElement.className = 'col-md-4 movie';
                 movieElement.innerHTML = `
                     <img src="${imageBaseUrl + movie.poster_path}" alt="${movie.title} poster" class="movie-poster movie-poster-small">
-                    <h3 class="movie-title">${movie.title}</h3>
-                    <p class="movie-overview">${movie.overview}</p>
-                    <p class="movie-original-title"><strong>Eredeti cím:</strong> ${movie.original_title}</p>
-                    <p class="movie-release-date"><strong>Megjelenési dátum:</strong> ${movie.release_date}</p>
-                    <p class="movie-original-language"><strong>Nyelv:</strong> ${movie.original_language}</p>
-                    <p class="movie-runtime"><strong>Hossz:</strong> ${movie.runtime} perc</p>
-                    <p class="movie-production-companies"><strong>Gyártó cégek:</strong> ${movie.production_companies.map(company => company.name).join(', ')}</p>
-                    <p class="movie-production-countries"><strong>Gyártó országok:</strong> ${movie.production_countries.map(country => country.name).join(', ')}</p>
-                    <p class="movie-revenue"><strong>Bevétel:</strong> $${movie.revenue.toLocaleString()}</p>
-                    <p class="movie-budget"><strong>Költségvetés:</strong> $${movie.budget.toLocaleString()}</p>
+                    
                 `;
                 moviesContainer.appendChild(movieElement);
 
@@ -136,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 trailerElement.className = 'col-md-8 trailer';
                                 trailerElement.innerHTML = `
                                     <h4>Előzetes</h4>
-                                    <iframe width="450" height="315" src="https://www.youtube.com/embed/${trailer.key}" frameborder="0" allowfullscreen></iframe>
+                                    <iframe width="100%" height="355" src="https://www.youtube.com/embed/${trailer.key}" frameborder="0" allowfullscreen></iframe>
                                 `;
                                 moviesContainer.appendChild(trailerElement);
                             }
@@ -150,10 +141,32 @@ document.addEventListener('DOMContentLoaded', function () {
                             `;
                             moviesContainer.appendChild(trailerElement);
                         }
+
+                        const movieElement2 = document.createElement('div');
+                        movieElement2.className = 'col-md-12';
+                        movieElement2.innerHTML += `<h3 class="movie-title">${movie.title}</h3>
+                            <p class="movie-overview">${movie.overview}</p>
+                            <p class="movie-original-title"><strong>Eredeti cím:</strong> ${movie.original_title}</p>
+                            <p class="movie-release-date"><strong>Megjelenési dátum:</strong> ${movie.release_date}</p>
+                            <p class="movie-original-language"><strong>Nyelv:</strong> ${movie.original_language}</p>
+                            <p class="movie-runtime"><strong>Hossz:</strong> ${movie.runtime} perc</p>
+                            <p class="movie-production-companies"><strong>Gyártó cégek:</strong> ${movie.production_companies.map(company => company.name).join(', ')}</p>
+                            <p class="movie-production-countries"><strong>Gyártó országok:</strong> ${movie.production_countries.map(country => country.name).join(', ')}</p>
+                            <p class="movie-revenue"><strong>Bevétel:</strong> $${movie.revenue.toLocaleString()}</p>
+                            <p class="movie-budget"><strong>Költségvetés:</strong> $${movie.budget.toLocaleString()}</p>`;
+
+                        moviesContainer.appendChild(movieElement2);
+
                     })
                     .catch(error => console.error('Error fetching trailer:', error));
 
+                
+
                 loadComments(movieId);
+
+                
+
+
             })
             .catch(error => console.error('Error fetching movie:', error));
     }
@@ -361,7 +374,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         movieElement.innerHTML = `
                             <img src="${imageBaseUrl + movie.poster_path}" alt="${movie.title} poster" class="movie-poster">
                             <h3 class="movie-title">${movie.title}</h3>
-                            <p class="movie-overview">${movie.overview}</p>
+                            <p class="movie-overview limited-overview">${movie.overview}</p>
                         `;
                         movieElement.addEventListener('click', () => {
                             window.location.href = `filmek?id=${movie.id}`;
@@ -392,7 +405,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 movieElement.innerHTML = `
                                     <img src="${imageBaseUrl + movie.poster_path}" alt="${movie.title} poster" class="movie-poster">
                                     <h3 class="movie-title">${movie.title}</h3>
-                                    <p class="movie-overview">${movie.overview}</p>
+                                    <p class="movie-overview limited-overview">${movie.overview}</p>
                                 `;
                                 movieElement.addEventListener('click', () => {
                                     window.location.href = `filmek?id=${movie.id}`;
@@ -426,7 +439,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             movieElement.innerHTML = `
                                 <img src="${imageBaseUrl + movie.poster_path}" alt="${movie.title} poster" class="movie-poster">
                                 <h3 class="movie-title">${movie.title}</h3>
-                                <p class="movie-overview">${movie.overview}</p>
+                                <p class="movie-overview limited-overview">${movie.overview}</p>
                             `;
                             movieElement.addEventListener('click', () => {
                                 window.location.href = `filmek?id=${movie.id}`;
@@ -445,5 +458,25 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!movieId) {
         commentSection.style.display = 'none';
     }
+
+
+    
+    const urlParams2 = new URLSearchParams(window.location.search);
+    const movieId2 = urlParams2.get("id");
+
+    const tmlrElement = document.querySelector(".tmlr");
+    const sidebarElement = document.querySelector(".sidebar");
+
+    if (!movieId2 && tmlrElement && sidebarElement) {
+        tmlrElement.classList.remove("col-md-3");
+        tmlrElement.classList.add("col-md-12");
+        sidebarElement.appendChild(tmlrElement);
+    }
+
+    
 });
 
+$(document).ready(function () {
+    
+    
+});

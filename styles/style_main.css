@@ -1406,7 +1406,6 @@ html {
 @media (max-width: 550px) {
 
     .rating {
-        flex-direction: row; 
         gap: 3px; 
     }
 

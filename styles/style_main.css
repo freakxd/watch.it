@@ -204,6 +204,7 @@ body {
     --bejreg-color: #ffffff;
     --comment-color: #ffffff;
     --indexsvg-color: #e3e3ff;
+    --brezyhover-color: #bababa;
 }
 
 
@@ -218,6 +219,7 @@ body {
     --bejreg-color: #111528;
     --comment-color: rgb(27, 28, 51);
     --indexsvg-color: #2d2d4a;
+    --brezyhover-color: #3d3d65;
 }
 
 
@@ -1379,8 +1381,11 @@ html {
     margin-bottom:0;
   }
   
-  .custom-top-section, .custom-latest-section {
-    background-color: #2c3e50;
+/* brezys cucc */
+
+.custom-top-section, .custom-latest-section {
+    margin-top: 20px;
+    background-color: var(--base-variant);
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 20px;
@@ -1388,7 +1393,7 @@ html {
 }
 
 .custom-list-group-item {
-    background-color: #34495e; 
+    background-color: var(--secondary-text); 
     color: #ecf0f1;
     border: none;
     padding: 10px;
@@ -1397,8 +1402,16 @@ html {
 }
 
 .custom-list-group-item:hover {
-    background-color: #3e5c76; 
+    background-color: var(--text-color); 
     cursor: pointer;
+}
+
+.custom-list-group-item-withcard{
+    background-color: var(--indexsvg-color);
+}
+
+.custom-list-group-item-withcard:hover{
+    background-color: var(--brezyhover-color);
 }
 
 

@@ -77,6 +77,19 @@ $(document).ready(function () {
     }
 
     // Profil beállítások megjelenítése
+
+    document.getElementById('settings_profile').addEventListener('click', function () {
+        document.getElementById('profile_form').style.display = 'block';
+        document.getElementById('security_password_form').style.display = 'none';
+        document.getElementById('security_email_form').style.display = 'none';
+    });
+
+    document.getElementById('settings_security').addEventListener('click', function () {
+        document.getElementById('profile_form').style.display = 'none';
+        document.getElementById('security_password_form').style.display = 'block';
+        document.getElementById('security_email_form').style.display = 'block';
+    });
+
     $('#profile_form').on('submit', function(event) {
         event.preventDefault();
         var newUsername = $('#profile_username').val();

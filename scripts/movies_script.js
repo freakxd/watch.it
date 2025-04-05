@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     <h5 class="custom-comment-card-title">${comment.username}</h5>
                                     <div class="checkbox-wrapper-10" style="pointer-events: none;">
                                         <input type="checkbox" id="cb-${index}" class="tgl tgl-flip" ${comment.recommended ? 'checked' : ''} disabled>
-                                        <label for="cb-${index}" data-tg-on="Ajánlom a filmet!" data-tg-off="Nem ajánlom a filmet." class="tgl-btn"></label>
+                                        <label for="cb-${index}" data-tg-on="Ajánlom a filmet" data-tg-off="Nem ajánlom a filmet" class="tgl-btn"></label>
                                     </div>
                                     <div class="rating" style="pointer-events: none;">
                                         ${[5, 4, 3, 2, 1].map(value => `
@@ -446,3 +446,4 @@ document.addEventListener('DOMContentLoaded', function () {
         commentSection.style.display = 'none';
     }
 });
+

@@ -45,27 +45,39 @@ $(document).ready(function () {
 
     // fekete-fehér mód
 
-    let darkmode = localStorage.getItem('darkmode')
-    const feketeFeher = document.getElementById("fekete-feher")
+    let darkmode = localStorage.getItem('darkmode');
+    const feketeFeher = document.getElementById("fekete-feher");
 
     const enableDarkmode = () => {
-        document.body.classList.add('darkmode')
-        localStorage.setItem('darkmode', 'active')
-    }
+        document.body.classList.add('darkmode');
+        localStorage.setItem('darkmode', 'active');
+        feketeFeher.checked = true; 
+    };
 
     const disableDarkmode = () => {
-        document.body.classList.remove('darkmode')
-        localStorage.setItem('darkmode', 'null')
-    }
+        document.body.classList.remove('darkmode');
+        localStorage.setItem('darkmode', 'null');
+        feketeFeher.checked = false; 
+    };
 
-    if(darkmode === "active") enableDarkmode()
+    
+    if (darkmode === "active") {
+        enableDarkmode();
+    } else {
+        disableDarkmode();
+    }
 
     if (feketeFeher) {
-        feketeFeher.addEventListener("click", () => {
-            darkmode = localStorage.getItem('darkmode')
-            darkmode !== "active" ? enableDarkmode() : disableDarkmode()
-        })
+        feketeFeher.addEventListener("change", () => {
+            if (feketeFeher.checked) {
+                enableDarkmode();
+            } else {
+                disableDarkmode();
+            }
+        });
     }
+
+    // Profil beállítások megjelenítése
 
     document.getElementById('settings_profile').addEventListener('click', function () {
         document.getElementById('profile_form').style.display = 'block';

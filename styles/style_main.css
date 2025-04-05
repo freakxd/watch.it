@@ -1,3 +1,18 @@
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */
+ /* Bakos Bence  Dózsa Dávid  Breznyánszky Dávid */
+
+                /* WATCH.IT */
+                  /* CSS */
+            /* 2025 VIZSGAREMEK */
+
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */                  
+
+/* oldal betoltes animacio */
+
 #loading-screen {
     position: fixed;
     width: 100%;
@@ -49,6 +64,11 @@
     color: var(--text-color); 
     background-color: var(--bejreg-color);
 }
+
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */
+
  /* Főoldallogó, animáció  */
 
 #fooldallogo {
@@ -107,6 +127,10 @@
 body{
     background-blend-mode: multiply;
 }
+
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */
 
 /* lefele nyilacska */
 
@@ -272,14 +296,18 @@ p {
     font-size: 0.9em;
 }
 
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */
+/* ----------------------------------------------- */      
+
+/* lista/kategoriak */
+
 .list-group{ 
-    /* lista forma */
     text-align: center;
     font-weight: bold;
 }
 
 .categories2 {
-    /* kategoriak */
     display: inline-flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -296,8 +324,8 @@ p {
     color: var(--filsor-color);
     cursor: pointer;
     border-radius: 5px;
-    font-weight: bold;
-    transition: background 0.3s;
+    font-weight: bold; 
+    transition: background 0.3s;  /*  ????? */
 }
 .category2:hover {
     background: gray;
@@ -321,6 +349,8 @@ p {
 /* ----------------------------------------------- */
 /* ----------------------------------------------- */
 /* ----------------------------------------------- */
+
+/* ??????????????????????????????????????????????????????????????? */
 
 .text-left {
     text-align: left;
@@ -378,6 +408,8 @@ p {
 /* ----------------------------------------------- */
 /* ----------------------------------------------- */
 
+/* film/sorozat kategoria es poszterek */
+
 .tv {
     margin-bottom: 20px;
 }
@@ -418,15 +450,18 @@ p{
 }
 
 .list-group{ 
-    /* lista forma */
     text-align: center;
     font-weight: bold;
 
 }
 
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+
+/* api filmek es sorozat lista */
 
 .col-md-9 {
-    /* api */
     height: auto;
     background-color: var(--base-variant);
     color: var(--text-color);
@@ -438,7 +473,6 @@ p{
 }
 
 .col-md-9-filmsor {
-    /* api */
     height: auto;
     background-color: var(--base-variant);
     color: var(--text-color);
@@ -453,7 +487,7 @@ p{
 /* ---------------------------------------- */
 /* ---------------------------------------- */
 
-/* index hatteranimacio */ 
+/* index.html hatteranimacio */ 
 
 svg {
     position: fixed;
@@ -662,17 +696,25 @@ a img.icon {
     color: var(--bejreg-color);
 }
 
-/* Fekete-fehér switch pozicionálása */
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+
+/* fekete-fehér switch pozicionálása */
 
 .toggle-switch {
-    position: fixed; /* Fixálja a switch-et az oldalhoz */
-    bottom: 20px; /* Távolság az oldal aljától */
-    right: 20px; /* Távolság az oldal jobb szélétől */
-    z-index: 1000; /* Legyen a legfelső rétegen */
-    width: 100px; /* Switch szélessége */
-    height: 50px; /* Switch magassága */
+    position: fixed; 
+    bottom: 20px; 
+    right: 20px; 
+    z-index: 1000; 
+    width: 100px; 
+    height: 50px; 
     margin-left: 20px;
 }
+
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+/* ---------------------------------------- */
 
 /* fekete fehér switch*/
 
@@ -735,13 +777,9 @@ a img.icon {
     box-shadow: none;
   }
   
-
-
-
 /* ---------------------------------------- */
 /* ---------------------------------------- */
 /* ---------------------------------------- */
-
 
 /* filmek/sorozat hatteranimacio */
 
@@ -796,6 +834,8 @@ html {
 /* ---------------------------------------- */
 /* ---------------------------------------- */
 
+/* filmek/sorozatok poszterkep animacio */
+
 .poszterkep {
     transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
     transform-origin: center center;
@@ -811,6 +851,10 @@ html {
     filter: blur(3px) brightness(0.7);
 }
 
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+
 /* youtube trailer */
 
 .trailer iframe {
@@ -820,6 +864,10 @@ html {
     max-width: 100%; 
     border: none; 
 }
+
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+/* ---------------------------------------- */
 
 /* kommentek */
 
@@ -874,12 +922,16 @@ html {
     pointer-events: none;
 }
 
-/* rating */
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+
+/* értékelés */
 
 .rating {
     display: flex;
     align-items: center;
-    flex-direction: row-reverse; /* Csillagok jobbról balra */
+    flex-direction: row-reverse; 
     justify-content: center;
     gap: 5px;
 }
@@ -917,7 +969,11 @@ html {
     color: #ffa723;
   }
 
-  /* recommend */
+ /* ---------------------------------------- */
+ /* ---------------------------------------- */
+ /* ---------------------------------------- */
+
+  /* ajánlás */
 
   .tgl-btn {
     display: block;
@@ -1068,6 +1124,10 @@ html {
   #notrecommended{
     background: #FF3A19;
   }
+  
+ /* ---------------------------------------- */
+ /* ---------------------------------------- */
+ /* ---------------------------------------- */
 
   /* vélemény beírás */
 
@@ -1092,6 +1152,10 @@ html {
 #comment-form button[type="submit"]:hover {
     background: var(--accent-color);
 }
+
+/* ---------------------------------------- */
+/* ---------------------------------------- */
+/* ---------------------------------------- */
 
 /* összesített vélemény */
 

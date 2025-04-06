@@ -263,14 +263,16 @@ body{
 .movie-poster {
     width: 100%;
     height: auto;
+    border-radius: 5px;
 }
 
 .tv-poster {
-    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 5px; 
 }
 
 .tv-poster:hover {
-    transform: scale(1.07); 
+    transform: scale(1.06); 
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
     z-index: 10; 
 }
@@ -280,7 +282,7 @@ body{
 }
 
 .movie-poster:hover {
-    transform: scale(1.07); 
+    transform: scale(1.06); 
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
     z-index: 10; 
 }

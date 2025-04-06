@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const recommendedCheckbox = document.getElementById('cb5');
     const reviewSummary = document.getElementById('review-summary');
     const paginationContainer = document.getElementById('pagination');
+    let selectedGenreId = null;
 
     let status = 'not_logged_in';
     let current_user_role = 0;
@@ -77,7 +78,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         .catch(error => console.error(`Error fetching movie count for genre ${genre.name}:`, error));
 
                     categoryItem.dataset.genreId = genre.id;
-                    categoryItem.addEventListener('click', () => loadMoviesByCategory(genre.id));
+                    categoryItem.addEventListener('click', () => {
+                        loadMoviesByCategory(genre.id);
+                    });
                     categoryList.appendChild(categoryItem);
                 });
             } else {
@@ -87,30 +90,9 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => console.error('Error fetching genres:', error));
 
     function loadMoviesByCategory(genreId) {
-        const categoryApiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}&language=hu-HU`;
-        fetch(categoryApiUrl)
-            .then(response => response.json())
-            .then(data => {
-                moviesContainer.innerHTML = '';
-                if (data.results) {
-                    data.results.forEach(movie => {
-                        const movieElement = document.createElement('div');
-                        movieElement.className = 'col-md-3 movie';
-                        movieElement.innerHTML = `
-                            <img src="${imageBaseUrl + movie.poster_path}" alt="${movie.title} poster" class="movie-poster">
-                            <h3 class="movie-title">${movie.title}</h3>
-                            <p class="movie-overview limited-overview">${movie.overview}</p>
-                        `;
-                        movieElement.addEventListener('click', () => {
-                            window.location.href = `filmek?id=${movie.id}`;
-                        });
-                        moviesContainer.appendChild(movieElement);
-                    });
-                } else {
-                    console.error('No movies found in the response:', data);
-                }
-            })
-            .catch(error => console.error('Error fetching movies:', error));
+        selectedGenreId = genreId;
+        currentPage = 1;
+        loadMovies(currentPage);
     }
 
     function loadMovieById(movieId) {
@@ -455,7 +437,14 @@ document.addEventListener('DOMContentLoaded', function () {
         if (page < 1) page = 1;
         if (page > 500) page = 500;
 
-        fetch(`${apiUrl}&page=${page}`)
+        let apiUrlWithGenre = apiUrl;
+        if (selectedGenreId) {
+            apiUrlWithGenre = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${selectedGenreId}&language=hu-HU&page=${page}`;
+        } else {
+            apiUrlWithGenre = `${apiUrl}&page=${page}`;
+        }
+
+        fetch(apiUrlWithGenre)
             .then(response => response.json())
             .then(data => {
                 moviesContainer.innerHTML = '';

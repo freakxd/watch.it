@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const recommendedCheckbox = document.getElementById('cb5');
     const reviewSummary = document.getElementById('review-summary');
     const paginationContainer = document.getElementById('pagination');
+    let selectedGenreId = null;
 
     let status = 'not_logged_in';
     let current_user_role = 0;
@@ -84,32 +85,9 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => console.error('Error fetching genres:', error));
 
     function loadTvByCategory(genreId) {
-        const categoryApiUrl = `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&with_genres=${genreId}&language=hu-HU`;
-        fetch(categoryApiUrl)
-            .then(response => response.json())
-            .then(data => {
-                tvContainer.innerHTML = '';
-                if (data.results) {
-                    data.results.forEach(tv => {
-                        if (!/[^\u0000-\u007F]+/.test(tv.name)) {
-                            const tvElement = document.createElement('div');
-                            tvElement.className = 'col-md-4 tv';
-                            tvElement.innerHTML = `
-                                <img src="${imageBaseUrl + tv.poster_path}" alt="${tv.name} poster" class="tv-poster">
-                                <h3 class="tv-title">${tv.name}</h3>
-                                <p class="tv-overview limited-overview">${tv.overview}</p>
-                            `;
-                            tvElement.addEventListener('click', () => {
-                                window.location.href = `sorozatok?id=${tv.id}`;
-                            });
-                            tvContainer.appendChild(tvElement);
-                        }
-                    });
-                } else {
-                    console.error('No tv found in the response:', data);
-                }
-            })
-            .catch(error => console.error('Error fetching tv:', error));
+        selectedGenreId = genreId;
+        currentPage = 1;
+        loadTvShows(currentPage);
     }
 
     function loadTvById(tvId) {
@@ -444,13 +422,20 @@ document.addEventListener('DOMContentLoaded', function () {
         if (page < 1) page = 1;
         if (page > 500) page = 500;
 
-        fetch(`${apiUrl}&page=${page}`)
+        let apiUrlWithGenre = apiUrl;
+        if (selectedGenreId) {
+            apiUrlWithGenre = `https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&with_genres=${selectedGenreId}&language=hu-HU&page=${page}`;
+        } else {
+            apiUrlWithGenre = `${apiUrl}&page=${page}`;
+        }
+
+        fetch(apiUrlWithGenre)
             .then(response => response.json())
             .then(data => {
                 tvContainer.innerHTML = '';
                 if (data.results) {
                     data.results.forEach(tv => {
-                        if (!/[^\u0000-\u007F]+/.test(tv.name)) {
+                        if (!/[^\u0000-\u007F]+/.test(tv.name)){
                             const tvElement = document.createElement('div');
                             tvElement.className = 'col-md-3 tv';
                             tvElement.innerHTML = `
@@ -481,7 +466,6 @@ document.addEventListener('DOMContentLoaded', function () {
         firstPageButton.className = `page-item ${current === 1 ? 'active' : ''}`;
         firstPageButton.innerHTML = `<a class="page-link" href="#">1</a>`;
         firstPageButton.addEventListener('click', (event) => {
-            event.preventDefault();
             loadTvShows(1);
         });
         paginationContainer.appendChild(firstPageButton);

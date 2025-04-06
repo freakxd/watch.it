@@ -360,7 +360,8 @@ p {
     cursor: pointer;
     border-radius: 5px;
     font-weight: bold; 
-    transition: background 0.3s;  /*  ????? */
+    transition: background 0.3s;
+    width: 100%;
 }
 .category2:hover {
     background: gray;

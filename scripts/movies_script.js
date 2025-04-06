@@ -63,7 +63,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 data.genres.forEach(genre => {
                     const categoryItem = document.createElement('div');
                     categoryItem.className = 'category2';
-                    categoryItem.textContent = categoryNames[genre.name] || genre.name;
+
+                    const categoryApiUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genre.id}&language=hu-HU`;
+                    fetch(categoryApiUrl)
+                        .then(response => response.json())
+                        .then(movieData => {
+                            const movieCount = movieData.total_results;
+                            categoryItem.textContent = `${categoryNames[genre.name] || genre.name} (${movieCount})`;
+                        })
+                        .catch(error => console.error(`Error fetching movie count for genre ${genre.name}:`, error));
+
                     categoryItem.dataset.genreId = genre.id;
                     categoryItem.addEventListener('click', () => loadMoviesByCategory(genre.id));
                     categoryList.appendChild(categoryItem);

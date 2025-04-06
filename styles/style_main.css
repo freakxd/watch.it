@@ -1320,7 +1320,7 @@ html {
         margin: 10px auto;
     }
     .custom-list-group-item-card img {
-        width: 15%;
+        width: 25%;
     }
 }
 
@@ -1561,4 +1561,118 @@ html {
   .button:focus .button-box {
     transition: 0.4s;
     transform: translateX(-56px);
+  }
+
+  /* pagination */
+
+  :root {
+    --primary: #23adad;
+    --greyLight: #23adade1;
+    --greyLight-2: #cbe0dd;
+    --greyDark: #2d4848;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  #tv-container {
+    overflow-y: scroll;
+    font-family: "Poppins", sans-serif;
+    letter-spacing: 0.6px;
+    line-height: 1.4;
+    -webkit-user-select: none;
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  
+  .container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #tv-container ul {
+    list-style-type: none;
+  }
+  
+  .items-list {
+    max-width: 90vw;
+    margin: 2rem;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 3rem;
+    justify-content: center;
+    align-content: center;
+  }
+  
+  .item {
+    width: 10rem;
+    height: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--greyDark);
+    cursor: pointer;
+  }
+  
+  .item span {
+    background: #ffffff;
+    box-shadow: 0 0.8rem 2rem rgba(90, 97, 129, 0.05);
+    border-radius: 0.6rem;
+    padding: 2rem;
+    font-size: 3rem;
+    transition: all 0.3s ease;
+  }
+  
+  .item:hover span {
+    transform: scale(1.2);
+    color: var(--primary);
+  }
+  
+  .item p {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    color: var(--greyLight);
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+  }
+  
+  .pagination .page-item {
+    margin: 0 0.5rem;
+  }
+  
+  .pagination .page-item .page-link {
+    color: var(--greyDark);
+    border: 1px solid var(--greyLight);
+    border-radius: 0.4rem;
+    padding: 0.8rem 1.2rem;
+    transition: all 0.3s ease;
+  }
+  
+  .pagination .page-item.active .page-link {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+  }
+  
+  .pagination .page-item .page-link:hover {
+    background: var(--greyLight);
+    color: var(--primary);
+  }
+  
+  .pagination .page-item.disabled .page-link {
+    color: var(--greyLight);
+    pointer-events: none;
+    background: #f8f9fa;
   }

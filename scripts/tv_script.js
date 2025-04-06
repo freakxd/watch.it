@@ -441,6 +441,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function loadTvShows(page = 1) {
+        if (page < 1) page = 1;
+        if (page > 500) page = 500;
+
         fetch(`${apiUrl}&page=${page}`)
             .then(response => response.json())
             .then(data => {
@@ -469,6 +472,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function setupPagination(current, total) {
         paginationContainer.innerHTML = '';
+
+        total = Math.min(total, 500);
 
         const prevButton = document.createElement('li');
         prevButton.className = `page-item ${current === 1 ? 'disabled' : ''}`;

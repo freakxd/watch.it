@@ -480,14 +480,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const movieId = urlParams.get("id");
     const backButton = document.getElementById("backButton");
 
-    if (movieId) {
+    if (movieId !== null && movieId.trim() !== "") {
+    
         backButton.style.display = "block";
+
 
         backButton.addEventListener("click", function () {
             if (document.referrer) {
                 window.history.back();
             } else {
-                window.location.href = "/filmek"; // Az összes film/sorozat oldala
+                window.location.href = "/movies"; 
             }
         });
     }

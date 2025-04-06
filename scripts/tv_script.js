@@ -13,10 +13,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const commentText = document.getElementById('comment-text');
     const recommendedCheckbox = document.getElementById('cb5');
     const reviewSummary = document.getElementById('review-summary');
+    const paginationContainer = document.getElementById('pagination');
 
     let status = 'not_logged_in';
     let current_user_role = 0;
     let current_user_id = null;
+    let currentPage = 1;
+    const tvPerPage = 20;
 
     fetch('../backend/check_login.php')
         .then(response => response.json())
@@ -406,31 +409,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (query) {
             searchTvByTitle(query);
         } else {
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    tvContainer.innerHTML = '';
-                    if (data.results) {
-                        data.results.forEach(tv => {
-                            if (!/[^\u0000-\u007F]+/.test(tv.name)) {
-                                const tvElement = document.createElement('div');
-                                tvElement.className = 'col-md-4 tv';
-                                tvElement.innerHTML = `
-                                    <img src="${imageBaseUrl + tv.poster_path}" alt="${tv.name} poster" class="tv-poster">
-                                    <h3 class="tv-title">${tv.name}</h3>
-                                    <p class="tv-overview">${tv.overview}</p>
-                                `;
-                                tvElement.addEventListener('click', () => {
-                                    window.location.href = `sorozatok?id=${tv.id}`;
-                                });
-                                tvContainer.appendChild(tvElement);
-                            }
-                        });
-                    } else {
-                        console.error('No tv found in the response:', data);
-                    }
-                })
-                .catch(error => console.error('Error fetching tv:', error));
+            loadTvShows(currentPage);
         }
     });
 
@@ -441,30 +420,7 @@ document.addEventListener('DOMContentLoaded', function () {
         loadTvById(tvId);
         categoryColumn.style.display = 'none';
     } else {
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                if (data.results) {
-                    data.results.forEach(tv => {
-                        if (!/[^\u0000-\u007F]+/.test(tv.name)) {
-                            const tvElement = document.createElement('div');
-                            tvElement.className = 'col-md-4 tv';
-                            tvElement.innerHTML = `
-                                <img src="${imageBaseUrl + tv.poster_path}" alt="${tv.name} poster" class="tv-poster">
-                                <h3 class="tv-title">${tv.name}</h3>
-                                <p class="tv-overview">${tv.overview}</p>
-                            `;
-                            tvElement.addEventListener('click', () => {
-                                window.location.href = `sorozatok?id=${tv.id}`;
-                            });
-                            tvContainer.appendChild(tvElement);
-                        }
-                    });
-                } else {
-                    console.error('No tv found in the response:', data);
-                }
-            })
-            .catch(error => console.error('Error fetching tv:', error));
+        loadTvShows(currentPage);
     }
 
     const commentSection = document.getElementById('comments');
@@ -475,14 +431,92 @@ document.addEventListener('DOMContentLoaded', function () {
     const backButton = document.getElementById("backButton");
 
     if (tvId !== null && tvId.trim() !== "") {
-        // Ha van "id" paraméter, megjelenítjük a gombot
         backButton.style.display = "block";
 
-        // Gomb eseménykezelője
         backButton.addEventListener("click", function () {
             if (document.referrer) {
                 window.location.href = "sorozatok";
             }
         });
+    }
+
+    function loadTvShows(page = 1) {
+        fetch(`${apiUrl}&page=${page}`)
+            .then(response => response.json())
+            .then(data => {
+                tvContainer.innerHTML = '';
+                if (data.results) {
+                    data.results.forEach(tv => {
+                        const tvElement = document.createElement('div');
+                        tvElement.className = 'col-md-3 tv';
+                        tvElement.innerHTML = `
+                            <img src="${imageBaseUrl + tv.poster_path}" alt="${tv.name} poster" class="tv-poster">
+                            <h3 class="tv-title">${tv.name}</h3>
+                            <p class="tv-overview limited-overview">${tv.overview}</p>
+                        `;
+                        tvElement.addEventListener('click', () => {
+                            window.location.href = `sorozatok?id=${tv.id}`;
+                        });
+                        tvContainer.appendChild(tvElement);
+                    });
+                    setupPagination(data.page, data.total_pages);
+                } else {
+                    console.error('No TV shows found in the response:', data);
+                }
+            })
+            .catch(error => console.error('Error fetching TV shows:', error));
+    }
+
+    function setupPagination(current, total) {
+        paginationContainer.innerHTML = '';
+
+        const prevButton = document.createElement('li');
+        prevButton.className = `page-item ${current === 1 ? 'disabled' : ''}`;
+        prevButton.innerHTML = `<a class="page-link" href="#" aria-label="Previous">&laquo;</a>`;
+        prevButton.addEventListener('click', () => {
+            if (current > 1) {
+                loadTvShows(current - 1);
+            }
+        });
+        paginationContainer.appendChild(prevButton);
+
+        const maxVisiblePages = 5;
+        let startPage = Math.max(1, current - Math.floor(maxVisiblePages / 2));
+        let endPage = Math.min(total, startPage + maxVisiblePages - 1);
+
+        if (endPage - startPage < maxVisiblePages - 1) {
+            startPage = Math.max(1, endPage - maxVisiblePages + 1);
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            const pageButton = document.createElement('li');
+            pageButton.className = `page-item ${i === current ? 'active' : ''}`;
+            pageButton.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+            pageButton.addEventListener('click', () => loadTvShows(i));
+            paginationContainer.appendChild(pageButton);
+        }
+
+        if (endPage < total) {
+            const ellipsis = document.createElement('li');
+            ellipsis.className = 'page-item disabled';
+            ellipsis.innerHTML = `<a class="page-link" href="#">...</a>`;
+            paginationContainer.appendChild(ellipsis);
+
+            const lastPageButton = document.createElement('li');
+            lastPageButton.className = `page-item ${current === total ? 'active' : ''}`;
+            lastPageButton.innerHTML = `<a class="page-link" href="#">${total}</a>`;
+            lastPageButton.addEventListener('click', () => loadTvShows(total));
+            paginationContainer.appendChild(lastPageButton);
+        }
+
+        const nextButton = document.createElement('li');
+        nextButton.className = `page-item ${current === total ? 'disabled' : ''}`;
+        nextButton.innerHTML = `<a class="page-link" href="#" aria-label="Next">&raquo;</a>`;
+        nextButton.addEventListener('click', () => {
+            if (current < total) {
+                loadTvShows(current + 1);
+            }
+        });
+        paginationContainer.appendChild(nextButton);
     }
 });

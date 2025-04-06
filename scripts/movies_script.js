@@ -13,10 +13,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const commentText = document.getElementById('comment-text');
     const recommendedCheckbox = document.getElementById('cb5');
     const reviewSummary = document.getElementById('review-summary');
+    const paginationContainer = document.getElementById('pagination');
 
     let status = 'not_logged_in';
     let current_user_role = 0;
     let current_user_id = null;
+    let currentPage = 1;
+    const moviesPerPage = 20;
 
     fetch('../backend/check_login.php')
         .then(response => response.json())
@@ -402,31 +405,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (query) {
             searchMoviesByTitle(query);
         } else {
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    moviesContainer.innerHTML = '';
-                    if (data.results) {
-                        data.results.forEach(movie => {
-                            if (movie.overview && movie.overview !== "") {
-                                const movieElement = document.createElement('div');
-                                movieElement.className = 'col-md-3 movie';
-                                movieElement.innerHTML = `
-                                    <img src="${imageBaseUrl + movie.poster_path}" alt="${movie.title} poster" class="movie-poster">
-                                    <h3 class="movie-title">${movie.title}</h3>
-                                    <p class="movie-overview limited-overview">${movie.overview}</p>
-                                `;
-                                movieElement.addEventListener('click', () => {
-                                    window.location.href = `filmek?id=${movie.id}`;
-                                });
-                                moviesContainer.appendChild(movieElement);
-                            }
-                        });
-                    } else {
-                        console.error('No movies found in the response:', data);
-                    }
-                })
-                .catch(error => console.error('Error fetching movies:', error));
+            loadMovies(currentPage);
         }
     });
 
@@ -437,30 +416,7 @@ document.addEventListener('DOMContentLoaded', function () {
         loadMovieById(movieId);
         categoryColumn.style.display = 'none';
     } else {
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                if (data.results) {
-                    data.results.forEach(movie => {
-                        if (movie.overview && movie.overview !== "") {
-                            const movieElement = document.createElement('div');
-                            movieElement.className = 'col-md-3 movie';
-                            movieElement.innerHTML = `
-                                <img src="${imageBaseUrl + movie.poster_path}" alt="${movie.title} poster" class="movie-poster">
-                                <h3 class="movie-title">${movie.title}</h3>
-                                <p class="movie-overview limited-overview">${movie.overview}</p>
-                            `;
-                            movieElement.addEventListener('click', () => {
-                                window.location.href = `filmek?id=${movie.id}`;
-                            });
-                            moviesContainer.appendChild(movieElement);
-                        }
-                    });
-                } else {
-                    console.error('No movies found in the response:', data);
-                }
-            })
-            .catch(error => console.error('Error fetching movies:', error));
+        loadMovies(currentPage);
     }
 
     const commentSection = document.getElementById('comments');
@@ -494,4 +450,86 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    function loadMovies(page = 1) {
+        fetch(`${apiUrl}&page=${page}`)
+            .then(response => response.json())
+            .then(data => {
+                moviesContainer.innerHTML = '';
+                if (data.results) {
+                    data.results.forEach(movie => {
+                        const movieElement = document.createElement('div');
+                        movieElement.className = 'col-md-3 movie';
+                        movieElement.innerHTML = `
+                            <img src="${imageBaseUrl + movie.poster_path}" alt="${movie.title} poster" class="movie-poster">
+                            <h3 class="movie-title">${movie.title}</h3>
+                            <p class="movie-overview limited-overview">${movie.overview}</p>
+                        `;
+                        movieElement.addEventListener('click', () => {
+                            window.location.href = `filmek?id=${movie.id}`;
+                        });
+                        moviesContainer.appendChild(movieElement);
+                    });
+                    setupPagination(data.page, data.total_pages);
+                } else {
+                    console.error('No movies found in the response:', data);
+                }
+            })
+            .catch(error => console.error('Error fetching movies:', error));
+    }
+
+    function setupPagination(current, total) {
+        paginationContainer.innerHTML = '';
+
+        const prevButton = document.createElement('li');
+        prevButton.className = `page-item ${current === 1 ? 'disabled' : ''}`;
+        prevButton.innerHTML = `<a class="page-link" href="#" aria-label="Previous">&laquo;</a>`;
+        prevButton.addEventListener('click', () => {
+            if (current > 1) {
+                loadMovies(current - 1);
+            }
+        });
+        paginationContainer.appendChild(prevButton);
+
+        const maxVisiblePages = 5;
+        let startPage = Math.max(1, current - Math.floor(maxVisiblePages / 2));
+        let endPage = Math.min(total, startPage + maxVisiblePages - 1);
+
+        if (endPage - startPage < maxVisiblePages - 1) {
+            startPage = Math.max(1, endPage - maxVisiblePages + 1);
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            const pageButton = document.createElement('li');
+            pageButton.className = `page-item ${i === current ? 'active' : ''}`;
+            pageButton.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+            pageButton.addEventListener('click', () => loadMovies(i));
+            paginationContainer.appendChild(pageButton);
+        }
+
+        if (endPage < total) {
+            const ellipsis = document.createElement('li');
+            ellipsis.className = 'page-item disabled';
+            ellipsis.innerHTML = `<a class="page-link" href="#">...</a>`;
+            paginationContainer.appendChild(ellipsis);
+
+            const lastPageButton = document.createElement('li');
+            lastPageButton.className = `page-item ${current === total ? 'active' : ''}`;
+            lastPageButton.innerHTML = `<a class="page-link" href="#">${total}</a>`;
+            lastPageButton.addEventListener('click', () => loadMovies(total));
+            paginationContainer.appendChild(lastPageButton);
+        }
+
+        const nextButton = document.createElement('li');
+        nextButton.className = `page-item ${current === total ? 'disabled' : ''}`;
+        nextButton.innerHTML = `<a class="page-link" href="#" aria-label="Next">&raquo;</a>`;
+        nextButton.addEventListener('click', () => {
+            if (current < total) {
+                loadMovies(current + 1);
+            }
+        });
+        paginationContainer.appendChild(nextButton);
+    }
+
+    loadMovies(currentPage);
 });

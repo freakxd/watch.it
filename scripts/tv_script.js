@@ -410,12 +410,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (tvId !== null && tvId.trim() !== "") {
         backButton.style.display = "block";
-
-        backButton.addEventListener("click", function () {
-            if (document.referrer) {
-                window.location.href = "sorozatok";
-            }
-        });
     }
 
     function loadTvShows(page = 1) {

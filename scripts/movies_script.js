@@ -425,12 +425,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (movieId !== null && movieId.trim() !== "") {
         backButton.style.display = "block";
-
-        backButton.addEventListener("click", function () {
-            if (document.referrer) {
-                window.location.href = "filmek";
-            }
-        });
     }
 
     function loadMovies(page = 1) {

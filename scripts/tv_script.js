@@ -450,17 +450,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 tvContainer.innerHTML = '';
                 if (data.results) {
                     data.results.forEach(tv => {
-                        const tvElement = document.createElement('div');
-                        tvElement.className = 'col-md-3 tv';
-                        tvElement.innerHTML = `
-                            <img src="${imageBaseUrl + tv.poster_path}" alt="${tv.name} poster" class="tv-poster">
-                            <h3 class="tv-title">${tv.name}</h3>
-                            <p class="tv-overview limited-overview">${tv.overview}</p>
-                        `;
-                        tvElement.addEventListener('click', () => {
-                            window.location.href = `sorozatok?id=${tv.id}`;
-                        });
-                        tvContainer.appendChild(tvElement);
+                        if (!/[^\u0000-\u007F]+/.test(tv.name)) {
+                            const tvElement = document.createElement('div');
+                            tvElement.className = 'col-md-3 tv';
+                            tvElement.innerHTML = `
+                                <img src="${imageBaseUrl + tv.poster_path}" alt="${tv.name} poster" class="tv-poster">
+                                <h3 class="tv-title">${tv.name}</h3>
+                                <p class="tv-overview limited-overview">${tv.overview}</p>
+                            `;
+                            tvElement.addEventListener('click', () => {
+                                window.location.href = `sorozatok?id=${tv.id}`;
+                            });
+                            tvContainer.appendChild(tvElement);
+                        }
                     });
                     setupPagination(data.page, data.total_pages);
                 } else {

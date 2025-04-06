@@ -473,7 +473,7 @@ document.addEventListener('DOMContentLoaded', function () {
         sidebarElement.appendChild(tmlrElement);
     }
 
-    
+
 });
 
 $(document).ready(function () {

@@ -265,6 +265,26 @@ body{
     height: auto;
 }
 
+.tv-poster {
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.tv-poster:hover {
+    transform: scale(1.07); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
+    z-index: 10; 
+}
+
+.movie-poster {
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.movie-poster:hover {
+    transform: scale(1.07); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
+    z-index: 10; 
+}
+
 .movie-poster, .poszterkep {
     position: relative; 
     z-index: 10; 

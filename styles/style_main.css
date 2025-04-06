@@ -287,11 +287,6 @@ body{
     z-index: 10; 
 }
 
-.movie-poster, .poszterkep {
-    position: relative; 
-    z-index: 10; 
-}
-
 .movie-title {
     color: var(--text-color);
     font-size: 1.2em;
@@ -307,7 +302,7 @@ body{
     color: var(--text-color);
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 10; /* Maximum 10 sor */
+    -webkit-line-clamp: 10; 
     line-clamp: 10; 
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;

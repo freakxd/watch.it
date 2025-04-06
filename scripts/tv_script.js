@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             tvElement.innerHTML = `
                                 <img src="${imageBaseUrl + tv.poster_path}" alt="${tv.name} poster" class="tv-poster">
                                 <h3 class="tv-title">${tv.name}</h3>
-                                <p class="tv-overview">${tv.overview}</p>
+                                <p class="tv-overview limited-overview">${tv.overview}</p>
                             `;
                             tvElement.addEventListener('click', () => {
                                 window.location.href = `sorozatok?id=${tv.id}`;

@@ -462,4 +462,18 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!tvId) {
         commentSection.style.display = 'none';
     }
+
+    const backButton = document.getElementById("backButton");
+
+    if (tvId !== null && tvId.trim() !== "") {
+        // Ha van "id" paraméter, megjelenítjük a gombot
+        backButton.style.display = "block";
+
+        // Gomb eseménykezelője
+        backButton.addEventListener("click", function () {
+            if (document.referrer) {
+                window.location.href = "sorozatok";
+            }
+        });
+    }
 });

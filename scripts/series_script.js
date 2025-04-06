@@ -123,22 +123,3 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
-document.addEventListener("DOMContentLoaded", function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const movieId = urlParams.get("id");
-    const backButton = document.getElementById("backButton");
-
-    if (movieId !== null && movieId.trim() !== "") {
-        // Ha van "id" paraméter, megjelenítjük a gombot
-        backButton.style.display = "block";
-
-        // Gomb eseménykezelője
-        backButton.addEventListener("click", function () {
-            if (document.referrer) {
-                window.history.back(); // Visszalép az előző oldalra
-            } else {
-                window.location.href = "/movies"; // Az összes film/sorozat oldala
-            }
-        });
-    }
-});

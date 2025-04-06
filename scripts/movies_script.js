@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     reviewSummary.innerHTML = `
                         <div class="checkbox-wrapper-10">
                             <input type="checkbox" class="tgl tgl-flip" checked disabled>
-                            <label data-tg-on="Ajánlott: ${recommendedCount}" data-tg-off="Ajánlott: ${recommendedCount}" class="tgl-btn" style="margin-left: 7px;"></label>
+                            <label data-tg-on="Ajánlott: ${recommendedCount}" data-tg-off="Ajánlott: ${recommendedCount}" class="tgl-btn"></label>
                         </div>
                         <div class="checkbox-wrapper-10" style="margin-left: 10px;">
                             <input type="checkbox" class="tgl tgl-flip" disabled>
@@ -473,23 +473,15 @@ document.addEventListener('DOMContentLoaded', function () {
         sidebarElement.appendChild(tmlrElement);
     }
 
-
-});
-document.addEventListener("DOMContentLoaded", function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const movieId = urlParams.get("id");
+    const urlParams_ = new URLSearchParams(window.location.search);
     const backButton = document.getElementById("backButton");
 
     if (movieId !== null && movieId.trim() !== "") {
-    
         backButton.style.display = "block";
-
 
         backButton.addEventListener("click", function () {
             if (document.referrer) {
-                window.history.back();
-            } else {
-                window.location.href = "/movies"; 
+                window.location.href = "filmek";
             }
         });
     }

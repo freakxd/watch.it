@@ -1566,8 +1566,8 @@ html {
   /* pagination */
 
   :root {
-    --primary: #23adad;
-    --greyLight: #23adade1;
+    --primary: white;
+    --greyLight: grey;
     --greyLight-2: #cbe0dd;
     --greyDark: #2d4848;
   }
@@ -1590,7 +1590,6 @@ html {
   }
   
   .container {
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1661,8 +1660,8 @@ html {
   }
   
   .pagination .page-item.active .page-link {
-    background: var(--primary);
-    color: #ffffff;
+    background: grey;
+    color: black;
     border-color: var(--primary);
   }
   

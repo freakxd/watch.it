@@ -123,3 +123,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
+document.addEventListener("DOMContentLoaded", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieId = urlParams.get("id");
+    const backButton = document.getElementById("backButton");
+
+    if (movieId) {
+        backButton.style.display = "block";
+
+        backButton.addEventListener("click", function () {
+            if (document.referrer) {
+                window.history.back();
+            } else {
+                window.location.href = "/sorozatok"; // Az összes film/sorozat oldala
+            }
+        });
+    }
+});

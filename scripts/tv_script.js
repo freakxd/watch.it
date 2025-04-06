@@ -477,49 +477,69 @@ document.addEventListener('DOMContentLoaded', function () {
 
         total = Math.min(total, 500);
 
-        const prevButton = document.createElement('li');
-        prevButton.className = `page-item ${current === 1 ? 'disabled' : ''}`;
-        prevButton.innerHTML = `<a class="page-link" href="#" aria-label="Previous">&laquo;</a>`;
-        prevButton.addEventListener('click', () => {
-            if (current > 1) {
-                loadTvShows(current - 1);
-            }
+        const firstPageButton = document.createElement('li');
+        firstPageButton.className = `page-item ${current === 1 ? 'active' : ''}`;
+        firstPageButton.innerHTML = `<a class="page-link" href="#">1</a>`;
+        firstPageButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            loadTvShows(1);
         });
-        paginationContainer.appendChild(prevButton);
+        paginationContainer.appendChild(firstPageButton);
 
-        const maxVisiblePages = 5;
-        let startPage = Math.max(1, current - Math.floor(maxVisiblePages / 2));
-        let endPage = Math.min(total, startPage + maxVisiblePages - 1);
+        if (current > 3) {
+            const ellipsisStart = document.createElement('li');
+            ellipsisStart.className = 'page-item disabled';
+            ellipsisStart.innerHTML = `<a class="page-link" href="#">...</a>`;
+            paginationContainer.appendChild(ellipsisStart);
+        }
 
-        if (endPage - startPage < maxVisiblePages - 1) {
-            startPage = Math.max(1, endPage - maxVisiblePages + 1);
+        const maxVisiblePages = 3;
+        let startPage = Math.max(2, current - Math.floor(maxVisiblePages / 2));
+        let endPage = Math.min(total - 1, current + Math.floor(maxVisiblePages / 2));
+
+        if (current > total - 2) {
+            startPage = Math.max(2, total - maxVisiblePages);
         }
 
         for (let i = startPage; i <= endPage; i++) {
             const pageButton = document.createElement('li');
             pageButton.className = `page-item ${i === current ? 'active' : ''}`;
             pageButton.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-            pageButton.addEventListener('click', () => loadTvShows(i));
+            pageButton.addEventListener('click', (event) => {
+                loadTvShows(i);
+            });
             paginationContainer.appendChild(pageButton);
         }
 
-        if (endPage < total) {
-            const ellipsis = document.createElement('li');
-            ellipsis.className = 'page-item disabled';
-            ellipsis.innerHTML = `<a class="page-link" href="#">...</a>`;
-            paginationContainer.appendChild(ellipsis);
-
-            const lastPageButton = document.createElement('li');
-            lastPageButton.className = `page-item ${current === total ? 'active' : ''}`;
-            lastPageButton.innerHTML = `<a class="page-link" href="#">${total}</a>`;
-            lastPageButton.addEventListener('click', () => loadTvShows(total));
-            paginationContainer.appendChild(lastPageButton);
+        if (current < total - 2) {
+            const ellipsisEnd = document.createElement('li');
+            ellipsisEnd.className = 'page-item disabled';
+            ellipsisEnd.innerHTML = `<a class="page-link" href="#">...</a>`;
+            paginationContainer.appendChild(ellipsisEnd);
         }
+
+        const lastPageButton = document.createElement('li');
+        lastPageButton.className = `page-item ${current === total ? 'active' : ''}`;
+        lastPageButton.innerHTML = `<a class="page-link" href="#">${total}</a>`;
+        lastPageButton.addEventListener('click', (event) => {
+            loadTvShows(total);
+        });
+        paginationContainer.appendChild(lastPageButton);
+
+        const prevButton = document.createElement('li');
+        prevButton.className = `page-item ${current === 1 ? 'disabled' : ''}`;
+        prevButton.innerHTML = `<a class="page-link" href="#" aria-label="Previous">&laquo;</a>`;
+        prevButton.addEventListener('click', (event) => {
+            if (current > 1) {
+                loadTvShows(current - 1);
+            }
+        });
+        paginationContainer.insertBefore(prevButton, paginationContainer.firstChild);
 
         const nextButton = document.createElement('li');
         nextButton.className = `page-item ${current === total ? 'disabled' : ''}`;
         nextButton.innerHTML = `<a class="page-link" href="#" aria-label="Next">&raquo;</a>`;
-        nextButton.addEventListener('click', () => {
+        nextButton.addEventListener('click', (event) => {
             if (current < total) {
                 loadTvShows(current + 1);
             }

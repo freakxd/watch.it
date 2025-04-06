@@ -363,6 +363,16 @@ p {
     color: white;
 }
 
+.category2:active {
+    background-color: #333333;
+    color: white;
+}
+
+.category2.active {
+    background-color: #333333;
+    color: white;
+}
+
 .kategoriaszoveg {
     color: var(--text-color);
     font-weight: bold;
@@ -493,7 +503,7 @@ p{
 /* api filmek es sorozat lista */
 
 .col-md-9 {
-    height: auto;
+    height: 100%;
     background-color: var(--base-variant);
     color: var(--text-color);
     font-weight: bold;
@@ -504,7 +514,7 @@ p{
 }
 
 .col-md-9-filmsor {
-    height: auto;
+    height: 100%;
     background-color: var(--base-variant);
     color: var(--text-color);
     font-weight: bold;
@@ -1580,15 +1590,6 @@ html {
     box-sizing: border-box;
   }
   
-  #tv-container {
-    overflow-y: scroll;
-    font-family: "Poppins", sans-serif;
-    letter-spacing: 0.6px;
-    line-height: 1.4;
-    -webkit-user-select: none;
-    -webkit-font-smoothing: subpixel-antialiased;
-  }
-  
   .container {
     display: flex;
     flex-direction: column;
@@ -1644,8 +1645,9 @@ html {
   .pagination {
     display: flex;
     justify-content: center;
-    margin: 2rem 0;
-  }
+    position: sticky;
+    bottom: 0;
+}
   
   .pagination .page-item {
     margin: 0 0.5rem;

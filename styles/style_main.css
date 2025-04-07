@@ -287,12 +287,16 @@ body{
     z-index: 10; 
 }
 
-.movie-title {
-    color: var(--text-color);
-    font-size: 1.2em;
-    margin-top: 10px;
+.movie-title{
+  font-size: 1.2em; 
+  margin-top: 8px;
+  height: 3em; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
-
 .movie-overview {
     color: var(--text-color);
     font-size: 0.9em;
@@ -461,11 +465,15 @@ p {
 }
 
 .tv-title {
-    color: var(--text-color);
-    font-size: 1.2em;
-    margin-top: 10px;
+  font-size: 1.2em;
+  margin-top: 8px;
+  height: 3em; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  display: -webkit-box;
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical;
 }
-
 .tv-overview {
     color: var(--text-color);
     font-size: 0.9em;

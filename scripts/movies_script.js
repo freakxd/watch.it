@@ -473,6 +473,7 @@ document.addEventListener('DOMContentLoaded', function () {
         prevButton.className = `page-item ${current === 1 ? 'disabled' : ''}`;
         prevButton.innerHTML = `<a class="page-link" href="#" aria-label="Previous">&laquo;</a>`;
         prevButton.addEventListener('click', (event) => {
+            event.preventDefault();
             if (current > 1) {
                 loadMovies(current - 1);
             }
@@ -483,6 +484,7 @@ document.addEventListener('DOMContentLoaded', function () {
         firstPageButton.className = `page-item ${current === 1 ? 'active' : ''}`;
         firstPageButton.innerHTML = `<a class="page-link" href="#">1</a>`;
         firstPageButton.addEventListener('click', (event) => {
+            event.preventDefault();
             loadMovies(1);
         });
         paginationContainer.appendChild(firstPageButton);
@@ -507,6 +509,7 @@ document.addEventListener('DOMContentLoaded', function () {
             pageButton.className = `page-item ${i === current ? 'active' : ''}`;
             pageButton.innerHTML = `<a class="page-link" href="#">${i}</a>`;
             pageButton.addEventListener('click', (event) => {
+                event.preventDefault();
                 loadMovies(i);
             });
             paginationContainer.appendChild(pageButton);
@@ -523,6 +526,7 @@ document.addEventListener('DOMContentLoaded', function () {
         lastPageButton.className = `page-item ${current === total ? 'active' : ''}`;
         lastPageButton.innerHTML = `<a class="page-link" href="#">${total}</a>`;
         lastPageButton.addEventListener('click', (event) => {
+            event.preventDefault();
             loadMovies(total);
         });
         paginationContainer.appendChild(lastPageButton);
@@ -531,6 +535,7 @@ document.addEventListener('DOMContentLoaded', function () {
         nextButton.className = `page-item ${current === total ? 'disabled' : ''}`;
         nextButton.innerHTML = `<a class="page-link" href="#" aria-label="Next">&raquo;</a>`;
         nextButton.addEventListener('click', (event) => {
+            event.preventDefault();
             if (current < total) {
                 loadMovies(current + 1);
             }

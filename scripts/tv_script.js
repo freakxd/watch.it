@@ -456,10 +456,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
         total = Math.min(total, 500);
 
+        const prevButton = document.createElement('li');
+        prevButton.className = `page-item ${current === 1 ? 'disabled' : ''}`;
+        prevButton.innerHTML = `<a class="page-link" href="#" aria-label="Previous">&laquo;</a>`;
+        prevButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            if (current > 1) {
+                loadTvShows(current - 1);
+            }
+        });
+        paginationContainer.appendChild(prevButton);
+
         const firstPageButton = document.createElement('li');
         firstPageButton.className = `page-item ${current === 1 ? 'active' : ''}`;
         firstPageButton.innerHTML = `<a class="page-link" href="#">1</a>`;
         firstPageButton.addEventListener('click', (event) => {
+            event.preventDefault();
             loadTvShows(1);
         });
         paginationContainer.appendChild(firstPageButton);
@@ -484,6 +496,7 @@ document.addEventListener('DOMContentLoaded', function () {
             pageButton.className = `page-item ${i === current ? 'active' : ''}`;
             pageButton.innerHTML = `<a class="page-link" href="#">${i}</a>`;
             pageButton.addEventListener('click', (event) => {
+                event.preventDefault();
                 loadTvShows(i);
             });
             paginationContainer.appendChild(pageButton);
@@ -500,24 +513,16 @@ document.addEventListener('DOMContentLoaded', function () {
         lastPageButton.className = `page-item ${current === total ? 'active' : ''}`;
         lastPageButton.innerHTML = `<a class="page-link" href="#">${total}</a>`;
         lastPageButton.addEventListener('click', (event) => {
+            event.preventDefault();
             loadTvShows(total);
         });
         paginationContainer.appendChild(lastPageButton);
-
-        const prevButton = document.createElement('li');
-        prevButton.className = `page-item ${current === 1 ? 'disabled' : ''}`;
-        prevButton.innerHTML = `<a class="page-link" href="#" aria-label="Previous">&laquo;</a>`;
-        prevButton.addEventListener('click', (event) => {
-            if (current > 1) {
-                loadTvShows(current - 1);
-            }
-        });
-        paginationContainer.insertBefore(prevButton, paginationContainer.firstChild);
 
         const nextButton = document.createElement('li');
         nextButton.className = `page-item ${current === total ? 'disabled' : ''}`;
         nextButton.innerHTML = `<a class="page-link" href="#" aria-label="Next">&raquo;</a>`;
         nextButton.addEventListener('click', (event) => {
+            event.preventDefault();
             if (current < total) {
                 loadTvShows(current + 1);
             }

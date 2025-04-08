@@ -698,7 +698,7 @@ p {
     gap: 10px;
     margin-top: 20px;
     border: 3px solid var(--text-color);
-    border-radius: 50px;
+    border-radius: 25px;
     padding: 20px;
     background-color: var(--base-variant);
 }
@@ -866,7 +866,7 @@ p{
     color: var(--text-color);
     font-weight: bold;
     border: 3px solid var(--text-color);
-    border-radius: 50px;
+    border-radius: 25px;
     padding: 25px;
     margin-top: 0;
 }
@@ -1415,6 +1415,12 @@ html {
 
 /* értékelés */
 
+.rating input[type="radio"] {
+   appearance: none; 
+  -webkit-appearance: none; 
+  -moz-appearance: none; 
+}
+
 .rating {
     display: flex;
     align-items: center;
@@ -1805,7 +1811,8 @@ html {
 @media (max-width: 550px) {
 
     .rating {
-        gap: 3px; 
+        gap: 3px;
+
     }
 
     .rating label {
@@ -1854,6 +1861,18 @@ html {
         order: 1; 
     }
     
+}
+
+@media (max-width: 768px) {
+  .rating label {
+      font-size: 20px; 
+      margin: 0 2px; 
+  }
+
+  .rating {
+      justify-content: center; 
+      gap: 1px;
+  }
 }
 
 /* vissza gomb */

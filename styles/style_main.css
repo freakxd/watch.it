@@ -318,7 +318,6 @@ body {
 .movie-overview {
     color: var(--text-color);
     font-size: 0.9em;
-    text-align: justify;
     line-height: 1.4;
     margin: 0;
 }

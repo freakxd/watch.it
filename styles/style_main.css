@@ -262,7 +262,7 @@ body{
 
 .movie-poster {
     width: 100%;
-    height: auto;
+    height: 326px;
     border-radius: 5px;
     display: inline-block;
     margin: 10px;
@@ -337,7 +337,28 @@ p {
     color: var(--text-color);
     font-size: 0.9em;
 }
+@media screen and (max-width: 768px) {
+    .movie-poster {
+        height: auto;
+    }
+ 
+  
+}
+@media screen and (max-width: 1000px) {
+  .movie-poster {
+      height: auto;
+  }
 
+
+}
+
+@media screen and (max-width: 1200px) {
+  .movie-poster {
+      height: auto;
+  }
+
+
+}
 /* ----------------------------------------------- */
 /* ----------------------------------------------- */
 /* ----------------------------------------------- */      

@@ -1471,7 +1471,7 @@ html {
     width: 8em; 
     height: 1.5em; 
     font-size: 0.8em;
-    padding: 1px;
+    padding: 0.5px;
 }
   .checkbox-wrapper-10 {
     display: flex;

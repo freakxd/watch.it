@@ -544,3 +544,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const isMovieOrSeriesPage = window.location.pathname.includes('film') || window.location.pathname.includes('sorozat');
+    
+    if (isMovieOrSeriesPage) {
+        document.body.classList.add('no-popout');
+    }
+});

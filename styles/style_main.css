@@ -1424,10 +1424,32 @@ html {
 /* értékelés */
 
 .rating input[type="radio"] {
-   appearance: none; 
+  appearance: none; 
   -webkit-appearance: none; 
   -moz-appearance: none; 
+  background-color: transparent; 
+  width: 0; 
+  height: 0; 
+  margin: 0; 
+  position: absolute; 
 }
+
+.rating label {
+  font-size: 30px; 
+  color: #ffa723; 
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.rating input:checked + label {
+  color: #ffa723; 
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+  color: #ff9e0b; 
+}
+
 
 .rating {
     display: flex;

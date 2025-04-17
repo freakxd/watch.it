@@ -1,4 +1,5 @@
 <?php
+//admin oldalon lévő felhasználók kilistázása
 include 'db.php';
 
 $response = array();
@@ -31,9 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response['status'] = 'success';
         $response['message'] = 'Felhasználói adatok sikeresen frissítve.';
         $response['hashed_password'] = $hashed_password;
-    } else {
-        $response['status'] = 'error';
-        $response['message'] = 'Hiba történt a felhasználói adatok frissítése során.';
     }
 
     $stmt->close();

@@ -1,4 +1,5 @@
 <?php
+//admin oldalon statisztikák
 include 'db.php';
 
 $response = array();

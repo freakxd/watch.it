@@ -9,39 +9,6 @@ window.addEventListener('load', function () { //töltőképernyő
 });
 
 $(document).ready(function () {
-    $('#profilePictureInput').on('click').trigger('click');
-
-    $('#profilePictureInput').on('change', function () {
-        var formData = new FormData();
-        formData.append('profilePicture', $('#profilePictureInput')[0].files[0]);
-
-        $.ajax({
-            url: '../backend/upload_profile_picture.php',
-            type: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                try {
-                    if (typeof response === 'string') {
-                        response = JSON.parse(response);
-                    }
-                    if (response.status === 'success') {
-                        var randomParam = new Date().getTime();
-                        $('#profilePictureDiv').html('<img src="' + response.filePath + '?t=' + randomParam + '" alt="Profilkép" class="img-fluid">');
-                    } else {
-                        $('#div_profileAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
-                    }
-                } catch (e) {
-                    console.error('JSON parse error: ', e);
-                    console.error('Response: ', response);
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
-            }
-        });
-    });
 
     // fekete-fehér mód
 
@@ -109,9 +76,6 @@ $(document).ready(function () {
                 } else {
                     $('#div_profileAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
             }
         });
     });
@@ -142,17 +106,11 @@ $(document).ready(function () {
                                 } else {
                                     $('#div_passwordAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                                 }
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-                                console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
                             }
                         });
                     } else {
                         $('#div_passwordAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
                 }
             });
         } else {
@@ -167,9 +125,6 @@ $(document).ready(function () {
                     } else {
                         $('#div_passwordAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
                 }
             });
         }
@@ -201,17 +156,11 @@ $(document).ready(function () {
                                 } else {
                                     $('#div_emailAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                                 }
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-                                console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
                             }
                         });
                     } else {
                         $('#div_emailAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
                 }
             });
         } else {
@@ -226,9 +175,6 @@ $(document).ready(function () {
                     } else {
                         $('#div_emailAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
                 }
             });
         }
@@ -250,9 +196,6 @@ $(document).ready(function () {
                 } else {
                     $('#div_forgotpasswordAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
             }
         });
     });
@@ -273,9 +216,6 @@ $(document).ready(function () {
                 } else {
                     $('#div_verifyAlert_forgotpassword').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
             }
         });
     });
@@ -295,9 +235,6 @@ $(document).ready(function () {
                 } else {
                     $('#div_newpasswordAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log('Hiba történt: ' + textStatus + ' - ' + errorThrown);
             }
         });
     });
@@ -331,7 +268,6 @@ $(document).ready(function () {
                 `);
             });
         })
-        .catch(error => console.error('Error fetching latest movies:', error));
 
     fetch(topRatedMoviesUrl)
         .then(response => response.json())
@@ -356,7 +292,6 @@ $(document).ready(function () {
                 `);
             });
         })
-        .catch(error => console.error('Error fetching top-rated movies:', error));
 
         $(".arrows").on("click", function() {
             var targetElement = document.querySelector(".latest-movies-title");

@@ -1,16 +1,12 @@
 <?php
+//jelszó módosítása
+header('Content-Type: application/json');
 session_start();
 include 'db.php';
 
 $response = array();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (!isset($_SESSION['user_id'])) {
-        $response['status'] = 'error';
-        $response['message'] = 'Felhasználó ID hiányzik';
-        echo json_encode($response);
-        exit();
-    }
 
     $userId = $_SESSION['user_id'];
     $oldPassword = $_POST['oldPassword'];
@@ -41,9 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $response['status'] = 'error';
             $response['message'] = 'Helytelen régi jelszó.';
         }
-    } else {
-        $response['status'] = 'error';
-        $response['message'] = 'Felhasználó nem található.';
     }
 
     $stmt->close();

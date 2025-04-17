@@ -1,4 +1,6 @@
 <?php
+//megerősítő kódok jelszó és email cím változtatásához
+header('Content-Type: application/json');
 session_start();
 include 'db.php';
 require '../vendor/autoload.php';

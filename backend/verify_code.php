@@ -1,4 +1,5 @@
 <?php
+//megerősítő kód bejelentkezésnél
 include 'db.php';
 
 $response = array();
@@ -8,13 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $verification_code = trim($_POST['verification_code']);
     $stay_logged_in = isset($_POST['stay_logged_in']) ? true : false;
 
-    if (empty($user_id) || empty($verification_code)) {
-        $response['status'] = 'error';
-        $response['message'] = 'Felhasználó ID és kód megadása kötelező';
-        echo json_encode($response);
-        exit();
-    }
-
     $sql = "SELECT verification_code, username FROM account WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
@@ -22,15 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->store_result();
     $stmt->bind_result($stored_code, $username);
     $stmt->fetch();
-
-    if ($stmt->num_rows == 0) {
-        $response['status'] = 'error';
-        $response['message'] = 'Hibás felhasználó ID';
-        $stmt->close();
-        $conn->close();
-        echo json_encode($response);
-        exit();
-    }
 
     if ($verification_code != $stored_code) {
         $response['status'] = 'error';

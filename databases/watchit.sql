@@ -1,3 +1,4 @@
+--watch.it adatbázis sémája
 CREATE DATABASE watchit DEFAULT CHARACTER SET UTF8 COLLATE utf8_hungarian_ci;
 
 USE watchit;

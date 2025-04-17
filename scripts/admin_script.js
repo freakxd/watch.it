@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const adminContent = document.getElementById('admin-content');
     let currentPage = 1;
-    const itemsPerPage = 10;
+    const itemsPerPage = 10; //egy oldalon hány db felhasználó/vélemény jelenjen meg
     let searchQuery = '';
 
     function paginate(array, page, itemsPerPage) {
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function renderTable(contentType, data) {
         let html = '';
-        if (contentType === 'felhasznalok') {
+        if (contentType === 'felhasznalok') { //felhasználók betöltése
             const filteredUsers = filterData(data.users, searchQuery);
             const paginatedUsers = paginate(filteredUsers, currentPage, itemsPerPage);
             html += '<table class="table table-dark table-striped">';
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
             html += renderPagination(filteredUsers.length, currentPage, itemsPerPage);
             html += `<p>Összes felhasználó: ${data.total_users}</p>`;
             html += `<p>Összes admin: ${data.total_admins}</p>`;
-        } else if (contentType === 'velemenyek') {
+        } else if (contentType === 'velemenyek') { //vélemények betöltése
             const filteredComments = filterData(data.comments, searchQuery);
             const paginatedComments = paginate(filteredComments, currentPage, itemsPerPage);
             html += '<table class="table table-dark table-striped">';
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return html;
     }
 
-    function updateTable(contentType, data) {
+    function updateTable(contentType, data) { //szerkeszhetőség
         const tableHtml = renderTable(contentType, data);
         document.getElementById('table-container').innerHTML = tableHtml;
 
@@ -133,7 +133,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             }
                         } else {
                             feedback.innerHTML = '❌';
-                            console.error(data.message);
                         }
                         this.parentNode.appendChild(feedback);
                         setTimeout(() => feedback.remove(), 5000);
@@ -146,7 +145,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         feedback.innerHTML = '❌';
                         this.parentNode.appendChild(feedback);
                         setTimeout(() => feedback.remove(), 5000);
-                        console.error('Error updating user data:', error);
                     });
                 }
             });
@@ -178,7 +176,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         feedback.innerHTML = '✔️';
                     } else {
                         feedback.innerHTML = '❌';
-                        console.error(data.message);
                     }
                     this.parentNode.appendChild(feedback);
                     setTimeout(() => feedback.remove(), 5000);
@@ -191,7 +188,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     feedback.innerHTML = '❌';
                     this.parentNode.appendChild(feedback);
                     setTimeout(() => feedback.remove(), 5000);
-                    console.error('Error updating user data:', error);
                 });
             });
         });
@@ -238,14 +234,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         feedbackSpan.innerHTML = '❌';
                         feedbackSpan.style.display = 'inline-block';
                         setTimeout(() => feedbackSpan.style.display = 'none', 5000);
-                        console.error(data.message);
                     }
                 })
                 .catch(error => {
                     feedbackSpan.innerHTML = '❌';
                     feedbackSpan.style.display = 'inline-block';
                     setTimeout(() => feedbackSpan.style.display = 'none', 5000);
-                    console.error('Error deleting item:', error);
                 });
             });
         });
@@ -296,7 +290,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 updateTable(contentType, data);
             })
-            .catch(error => console.error('Error loading admin content:', error));
     }
 
     const urlParams = new URLSearchParams(window.location.search);

@@ -1,4 +1,6 @@
 <?php
+//email-cím módosítása
+header('Content-Type: application/json');
 session_start();
 include 'db.php';
 

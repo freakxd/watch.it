@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const apiUrl = `https://api.themoviedb.org/3/tv/popular?api_key=${apiKey}&language=hu-HU`;
     const onTheAirApiUrl = `https://api.themoviedb.org/3/tv/on_the_air?api_key=${apiKey}&language=hu-HU`;
     const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
-    //const categoryUrl = `https://api.themoviedb.org/3/genre/tv/list?api_key=${apiKey}&language=hu-HU`;
 
     const topSeries = document.getElementById('custom-top-series');
     const onAirSeries = document.getElementById('custom-on-air-series');
@@ -12,6 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var seriesListNr = 1;
     var onAirListNr = 1;
    
+    //top sorozatok és legújabb sorozatok
+
     fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
@@ -53,11 +54,8 @@ document.addEventListener('DOMContentLoaded', function () {
                            
                         }
                     });
-                } else {
-                    console.error('No series found in the response:', data);
                 }
             })
-            .catch(error => console.error('Error fetching series:', error));
 
     fetch(onTheAirApiUrl)
             .then(response => response.json())
@@ -97,11 +95,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             onAirListNr++;
                         }
                     });
-                } else {
-                    console.error('No series found in the response:', data);
                 }
             })
-            .catch(error => console.error('Error fetching series:', error));
 
 
 

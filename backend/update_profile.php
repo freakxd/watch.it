@@ -1,4 +1,6 @@
 <?php
+//felhasználói név megváltoztatása
+header('Content-Type: application/json');
 session_start();
 include 'db.php';
 
@@ -24,12 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("si", $newUsername, $userId);
         if ($stmt->execute()) {
-            $oldProfilePath = "../members/" . $currentUsername . ".". $userId .".html";
-            $newProfilePath = "../members/" . $newUsername . ".". $userId .".html";
-            if (file_exists($oldProfilePath)) {
-                rename($oldProfilePath, $newProfilePath);
-            }
-
             $response['status'] = 'success';
             $response['message'] = 'A felhasználónév sikeresen megváltozott, jelentkezz be újra!';
             $response['redirect'] = '../backend/logout.php';

@@ -1,4 +1,5 @@
 <?php
+//admin oldalon felhasználó/vélemény törlése
 header('Content-Type: application/json');
 
 include 'db.php';
@@ -14,8 +15,6 @@ if ($type === 'user') {
     $stmt->bind_param("i", $id);
     if ($stmt->execute()) {
         $response = ['status' => 'success'];
-    } else {
-        $response = ['status' => 'error', 'message' => 'Error deleting user'];
     }
     $stmt->close();
 } elseif ($type === 'comment') {
@@ -23,8 +22,6 @@ if ($type === 'user') {
     $stmt->bind_param("i", $id);
     if ($stmt->execute()) {
         $response = ['status' => 'success'];
-    } else {
-        $response = ['status' => 'error', 'message' => 'Error deleting comment'];
     }
     $stmt->close();
 }

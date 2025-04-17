@@ -1,9 +1,6 @@
 $(document).ready(function() {
-    function handleAjaxError(jqXHR, textStatus, errorThrown, alertDiv) {
-        console.log('Hiba történt:', textStatus, '-', errorThrown);
-        $(alertDiv).html('<div class="alert alert-danger">Hiba történt a szerverrel való kommunikáció során.</div>');
-    }
 
+    //bejelentkezés
     $('#login_form').on('submit', function(event) {
         event.preventDefault();
 
@@ -27,12 +24,10 @@ $(document).ready(function() {
                     $('#div_loginAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                handleAjaxError(jqXHR, textStatus, errorThrown, '#div_loginAlert');
-            }
         });
     });
 
+    //bejelentkezés megerősítő kód ellenőrzése
     $('#verify_form').on('submit', function(event) {
         event.preventDefault();
 
@@ -55,12 +50,10 @@ $(document).ready(function() {
                     $('#div_verifyAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                handleAjaxError(jqXHR, textStatus, errorThrown, '#div_verifyAlert');
-            }
         });
     });
 
+    //regisztrálás
     $('#register_form').on('submit', function(e) {
         e.preventDefault();
         
@@ -78,12 +71,10 @@ $(document).ready(function() {
                     $('#div_registerAlert').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                handleAjaxError(jqXHR, textStatus, errorThrown, '#div_registerAlert');
-            }
         });
     });
 
+    //regisztráció megerősítő kód ellenőrzése
     $('#verify_form_register').on('submit', function(e) {
         e.preventDefault();
         
@@ -103,12 +94,10 @@ $(document).ready(function() {
                     $('#div_verifyAlert_register').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                handleAjaxError(jqXHR, textStatus, errorThrown, '#div_verifyAlert_register');
-            }
         });
     });
 
+    //ha be van jelentkezve akkor ez jelenjen meg a navbarban
     $.ajax({
         url: '../backend/check_login.php',
         method: 'GET',

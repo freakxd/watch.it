@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon"> <!-- böngészőben icon -->
     <title>watch.it</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="../styles/style_main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> <!-- bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script> <!-- bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> <!-- bootstrap -->
+    <link rel="stylesheet" href="../styles/style_main.css"><!-- css -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../scripts/main_script.js" defer></script>
     <script src="../scripts/ajax.js"></script>
@@ -16,11 +16,13 @@
     <script src="../scripts/admin_script.js" defer></script>
 </head>
 <body>
+    <!-- betöltőképernyő -->
     <div id="loading-screen">
         <img src="../images/logo.png" alt="Logo">
         <div class="spinner-border text-light" role="status">
         </div>
     </div>
+    <!-- navbar -->
     <nav class="navbar navbar-expand-sm bg-dark bg-gradient navbar-dark text-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="index"><img src="../images/homebutton2.png" alt="watch.it" style="width: 50px; height: 50px; border-radius: 8px;"></a>
@@ -63,6 +65,14 @@
     <div class="container mt-5">
         <div id="admin-content">
         </div>
+    </div>
+
+    <!-- fekete-feher switch -->
+    <div class="toggle-switch">
+        <label class="switch-label">
+          <input type="checkbox" class="checkbox" id="fekete-feher" checked>
+          <span class="slider"></span>
+        </label>
     </div>
 
     <!-- bejelentkezés modal -->

@@ -1,4 +1,5 @@
 <?php
+//bejelentkezés
 include 'db.php';
 require '../vendor/autoload.php';
 

@@ -1,4 +1,5 @@
 <?php
+//megerősítő kód elfelejtett jelszónál
 header('Content-Type: application/json');
 require 'db.php';
 

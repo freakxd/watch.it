@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=hu-HU`;
     const onTheAirApiUrl = `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=hu-HU`;
     const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
-    //const categoryUrl = `https://api.themoviedb.org/3/genre/tv/list?api_key=${apiKey}&language=hu-HU`;
 
     const topMovies = document.getElementById('custom-top-movies');
     const upcomingMoviesDIV = document.getElementById('custom-latest-releases');
@@ -11,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const upcomingMoviesLimit = 5;
     var topMoviesNr = 1;
     var upcomingMoviesNr = 1;
+
+    //top filmek és legújabb filmek
    
     fetch(apiUrl)
             .then(response => response.json())
@@ -53,11 +54,8 @@ document.addEventListener('DOMContentLoaded', function () {
                            
                         }
                     });
-                } else {
-                    console.error('No movie found in the response:', data);
                 }
             })
-            .catch(error => console.error('Error fetching movie:', error));
 
     fetch(onTheAirApiUrl)
             .then(response => response.json())
@@ -97,18 +95,6 @@ document.addEventListener('DOMContentLoaded', function () {
                             upcomingMoviesNr++;
                         }
                     });
-                } else {
-                    console.error('No movies found in the response:', data);
                 }
             })
-            .catch(error => console.error('Error fetching movies:', error));
-
-
-
-
-
-
-
-
-
 });

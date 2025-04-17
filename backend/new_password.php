@@ -1,4 +1,5 @@
 <?php
+//új jelszó beállítása
 header('Content-Type: application/json');
 require 'db.php';
 

@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentPage = 1;
     const moviesPerPage = 20;
 
+    //vélemény íráshoz megnézi, be van-e jelentkezve a felhasználó
     fetch('../backend/check_login.php')
         .then(response => response.json())
         .then(data => {
@@ -36,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 recommendedCheckbox.disabled = true;
             }
         })
-        .catch(error => console.error('Error checking login status:', error));
 
+    //kategóriák magyar nevekkel
     const categoryNames = {
         "Action": "Akció ",
         "Adventure": "Kaland",
@@ -60,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
         "Western": "Western"
     };
 
+    //kategóriák betöltése
     fetch(categoryUrl)
         .then(response => response.json())
         .then(data => {
@@ -75,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
                             const movieCount = movieData.total_results;
                             categoryItem.textContent = `${categoryNames[genre.name] || genre.name} (${movieCount})`;
                         })
-                        .catch(error => console.error(`Error fetching movie count for genre ${genre.name}:`, error));
 
                     categoryItem.dataset.genreId = genre.id;
                     categoryItem.addEventListener('click', () => {
@@ -83,18 +84,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                     categoryList.appendChild(categoryItem);
                 });
-            } else {
-                console.error('No genres found in the response:', data);
             }
         })
-        .catch(error => console.error('Error fetching genres:', error));
 
+    //kategóriák alapján betölti a filmet
     function loadMoviesByCategory(genreId) {
         selectedGenreId = genreId;
         currentPage = 1;
         loadMovies(currentPage);
     }
 
+    //egy adott film betöltése
     function loadMovieById(movieId) {
         const movieApiUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=hu-HU`;
         const videoApiUrl = `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`;
@@ -150,21 +150,12 @@ document.addEventListener('DOMContentLoaded', function () {
                             <p class="movie-budget"><strong>Költségvetés:</strong> $${movie.budget.toLocaleString()}</p>`;
 
                         moviesContainer.appendChild(movieElement2);
-
                     })
-                    .catch(error => console.error('Error fetching trailer:', error));
-
-                
-
                 loadComments(movieId);
-
-                
-
-
             })
-            .catch(error => console.error('Error fetching movie:', error));
     }
 
+    //vélemények betöltése
     function loadComments(movieId) {
         fetch(`../backend/get_comments.php?movie_id=${movieId}`)
             .then(response => response.json())
@@ -251,9 +242,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     reviewSummary.innerHTML = '';
                 }
             })
-            .catch(error => console.error('Error fetching comments:', error));
     }
 
+    //vélemény lementése
     if (commentForm) {
         commentForm.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -277,17 +268,13 @@ document.addEventListener('DOMContentLoaded', function () {
                             document.querySelector('.rating input[name="rate"]:checked').checked = false;
                             recommendedCheckbox.checked = false;
                             loadComments(movieId);
-                        } else {
-                            console.error(data.message);
                         }
                     })
-                    .catch(error => console.error('Error saving comment:', error));
-            } else {
-                console.error('Minden mezőt ki kell tölteni.');
             }
         });
     }
 
+    //vélemény törlése
     commentsContainer.addEventListener('click', function (event) {
         const target = event.target;
 
@@ -316,7 +303,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         loadComments(movieId);
                     }
                 })
-                .catch(error => console.error('Error deleting comment:', error));
         }
 
         if (target.classList.contains('cancel-delete-btn')) {
@@ -328,6 +314,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    //like/dislike gombok működése
     commentsContainer.addEventListener('click', function (event) {
         const target = event.target;
     
@@ -347,14 +334,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (data.status === 'success') {
                         const movieId = new URLSearchParams(window.location.search).get('id');
                         loadComments(movieId);
-                    } else {
-                        alert(data.message || 'Hiba történt a like/dislike mentése során.');
                     }
                 })
-                .catch(error => console.error('Error liking/disliking comment:', error));
         }
     });
 
+    //keresés
     function searchMoviesByTitle(title) {
         const searchApiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${title}&language=hu-HU`;
         fetch(searchApiUrl)
@@ -375,11 +360,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         });
                         moviesContainer.appendChild(movieElement);
                     });
-                } else {
-                    console.error('No movies found in the response:', data);
                 }
             })
-            .catch(error => console.error('Error fetching movies:', error));
     }
 
     searchBar.addEventListener('input', function () {
@@ -394,6 +376,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const movieId = urlParams.get('id');
 
+    //ha egy adott filmek vagyunk akkor eltűntetjuk a kategóriákat
     if (movieId) {
         loadMovieById(movieId);
         categoryColumn.style.display = 'none';
@@ -401,6 +384,7 @@ document.addEventListener('DOMContentLoaded', function () {
         loadMovies(currentPage);
     }
 
+    //ha nem vagyunk egy adott filmen akkor eltűntetjük a vélemény szekciót
     const commentSection = document.getElementById('comments');
     if (!movieId) {
         commentSection.style.display = 'none';
@@ -427,6 +411,7 @@ document.addEventListener('DOMContentLoaded', function () {
         backButton.style.display = "block";
     }
 
+    //filmek betöltése, maximum 500 oldal az api miatt
     function loadMovies(page = 1) {
         if (page < 1) page = 1;
         if (page > 500) page = 500;
@@ -457,11 +442,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         moviesContainer.appendChild(movieElement);
                     });
                     setupPagination(data.page, data.total_pages);
-                } else {
-                    console.error('No movies found in the response:', data);
                 }
             })
-            .catch(error => console.error('Error fetching movies:', error));
     }
 
     function setupPagination(current, total) {

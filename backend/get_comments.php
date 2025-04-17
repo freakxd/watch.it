@@ -1,4 +1,5 @@
 <?php
+//vélemények betöltése
 require_once 'db.php';
 header('Content-Type: application/json');
 
@@ -40,17 +41,9 @@ if (isset($_GET['movie_id'])) {
             WHERE comments.series_id = ?
             GROUP BY comments.id
             ORDER BY comments.created_at DESC";
-} else {
-    echo json_encode(['status' => 'error', 'message' => 'Nincs megadva azonosító.']);
-    exit;
 }
 
 $stmt = $conn->prepare($sql);
-if (!$stmt) {
-    error_log("SQL előkészítési hiba: " . $conn->error);
-    echo json_encode(['status' => 'error', 'message' => 'Hiba történt az adatbázis lekérdezése során.']);
-    exit;
-}
 
 $stmt->bind_param("i", $id);
 $stmt->execute();

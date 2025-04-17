@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
     let current_user_role = 0;
     let current_user_id = null;
     let currentPage = 1;
-    const tvPerPage = 20;
 
+    //vélemény íráshoz megnézi, be van-e jelentkezve a felhasználó
     fetch('../backend/check_login.php')
         .then(response => response.json())
         .then(data => {
@@ -36,9 +36,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 recommendedCheckbox.disabled = true;
             }
         })
-        .catch(error => console.error('Error checking login status:', error));
 
-    const categoryNames = {
+    //kategóriák magyar nevei
+        const categoryNames = {
         "Action & Adventure": "Akció és Kaland",
         "Animation": "Animáció",
         "Comedy": "Vígjáték",
@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
         "Western": "Western"
     };
 
+    //kategóriák betöltése
     fetch(categoryUrl)
         .then(response => response.json())
         .then(data => {
@@ -72,24 +73,22 @@ document.addEventListener('DOMContentLoaded', function () {
                             const tvCount = tvData.total_results;
                             categoryItem.textContent = `${categoryNames[genre.name] || genre.name} (${tvCount})`;
                         })
-                        .catch(error => console.error(`Error fetching TV count for genre ${genre.name}:`, error));
 
                     categoryItem.dataset.genreId = genre.id;
                     categoryItem.addEventListener('click', () => loadTvByCategory(genre.id));
                     categoryList.appendChild(categoryItem);
                 });
-            } else {
-                console.error('No genres found in the response:', data);
             }
         })
-        .catch(error => console.error('Error fetching genres:', error));
 
+    //kategória alapján sorozatok betöltése
     function loadTvByCategory(genreId) {
         selectedGenreId = genreId;
         currentPage = 1;
         loadTvShows(currentPage);
     }
 
+    //egy adott sorozat betöltése
     function loadTvById(tvId) {
         const tvApiUrl = `https://api.themoviedb.org/3/tv/${tvId}?api_key=${apiKey}&language=hu-HU`;
         const videoApiUrl = `https://api.themoviedb.org/3/tv/${tvId}/videos?api_key=${apiKey}`;
@@ -152,14 +151,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
                             loadComments(tvId);
                         })
-                        .catch(error => console.error('Error fetching trailer:', error));
-                } else {
-                    console.error('No detailed information found for tv:', tvId);
                 }
             })
-            .catch(error => console.error('Error fetching tv:', error));
     }
 
+    //vélemények betöltése
     function loadComments(tvId) {
         fetch(`../backend/get_comments.php?series_id=${tvId}`)
             .then(response => response.json())
@@ -250,9 +246,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     reviewSummary.innerHTML = '';
                 }
             })
-            .catch(error => console.error('Error fetching comments:', error));
     }
 
+    //vélemény írása, mentése
     if (commentForm) {
         commentForm.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -276,17 +272,13 @@ document.addEventListener('DOMContentLoaded', function () {
                             document.querySelector('.rating input[name="rate"]:checked').checked = false;
                             recommendedCheckbox.checked = false;
                             loadComments(seriesId);
-                        } else {
-                            console.error(data.message);
                         }
                     })
-                    .catch(error => console.error('Error saving comment:', error));
-            } else {
-                console.error('Minden mezőt ki kell tölteni.');
             }
         });
     }
 
+    //vélemény törlése
     commentsContainer.addEventListener('click', function (event) {
         const target = event.target;
 
@@ -314,7 +306,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         loadComments(tvId);
                     }
                 })
-                .catch(error => console.error('Error deleting comment:', error));
         }
 
         if (target.classList.contains('cancel-delete-btn')) {
@@ -326,6 +317,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    //like/dislike gombok eseménykezelője
     commentsContainer.addEventListener('click', function (event) {
         const target = event.target;
     
@@ -345,14 +337,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (data.status === 'success') {
                         const tvId = new URLSearchParams(window.location.search).get('id');
                         loadComments(tvId);
-                    } else {
-                        alert(data.message || 'Hiba történt a like/dislike mentése során.');
                     }
                 })
-                .catch(error => console.error('Error liking/disliking comment:', error));
         }
     });
 
+    //keresés
     function searchTvByTitle(title) {
         const searchApiUrl = `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${title}&language=hu-HU`;
         fetch(searchApiUrl)
@@ -375,11 +365,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             tvContainer.appendChild(tvElement);
                         }
                     });
-                } else {
-                    console.error('No tv found in the response:', data);
                 }
             })
-            .catch(error => console.error('Error fetching tv:', error));
     }
 
     searchBar.addEventListener('input', function () {
@@ -444,11 +431,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     });
                     setupPagination(data.page, data.total_pages);
-                } else {
-                    console.error('No TV shows found in the response:', data);
                 }
             })
-            .catch(error => console.error('Error fetching TV shows:', error));
     }
 
     function setupPagination(current, total) {

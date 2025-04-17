@@ -1,4 +1,5 @@
 <?php
+//admin oldalon vélemények kilistázása
 include 'db.php';
 
 $response = array();

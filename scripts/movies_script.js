@@ -534,3 +534,21 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.classList.add('no-popout');
     }
 });
+
+// Komment ellenőrzése
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('comment-form').addEventListener('submit', function (e) {
+        e.preventDefault(); 
+        const commentText = document.getElementById('comment-text').value.trim(); 
+        if (commentText === '') {
+            alert('A komment mező nem lehet üres!'); 
+        } else {
+            const commentContainer = document.getElementById('comments-container');
+            const newComment = document.createElement('div');
+            newComment.textContent = commentText; 
+            commentContainer.appendChild(newComment);
+            document.getElementById('comment-text').value = ''; 
+        }
+    });
+});
